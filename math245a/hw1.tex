@@ -1,0 +1,215 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245A: HW \#1}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{October 9, 2018}
+
+\begin{document}
+\begin{enumerate}
+    \item [1.] Given a ring (or $\sigma$-ring) $\mathcal{R} \subset \mathcal{P}(X)$, we prove the following properties:
+    \begin{enumerate}
+        \item \textbf{Claim:} Rings (resp. $\sigma$-rings) are closed under finite (resp. countable) intersections.
+
+        \textbf{Proof:} Given any two sets $E_1, E_2 \in \mathcal{R}$, it is possible to construct their intersection through set differences. Specifically, $E_1 \cap E_2 = E_1 \setminus (E_1 \setminus E_2)$ where $E_1 \setminus E_2$ represents $E_2^c$ restricted to $E_1$. Since $\mathcal{R}$ is closed under finite set differences, $(E_1 \cap E_2 ) \in \mathcal{R}$.
+        
+        We can extend this idea by looking at the intersection of a finite (resp. countable) collection of sets $\{E_i\}_i$. Arbitrarily pick one set in the collection, say $E_1$. For any element $x \in E_1$ also contained in every other set $E_i: i > 1$, it must hold that $x \notin E_1 \setminus E_i$. This implies $x \notin \bigcup\limits_{i=2}^n E_1 \setminus E_i$ and we can express the intersection of the sets in $\{E_i\}_i$ as:
+        \begin{align*}
+            E_1 \setminus \Big( \bigcup\limits_{i=2}^n E_1 \setminus E_i \Big)
+        \end{align*}
+        This is a finite (resp. countable) union of differences of sets in $\mathcal{R}$ and so $\mathcal{R}$ is closed under finite (resp. countable) intersections.
+
+        \item \textbf{Claim:} If $\mathcal{R}$ is a ring (resp. $\sigma$-ring), then $\mathcal{R}$ is an algebra (resp. $\sigma$-algebra) iff $X \in \mathcal{R}$.
+
+        \textbf{Proof:} We can express the compliment of any $E \in \mathcal{R}$ as $E^c = X \setminus E$. Since $X, E \in \mathcal{R}$ and $\mathcal{R}$ is closed under differences, this means that $E^c \in \mathcal{R}$ for all $E \in \mathcal{R}$ and that $\mathcal{R}$ is an algebra (resp. $\sigma$-algebra). Also, if $\mathcal{R}$ is a an algebra, then it contains $E^c$ for every $E \in \mathcal{R}$. $X = E \cup E^c$ so $X \in \mathcal{R}$.
+
+        \item \textbf{Claim:} If $\mathcal{R}$ is a $\sigma$-ring then $\mathcal{M} = \{E \subset X : E \in \mathcal{R} \text{ or } E^c \in \mathcal{R}\}$ is a $\sigma$-algebra.
+
+        \textbf{Proof:} To show that $\mathcal{M}$ is closed under compliments, pick any set $E \in \mathcal{M}$ and let $F = E^c$. Then $F^c = E \implies F^c \in \mathcal{R} \implies F \in \mathcal{M} \implies E^c \in \mathcal{M}$ by the def. of $\mathcal{M}$.
+
+        To show that $\mathcal{M}$ is closed under countable unions, let $S$ be a union of sets $E_\alpha \in \mathcal{R}$ and $F_\beta$ such that $F^c_\beta \in \mathcal{R}$ and $\mathcal{A}, \mathcal{B}$ are countable. Then:
+        \begin{align*}
+        S & = (\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha) \cup (\bigcup\limits_{\beta \in \mathcal{B}} F_\beta), \quad \text{and} \\
+        S^c & = (\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha)^c \cap (\bigcup\limits_{\beta \in \mathcal{B}} F_\beta)^c = (\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha)^c \cap (\bigcap\limits_{\beta \in \mathcal{B}} F_\beta^c) = \bigcap\limits_{\beta \in \mathcal{B}} F_\beta^c - (\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha)
+        \end{align*}
+        The left term of the last expression is an intersection of elements of $\mathcal{R}$ and so is contained in $\mathcal{M}$. So is the right term and $\mathcal{R}$, being a ring, is closed under differences. Thus $S^c \in \mathcal{R}$ and $S \in \mathcal{M}$.
+
+        \item \textbf{Claim:} If $\mathcal{R}$ is a $\sigma$-ring then $\mathcal{M} = \{E \subset X : E \cap F \in \mathcal{R} \text{ for all } F \in \mathcal{R}\}$ is a $\sigma$-algebra.
+
+        \textbf{Proof:} To show that $\mathcal{M}$ is closed under compliment, take some set $E \in \mathcal{M}$. Since $E \cap F \in \mathcal{R} \text{ for all } F \in \mathcal{R}$, and $\mathcal{R}$ is closed under differences, it must hold that:
+        \begin{align*}
+            F - (E \cap F) \in \mathcal{R} \implies (E \cap F)^c \cap F = E^c \cup F^c \cap F = E^c \cap F \in \mathcal{R}
+        \end{align*}
+        Thus $E^c \in \mathcal{M}$.
+
+        To show that $\mathcal{M}$ is closed under countable unions, note that for any countable union of sets $E_\alpha \in \mathcal{M}$ we have:
+        \begin{align*}
+            (\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha) \cap F = \bigcup\limits_{\alpha \in \mathcal{A}} (E_\alpha \cap F)
+        \end{align*}
+        Each $E_\alpha \cap F$ is an element of $\mathcal{R}$ for all $F \in \mathcal{R}$. Since $\mathcal{R}$ is closed under countable union, it holds that:
+        \begin{align*}
+            (\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha) \cap F \in \mathcal{R} \text{ for all } F \in \mathcal{R}
+        \end{align*}
+        and so $\bigcup\limits_{\alpha \in \mathcal{A}} E_\alpha \in \mathcal{M}$.
+    \end{enumerate}
+
+    \item[2.] Below I show that $\mathcal{B}_\mathbb{R}$ is generated by each of the two sets $\mathcal{E}_4 = \{[a,b):a<b\}$ and $\mathcal{E}_8 = \{(-\infty,a]:a \in \mathbb{R}\}$.
+    \begin{enumerate}
+        \item [$\mathcal{E}_4:$] By proposition 0.21 in Folland, we know that any open set $U \subset \mathbb{R}$ is a countable disjoint union of open intervals, $\bigcup\limits_i E_i$. It is possible to represent each such intervals as:
+        \begin{align*}
+            E_i = (a,b) = \bigcup\limits_n [a_i - \frac{1}{n}, b_i)
+        \end{align*}
+        Any $\sigma$-algebra containing $\mathcal{E}_4$ also contains countable unions of it's elements, so this representation is valid. Thus we can represent any open set $U$ as:
+        \begin{align*}
+            U = \bigcup\limits_i E_i  = \bigcup\limits_i \Big (\bigcup\limits_n [a_i - \frac{1}{n}, b_i) \Big )
+        \end{align*}
+
+        \item [$\mathcal{E}_8:$] The same argument follows here. We just need to be able to create open intervals out of the elements of $\mathcal{E}_8$, or sets derived from them. Since, $\mathcal{E}_8 \subset \mathcal{M}(\mathcal{E}_8)$, it follows that compliments of its elements, of the form $(a,\infty0$, are also contained in $\mathcal{M}(\mathcal{E}_8)$. Furthermore, we can form open rays contained in $\mathcal{M}(\mathcal{E}_8)$ by taking coutable unions:
+        \begin{align*}
+            \bigcup\limits_n (-\infty, b - \frac{1}{n}] = (-\infty,b) \in \mathcal{M}(\mathcal{E}_8)
+        \end{align*}
+        This is all we need to create arabitrary open intervals:
+        \begin{align*}
+            (-\infty, b) \cup (a, \infty) = (a,b) \in \mathcal{M}(\mathcal{E}_8)
+        \end{align*}
+        which we can use to construct arbitrary open sets by taking countable unions.
+    \end{enumerate}
+
+    \item[8.] We're given that $(X,\mathcal{M},\mu)$ is a measure space and that $\{E_j\}_1^\infty \subset \mathcal{M}$.
+    
+    \textbf{Claim:} $\mu(\text{lim inf } E_j) \le \text{lim inf }\mu(E_j)$
+
+    \textbf{Proof:} As defined in pg.2 of Folland,
+    \begin{align*}
+        \text{lim inf } E_j = \bigcup\limits_{k=1}^\infty \bigcap\limits_{j=k}^\infty E_j
+    \end{align*}
+
+    We already know $\sigma$-algebras are closed under countable intersection so let $F_k = \bigcap_{j=k}^\infty E_j$ such that $F_1 \subset F_2 \subset \cdots$ with $F_k \in \mathcal{M}$ for all $k \in \mathbb{N}$. This, combined with the fact that measurable sets are continuous from below, lets us determine:
+    \begin{align*}
+        \mu \Big( \bigcup\limits_{k=1}^\infty F_k \Big) = \text{lim}_{k \rightarrow \infty} \ \mu (F_k)
+    \end{align*}
+    which implies:
+    \begin{align*}
+        \mu (\text{lim inf } E_j) = \mu \Big(\bigcup\limits_{k=1}^\infty \bigcap\limits_{j=k}^\infty E_j \Big) = \text{lim}_{k \rightarrow \infty} \mu \Big( \bigcap\limits_{j=k}^\infty E_j \Big)
+    \end{align*}
+    Furthermore, the motonic property of measurable sets tells us that:
+    \begin{align*}
+        \Big( \bigcap\limits_{j=k}^\infty E_j \Big) \subset E_j \text{ for all } j \ge k \implies \mu \Big( \bigcap\limits_{j=k}^\infty E_j \Big) \le \text{inf}_{j \ge k} \ \mu(E_j)
+    \end{align*}
+    Putting everything together:
+    \begin{align*}
+        \mu (\text{lim inf } E_j) = \text{lim}_{k \rightarrow \infty} \ \mu \Big( \bigcap\limits_{j=k}^\infty E_j \Big) \le \text{lim}_{k \rightarrow \infty} \ \text{inf}_{j \ge k} \ \mu(E_j) \ _\blacksquare
+    \end{align*}
+
+    If we're given that $\mu \big( \bigcup_1^\infty E_j \big) < \infty$, we can derive the following additional result.
+
+    \textbf{Claim:} $\mu(\text{lim sup } E_j) \ge \text{lim sup }\mu(E_j)$
+    
+    \textbf{Proof:} Using the definition (from Folland):
+
+    \begin{align*}
+        \text{lim sup } E_j = \bigcap\limits_{k=1}^\infty \bigcup\limits_{j=k}^\infty E_j
+    \end{align*}
+
+    We can create the sets $F_k \in \mathcal{M}$ defined by $F_k = \bigcup_{j=k}^\infty E_j$ such that $F_1 \supset F_2 \supset \cdots$. Using the continuity of measurable sets from above (which depends on $\bigcup_{1}^\infty E_n$ having finite measure), we can infer that:
+    \begin{align*}
+        \mu \Big( \bigcap\limits_{k=1}^\infty F_k \Big) = \text{lim}_{k \rightarrow \infty} \ \mu(F_k)
+    \end{align*}
+
+    Similarly to the previous proof, we also rely on monotonicity to show:
+    \begin{align*}
+        \Big( \bigcup\limits_{j=k}^\infty E_j \Big) \supset E_j \text{ for all } j \ge k \implies \mu \Big( \bigcup\limits_{j=k}^\infty E_j \Big) \ge \text{sup}_{j \ge k} \ \mu(E_j)
+    \end{align*}
+
+    Combining results, we get the following:
+    \begin{align*}
+        \mu (\text{lim sup } E_j) = \text{lim}_{k \rightarrow \infty} \ \mu \Big( \bigcup\limits_{j=k}^\infty E_j \Big) \ge \text{lim}_{k \rightarrow \infty} \ \text{sup}_{j \ge k} \ \mu(E_j) \ _\blacksquare    
+    \end{align*}
+
+    \item[10.] \textbf{Claim:} Given a measure space $(X,\mathcal{M},\mu)$ and $E \in \mathcal{M}$, $\mu_E$ (defined as $\mu_E(A) = \mu(A \cap E)$ for $A \in \mathcal{M}$) is a measure.
+
+    \textbf{Proof:} That $\mu_E(\emptyset) = 0$ is imediately clear since:
+    \begin{align*}
+        \mu_E(\emptyset) = \mu(\emptyset \cap E) = \mu(\emptyset) = 0
+    \end{align*}
+    To show countable additivity, note that for any sequence of disjoin sets $\{A_j\}_j^\infty$ in $\mathcal{M}$ we have:
+    \begin{align*}
+        \mu_E \Big(\bigcup\limits_1^\infty A_j \Big) = \mu \Big( \Big(\bigcup\limits_1^\infty A_j \Big) \cap E \Big) = \mu \Big(\bigcup\limits_1^\infty (A_j \cap E) \Big) = \sum\limits_1^\infty \mu (A_j \cap E) = \sum\limits_1^\infty \mu_E (A_j)
+    \end{align*}
+
+    \item[11.] \textbf{Claim:} A finitely additive measure $\mu$ is a measure iff it is continuous from bellow as in Thrm. 1.8c.
+
+    \textbf{Proof:} Assume that $\mu$ is a measure. Then Thrm 1.8c immediately holds as shown on pg.26 of Folland.
+
+    Now assume Thrm 1.8c is true. That is, $\mu ( \bigcup_{i=1}^\infty E_i ) = \text{lim}_{k \rightarrow \infty} \ \mu(E_k)$ for any telescopically increasing series in $\mathcal{M}$. For a disjoint series, $\{E_i\}_1^\infty$, we can construct a series $F_i = \bigcup_{k=1}^i E_k$ such that $F_1 \subset F_2 \subset \cdots$. This let's us apply Thrm 1.8c:
+    \begin{align*}
+        \mu \Big( \bigcup\limits_{i=1}^\infty E_i \Big) = \mu \Big( \bigcup\limits_{i=1}^\infty F_i \Big) = \text{lim}_{k \rightarrow \infty} \ \mu(F_k) = \text{lim}_{k \rightarrow \infty} \sum\limits_{i=1}^k \mu(F_i \setminus F_{i-1}) = \sum\limits_{i=1}^\infty \mu(E_i)
+    \end{align*}
+    Note that in the first equality we make use of the property that countable unions of countable (including finite) sets are countable. In the next to last equality we use to property of finite additivity of disjoint sets to deduce $\mu(F_k) = \sum_1^k \mu(F_i \setminus F_{i-1})$.
+
+    \textbf{Claim:} If $\mu(X) < \infty$, $\mu$ is a measure iff it is continuous from above as in Thrm. 1.8d.
+
+    \textbf{Proof:} This proof proceeds in a simliar manner to the previous one. If we assume that $\mu$ is a measure, then Thrm 1.8d holds by the proof in Folland.
+
+    If we assume instead that Thrm 1.8d holds and want to show $\mu$ is countably additive for any disjoint sequence $\{E_i\}_1^\infty$, we can form $\{F_i\}_1^\infty$ where $F_i = X - \bigcup_{k=1}^i E_k$ and $F_1 \supset F_2 \supset \cdots$. Thrm 1.8d gives us that:
+    \begin{align*}
+        \mu \Big( \bigcap\limits_{1}^\infty F_i \Big) = \text{lim}_{i \rightarrow \infty} \ \mu(F_i) = \text{lim}_{i \rightarrow \infty} \ \big[\mu(X) - \mu \Big(\bigcup\limits_{k=1}^i E_k\Big)\big] = \mu(X) - \text{lim}_{i \rightarrow \infty} \sum\limits_1^i \mu(E_k)
+    \end{align*}
+    The second equality is valid due to the finitely additive property of $\mu$ and the fact that $F_i \cap \big(\bigcup_{k=1}^i E_k \big)= \emptyset$. Furthermore:
+    \begin{align*}
+        \bigcap\limits_1^\infty F_i = X - \bigcup\limits_1^\infty E_i \implies \mu\Big( \bigcap\limits_1^\infty F_i \Big) = \mu(X) - \mu\Big(\bigcup\limits_1^\infty E_i \Big)
+    \end{align*}
+    This combined with the knowledge that $\mu(X) < \infty$ gives us:
+    \begin{align*}
+        \mu(X) - \mu\Big(\bigcup\limits_1^\infty E_i \Big) = \mu(X) - \text{lim}_{i \rightarrow \infty} \sum\limits_1^i \mu(E_k) = \mu(X) - \sum\limits_1^\infty \mu(E_i)
+    \end{align*}
+    from which we can subtract finite $\mu(X)$ to confirm countable additivity under $\mu$.
+
+    \item[12.] Let $(X,\mathcal{M},\mu)$ be a finite measure space.
+
+    \textbf{Claim:} If $E,F \in \mathcal{M}$ and $\mu(E \triangle F) = 0$, then $\mu(E) = \mu(F)$.
+
+    \textbf{Proof:} $E \triangle F = (E \setminus F) \cup (F \setminus E)$ which is a union of disjoint sets. Thus 
+    \begin{align*}
+        & \mu(E \triangle F) = \mu(E \setminus F) + \mu(F \setminus E) = 0 \\
+        \implies & \mu(E \setminus F) = -\mu(F \setminus E) = 0
+    \end{align*}
+    But we can write:
+    \begin{align*}
+        & \mu(E \cup F) = \mu(E \cup (F \setminus E)) = \mu(F \cup (E \setminus F)) \\
+        \implies & \mu(E) + \mu(F \setminus E) = \mu(F) + \mu (E \setminus F) \\
+        \implies & \mu(E) = \mu(F)
+    \end{align*}
+
+    \textbf{Claim:} Say that $E \sim F$ if $\mu(E \triangle F) = 0$; then $\sim$ is an equivalence relation on $\mathcal{M}$.
+
+    \textbf{Proof:} 
+        \begin{enumerate}
+        \item[$\bullet$] $\mu (E \triangle E) =  \mu(E \setminus E) + \mu(E \setminus E) = 2 \mu(\emptyset) = 0$. So $E \sim E$ holds.
+        \item[$\bullet$] $\mu (E \triangle F) = \mu(E \setminus F) + \mu(F \setminus E) = \mu(F \setminus E) + \mu(E \setminus F) = \mu(F \triangle E)$. Thus if $E \sim F$, $\mu(E \triangle F) = \mu(F \triangle E) = 0$ implying $F \sim E$. This works just as well in the other direction, so $E \sim F$ iff $F \sim E$.
+        \item[$\bullet$] If $E \sim F$ and $F \sim G$ then:
+        \begin{align*}
+            \mu(E \triangle G) & = \mu(E \setminus G) + \mu(G \setminus E) \\
+            & = \mu(((E \cap F) \cup (E \setminus F)) \setminus G) + \mu(((F \cap G) \cup (F \setminus G)) \setminus E) \\
+            & = \mu((E \cap F) \setminus G) + \mu((E \setminus F) \setminus G) + \mu((F \cap G) \setminus E) + \mu((F \setminus G) \setminus E) \\
+            & \le \mu(F \setminus G) + \mu(E \setminus F) + \mu(F \setminus E) + \mu(F \setminus G) = 0
+        \end{align*} 
+        And so $E \sim G$.
+        \end{enumerate}
+
+    \textbf{Claim:} For $E,F \in \mathcal{M}$, define $\rho(E,F) = \mu(E \triangle F)$. Then $\rho(E,G) \le \rho(E,F) + \rho(F,G)$, and hence $\rho$ defines a metric on the space $\mathcal{M} / \sim$ of equivalence classes.
+
+    \textbf{Proof:}
+    \begin{align*}
+        \rho(E,F) + \rho(F,G) & = \mu(E \triangle F) + \mu(F \triangle G) \\ & = \mu(E \setminus F) + \mu(F \setminus E) + \mu(F \setminus G) + \mu(G \setminus F) \\
+        & \ge \mu(E \setminus F \setminus G) + \mu((F \cap G) \setminus E) + \mu((F \cap E) \setminus G) + \mu(G \setminus F \setminus E) \\
+        & = \mu(E \setminus G) + \mu(G \setminus E) \\
+        & = \mu(E \triangle G) = \rho(E,G)
+    \end{align*}
+    And so $\rho$ is a metric.
+\end{enumerate}
+\end{document}

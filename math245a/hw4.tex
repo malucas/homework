@@ -1,0 +1,132 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245A: HW \#4}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{October 30, 2018}
+
+\begin{document}
+\begin{enumerate}
+    \item [2.19] Suppose $\{f_n\} \subset L^1(\mu)$ and $f_n \rightarrow f$ uniformly.
+    \begin{enumerate}
+        \item \textbf{Claim:} If $\mu(X) < \infty$, then $f \in L^1(\mu)$ and $\int f_n \rightarrow \int f$.
+        
+        \textbf{Proof:} $f_n$ converges uniformly such that for any $\epsilon > 0$ there exists a $N \in \mathbb{N}$ such that $|f - f_n| < \epsilon$ for all $n > N$. Thus $|f| \le |f - f_n| + |f_n| > \epsilon + |f_N|$. This implies that
+        \begin{align*}
+            \int |f| < \int (\epsilon + |f_n|) = \epsilon \mu(X) + \int |f_n| < \infty
+        \end{align*}    
+        Thus $f \in L^1(\mu)$. Furthermore we also have that $|f_n| \le |f_n - f| + |f| < \epsilon + |f| \in L^1(\mu)$ and so we can apply the Dominated convergence theorem to get
+        \begin{align*}
+            \underset{n \rightarrow \infty}{\text{lim}} \int f_n = \int f 
+        \end{align*}
+
+        \item \textbf{Claim:} The previous is not necessarily true if $\mu(X) = \infty$.
+        
+        \textbf{Proof:} We can take as an example the sequence of functions $f_n = n^{-1}\chi_{(0,n]}$. Here, $f_n \rightarrow f$ uniformly where $f=0$. However
+        \begin{align*}
+            \underset{n \rightarrow \infty}{\text{lim}} \int f_n = \underset{n \rightarrow \infty}{\text{lim}} \int n^{-1}\chi_{(0,n]} = 1 \ne 0 = \int f 
+        \end{align*}
+        and so the results from part (a) do not hold.
+    \end{enumerate}
+
+    \item [2.25] Let $f(x) = x^{-1/2}$ if $0 < x < 1$, $f(x) = 0$ otherwise. Let $\{r_n\}_1^\infty$ be an enumeration of the rationals, and set $g(x) = \sum_1^\infty 2^{-n}f(x - r_n)$.
+    \begin{enumerate}
+        \item \textbf{Claim:} $g \in L^1(m)$, and in particular $g < \infty$ a.e.
+        
+        \textbf{Proof:} $f(x)$ is Rieman integrable and so is Lebesgue measurable. It is also strictly positive and so we can apply the Monotone Convergence Theorem (along with Thrm 2.28) to the increasing sequence $f_n = x^{-1/2}\chi_{[(1/n,1)]}$ to get
+        \begin{align*}
+            \int f = \underset{n \rightarrow \infty}{\text{lim}} \int_{1/n}^1 x^{-1/2} = \underset{n \rightarrow \infty}{\text{lim}} (2 - 2n^{-1/2}) = 2
+        \end{align*}
+        Again, by the MCT, we see that
+        \begin{align*}
+            \int |g| = \int g = \underset{n \rightarrow \infty}{\text{lim}} \sum_1^n 2^{-n} \int f(x-r_n) = \sum_1^\infty 2^{-n} \int f(x) = 2
+        \end{align*}
+        and so $g \in L^1(\mu)$. Since we also have $g \in L^+$, theorem 2.20 tells us that $g < \infty$ a.e.
+
+        \item \textbf{Claim:} $g$ is discontinuous at every point and unbounded on every interval, and it remains so after any modification on a Lebesgue null set.
+        
+        \textbf{Proof:} Let $g'$ be the modifiction of $g$ on some null set $N$ such that $g' = g$ a.e. On any interval $I$ there exists an interior point such that we can create the  set $(r_n, k^{-1}) \cap I$ having positive measure. Let $E_k = ((r_n, k^{-1}) \cap I) \setminus N$. Then any sequence $\{x_k\}$ for which $x_k \in E_k$ converges to $r_n$. But $\underset{k \rightarrow \infty}{\text{lim}} f(x_k - r_n) = \infty$ and $f(x_k - r_n) \le g(x_k)$ meaning that $g$ and any related $g'$ are unbounded on the (arbitrary) open interval $I$. This also implies that any $g'$ is everywhere discontinuous since $\mathbb{Q}$ is dense in $\mathbb{R}$ and for any $x_0 \in \mathbb{R}$ we can never find a $\delta > 0$ such that $|x - x_0| < \delta \implies |g'(x) - g'(x_0)| < \epsilon$ for $\epsilon > 0$.
+
+        \item \textbf{Claim:} $g^2 < \infty$ a.e., but $g^2$ is not integrable on any interval.
+        
+        \textbf{Proof:} $\mathbb{Q}$ is a null set and $g$ is finite everywhere else so by propotision 2.23 $\int g < \infty$. The same can be said for $g^2$ so $\int g^2 < \infty$.
+
+        For any interval $I$, There exists a rational $r_n$ in it's interior such that $[r_n, r_n + \delta] \subset I$ for some $\delta > 0$. Thus
+        \begin{align*}
+            \int_I g^2 \ge \int_{r_n}^{r_n + \delta} 2^{-2n}f(x - r_n)\,dx = 2^{-2n} \int_0^\delta x^{-1}\,dx = \infty
+        \end{align*}
+        so $\int_I g^2$ is unbounded over any interval $I$.
+    \end{enumerate}
+
+    \item [2.26] \textbf{Claim:} If $f \in L^1(m)$ and $F(x) = \int_{-\infty}^x f(t)\,dt$, then $F$ is continous on $\mathbb{R}$.
+    
+    \textbf{Proof:} For any $x_0$ we can create a sequence $f_n = f\chi_{[-\infty, x_n]}$ for which $f_n \rightarrow f$ as $x_n \rightarrow x_0$. We also have that $|f_n| \le |f|$ where $|f| \in L^1(m)$, so we can apply the dominated convergence theorem and get
+    \begin{align*}
+        F(x_0) = \int f\chi_{[-\infty,x_0]} = \underset{n \rightarrow \infty}{\text{lim}} \int f\chi_{[-\infty,x_n]} = \underset{n \rightarrow \infty}{\text{lim}} F(x_n)
+    \end{align*}
+    Thus $F(x)$ is continuous at any point $x_0 \in \mathbb{R}$ and so is continuous on $\mathbb{R}$.
+
+    \item [2.34] Suppose $|f_n| \le g \in L^1$ and $f_n \rightarrow f$ in measure.
+    \begin{enumerate}
+        \item \textbf{Claim:} $\int f = \text{ lim } \int f_n$.
+        
+        \textbf{Proof:} Here we can assume that $f_n$ is real valued since $|f_n| > |\text{Re }f|$ and $|f_n| > |\text{Im } f|$. By theorem 2.30 we know that $\{f_n\}$ contains a subsequence $\{f_{n_k}\}$ that converges to a function that equal $f$ almost everywhere. Thus by the DCT, $f \in L^1$ and
+        \begin{align*}
+            \int f = \text{ lim } \int f_{n_k} = \text{ lim } \int f_n
+        \end{align*}
+
+        \item \textbf{Claim:} $f_n \rightarrow f$ in $L^1$.
+        
+        \textbf{Proof:} $|f - f_n|$ converges to 0 in measure and also $|f - f_n| \le |f| + |f_n| < 2g$, \\so by part (a)
+        \begin{align*}
+            \text{lim } \int |f - f_n| = \int 0 = 0
+        \end{align*}
+        and $f_n \rightarrow f$ in $L^1$.
+    \end{enumerate}
+
+    \item [2.36] \textbf{Claim:} If $\mu(E_n) < \infty$ for $n \in \mathbb{N}$ and $\chi_{E_n} \rightarrow f$ in $L^1$, then $f$ is (a.e. equal to) the characteristic function of a measurable set.
+    
+    \textbf{Proof:} By corollary 2.32 of Folland we know that there exists a subsequence $\{f_{n_k}\}$ that converges to $f$ a.e. This tells us that $f$ either equals 0 or 1, except on a set of measure zero. Since $f$ is measurable, this tells us that $f^{-1}(1) = E \cup F$ for some measurable set $E$ and null-set $F$ such that $f = \chi_E$ a.e.
+    
+    \item [2.38] Suppose $f_n \rightarrow f$ in measure and $g_n \rightarrow g$ in measure.
+    \begin{enumerate}
+        \item \textbf{Claim:} $f_n + g_n \rightarrow f + g$ in measure.
+        
+        \textbf{Proof:} We know that $\mu\{x: f_n(x) - f(x) > \epsilon\} \rightarrow 0$ and $\mu\{x: g_n(x) - g(x) > \epsilon\} \rightarrow 0$. Furthermore $|(f_n(x) + g_n(x)) - (f(x) + g(x))| < |f_n(x) - f(x)| + |g_n(x) - g(x)|$ such that
+        \begin{align*}
+            & \{x: |(f_n(x) + g_n(x)) - (f(x) + g(x))| > \epsilon\} \\
+             & \subset \{x: |f_n(x) - f(x)| + |g_n(x) - g(x)| > \epsilon\} \\ 
+             & \subset \{x: |f_n(x) - f(x)| > \epsilon\} \cup \{x: |g_n(x) - g(x)| > \epsilon\}
+        \end{align*}
+        But 
+        \begin{align*}
+            & \mu(\subset \{x: |f_n(x) - f(x)| > \epsilon\} \cup \{x: |g_n(x) - g(x)| > \epsilon\}) \\
+            & < \mu(\{x: |f_n(x) - f(x)| > \epsilon\}) + \mu(\{x: |g_n(x) - g(x)| > \epsilon\}) \rightarrow 0
+        \end{align*}
+        so it must hold that $f_n + g_n \rightarrow f + g$ in measure.
+        \item \textbf{Claim:} $f_ng_n \rightarrow fg$ in measure if $\mu(X) < \infty$, but not necessarily if $\mu(X) = \infty$.
+        
+        \textbf{Proof:} Let $F_n = \{x: |f_n(x)| > \epsilon\}$ and $g_n = \{x: |g_n(x)| > \epsilon\}$. Both sets decrease as $n \rightarrow \infty$ and $\cap_1^\infty F_n = \emptyset$, so we can conclude that $\mu(F_n) \rightarrow 0$ and likewise for $G_n$. But for fixed $\epsilon > 0$
+        \begin{align*}
+            & \{x: |f_n(x)g_n(x) - f(x)g(x)| > \epsilon\} \\
+            & \subset \{x: |f_n(x)(g_n(x) - g(x))| > \epsilon\} \cup \{x: |g_n(x)(f_n(x) - f(x))| > \epsilon\}
+        \end{align*}
+        and
+        \begin{align*}
+            \{x: |f_n(x)(g_n(x) - g(x))| > \epsilon\} & \subset \{x: |f_n(x)| > \epsilon\} \cup \{x: |g_n(x) - g(x)| > \epsilon\} \\
+            \{x: |g_n(x)(f_n(x) - f(x))| > \epsilon\} & \subset \{x: |g_n(x)| > \epsilon\} \cup \{x: |f_n(x) - f(x)| > \epsilon\}
+        \end{align*}
+        Both unions on the right have measures that converge to 0 so it must hold that \\ $\mu(\{x: |f_n(x)g_n(x) - f(x)g(x)| > \epsilon\}) \rightarrow 0$. Thus $f_ng_n \rightarrow fg$.
+
+        If $\mu(X) = \infty$. We can't always assume that $F_n$ or $G_n$ approach 0. For example, take $f_n = g_n = x + n^{-1}$ which converge to $f = g = x$ in measure. If $\mu(X) = \infty$, then
+        \begin{align*}
+            \mu(\{x: |f_n(x)g_n(x) - f(x)g(x)| > \epsilon\}) = \mu(\{x: |2xn^{-1} + n^{-2}| > \epsilon\})
+        \end{align*}
+        but $|2xn^{-1} + n^{-2}| > \epsilon$ for all $x$ such that $|x| > (\epsilon n - n^{-1})/2$ and so $\mu(X) = \infty$ for any $n$ and any $\epsilon$. Thus $f_ng_n \not \rightarrow fg$.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

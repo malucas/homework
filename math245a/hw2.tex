@@ -1,0 +1,185 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245A: HW \#2}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{October 16, 2018}
+
+\begin{document}
+\begin{enumerate}
+    \item[1.18] We're given an algebra $\mathcal{A} \subset \mathcal{P}(X)$, the collections $\mathcal{A}_\sigma$ and $\mathcal{A}_{\sigma\delta}$ induced by $\mathcal{A}$, and an outermeasure $\mu^*$ induced by the premeasure $\mu_0$ on $\mathcal{A}$.
+    \begin{enumerate}
+        \item \textbf{Claim:} For any $E \subset X$ and $\epsilon > 0$ there exists $A \in \mathcal{A}_\sigma$ with $E \subset A$ and $\mu^*(A) \le \mu^*(E) + \epsilon$.
+
+        \textbf{Proof:} By definition
+        \begin{align*}
+            \mu^*(E) = \text{inf } \Big\{\sum\limits_1^\infty \mu_0(A_j): A_j \in \mathcal{A}, E \subset \bigcup\limits_1^\infty A_j \Big\}
+        \end{align*}
+        Since $\mu^*(E)$ is an infimum, it is always possible to find a sequence $\{A_j\}_1^\infty \subset \mathcal{A}$ with $E \subset \bigcup_1^\infty A_j$ and $\sum_1^\infty \mu_0(A_j) \le \mu^*(E) + \epsilon$. Any such set $\bigcup_1^\infty A_j$ is contained in $\mathcal{A}_\sigma$ since it is a countable union of elements of $\mathcal{A}$. So let $A = \bigcup_1^\infty A_j$ such that the previous relations become
+        \begin{align*}
+            E \subset A \text{ and } \mu^*(A) \le \mu^*(E) + \epsilon \text{ with } A \in \mathcal{A}_\sigma
+        \end{align*}
+        
+        \item \textbf{Claim:} If $\mu^*(E) < \infty$, then $E$ is $\mu^*$-measurable iff there exists $B \in \mathcal{A}_{\sigma\delta}$ with $E \subset B$ and $\mu^*(B \setminus E) = 0$.
+
+        \textbf{Proof:} ($\Rightarrow$) Given $E$, $\mu^*$-measurable, we know that for any $\epsilon_i > 0$, we can find an infinite union $B_i \in \mathcal{A}_\sigma$ containing $E$ such that $\mu^*(B_i) \le \mu^*(E) + \epsilon_i$. Let $\{\epsilon_i\}_1^\infty$ be a monotonically decreasing sequence of real numbers that converges to 0. Then define $B = \bigcap_1^\infty B_i$ such that $E \subset B$ and $B \in \mathcal{A}_{\sigma\delta}$. Since by Caratheodory's Theorem we know that the $\mu^*$-measurable sets form a $\sigma$-algebra (by definition containing $\mathcal{A}$), we also know that any element of $\mathcal{A}_\sigma$ or $\mathcal{A}_{\sigma\delta}$ is $\mu^*$-measurable as well. Thus we can do the following
+        \begin{align*}
+            \mu^*(B \setminus E) = \mu^*(B_i \cap E^c) = \mu^*(B_i) - \mu^*(B_i \cap E) = \mu^*(B_i) - \mu^*(E) \le \epsilon_i \quad \forall i
+        \end{align*}
+        implying that $\mu^*(B \setminus E) = 0$.
+        
+        ($\Leftarrow$) Given some $B \in \mathcal{A}_{\sigma\delta}$ such that $E \subset B$ and $\mu^*(B\setminus E) = 0$, we make use of the fact that any element of $\mathcal{A}_{\sigma\delta}$ is $\mu^*$-measurable to show that for any $F \subset X$
+        \begin{align*}
+            \mu^*(F) & = \mu^*(F \cap B) + \mu^*(F \cap B^c)\\ 
+            & = \mu^*(F \cap B) + \mu^*(F \cap B^c) + \mu^*(F \cap (B\setminus E)) \\
+            & \ge \mu^*(F \cap B) + \mu^*(F \cap E^c) \\
+            & \ge \mu^*(F \cap E) + \mu^*(F \cap E^c)
+        \end{align*}
+        It's imediatly clear from the subadditivity of outer measures that $\mu^*(F \cap E) + \mu^*(F \cap E^c) \ge \mu^*(F)$ so $E$ must be $\mu^*$-measurable.
+
+        \item \textbf{Claim:} If $\mu_0$ is $\sigma$-finite, the restriction $\mu^*(E) < \infty$ in (b) is superfluous.
+
+        \textbf{Proof:} ($\Rightarrow$) $\mu_0$ being $\sigma$-finite, there exists some countable union such that $X = \bigcup_1^\infty X_i$ and $\mu_0(X_i) < \infty$. Thus the measurable sets $E_i = E \cap X_i$ have finite measure and their countable union equals $E$. By part (a), for any $\epsilon_{ik} > 0$ there exists $A_{ik} \in A_\sigma$ such that $E_i \subset A_{ik}$ and $\mu^*(A_{ik}) \le \mu^*(E_i) + \epsilon_{ik}$. $E_i$ being measureable, it is also $\mu^*$-measurable such that
+        \begin{align*}
+            \mu^*(A_{ik}) = \mu^*(A_{ik} \cap E_i) + \mu(A_{ik} \cap E_i^c) = \mu^*(E_i) + \mu(A_{ik} \setminus E_i)
+        \end{align*}
+        This in turn implies that
+        \begin{align*}
+            \mu^*(A_{ik}\setminus E_i) = \mu^*(A_{ik}) - \mu^*(E_i) \le \epsilon_{ik}
+            \implies \mu^*(A_{ik}\setminus E_i) = 0
+        \end{align*}
+        If we set each $\epsilon_{ik} = 1/(k2^i)$ and let $A_k = \bigcup_{i=1}^\infty A_{ik}$ then $E \subset A_k$, $A_k \in \mathcal{A}_\sigma$, and we have
+        \begin{align*}
+            \mu^*(A_k \setminus E) = \mu^*\Big(\bigcup_{i=1}^\infty A_{ik} \cap E^c \Big) \le \sum_{i=1}^\infty \mu^*(A_{ik} \setminus E) \le \sum_{i=1}^\infty \mu^*(A_{ik} \setminus (E_i) = \frac{1}{k}
+        \end{align*}
+        Then we can set $A = \bigcap_{k=1}^\infty A_k$ such that $E \subset A$ and $A \in \mathcal{A}_{\sigma\delta}$. Since
+        \begin{align*}
+            \mu^*(A \setminus E) \le \mu^*(A_k \setminus E) \le \frac{1}{k}
+        \end{align*}
+        it must hold that $\mu^*(A - E) = 0$ and we're done.
+
+        ($\Leftarrow$) This follows from the previous proof in part (b). There, we never actually assumed that $\mu^*(E) \le \infty$.
+
+    \end{enumerate}
+    \item[1.22.a] We're given $(X,\mathcal{M},\mu)$ with outer measure $\mu*$ (induced by $\mu$), $\mathcal{M}^*$ (the $\sigma$-algebra of $\mu^*$-measurable sets), and $\bar\mu = \mu^*|\mathcal{M}^*$.
+
+    \textbf{Claim:} If $\mu$ is $\sigma$-finite, then $\bar\mu$ is the completion of $\mu$.
+
+    \textbf{Proof:} From Caratheodory's Theorem we know that $\bar\mu$ is a complete measure on $\mathcal{M}^*$. Furthermore, Theorem 1.9 in Folland tells us that $ \overline{\mathcal{M}} = \{E \cup F: E \in \mathcal{M} \text{ and } F \subset N \text{ for some } N \in \mathcal{N} \}$ (where $\mathcal{N} = \{N \in \mathcal{M}: \mu(N) = 0\}$) is a $\sigma$-algebra for which there is a unique extension of $\mu$ to a complete measure of $\overline{\mathcal{M}}$. Thus if we can show that $\mathcal{M}^* = \overline{\mathcal{M}}$, we're done.
+
+    Given a set $S \in \overline{\mathcal{M}}$ we have that $S = E \cup F$ where $E \in \mathcal{M}$ and $F \in \mathcal{N}$. Furthermore, $F \subset B$ for some $B \in \mathcal{M}$ for which $\mu(B) = 0$. This means that $S \subset (E \cup B) \in \mathcal{M}$ and that $\mu^*(E\cup B \setminus S) = \mu^*((E \cup B) \setminus (E \cup F)) \le \mu^*(B) = 0$. Noting that $\mathcal{M} = \mathcal{M}_{\sigma\delta}$, we can apply parts (b,c) of exercise 1.18 to determine that $S$ is $\mu^*$-measurable. Since $\mu$ is $\sigma$-finite, this analysis holds for any $S \in \overline{\mathcal{M}}$.
+
+    Likewise, if we're given a $\mu^*$-measurable set $S$, then we know by exercise 1.18 that there exists a set $B \in \mathcal{M}_{\sigma\delta}$ such that $S \subset B$ and $\mu^*(B \setminus S) = 0$. $B \in \mathcal{M}^*$ so $(B \setminus S) \in \mathcal{M}^*$ as well. This and another application of the result in ex. 1.18 tell us that there exists some $C \in \mathcal{M}_{\sigma\delta}$ such that $(B \setminus S) \subset C$ and $\mu^*(C \setminus (B \setminus S)) = 0$.
+    
+    $(S \cap C) \subset (C \setminus (B \setminus S))$ implies that $\mu^*(S \cap C) = 0$ by subadditivity. What's more, we can write $S$ as the union $S = (B \setminus C) \cup (S \cap C)$. Once again, there exists some  $D \in \mathcal{M}_{\sigma\delta}$ containing $S \cap C$ such that $\mu^*(D \setminus (S \cap C)) = 0$. Thus $S = E \cup F$ where $E = (B \setminus C) \in \mathcal{M}$ and $F = (S \cap C) \subset D \in \mathcal{N}$, implying that $S \in \overline{\mathcal{M}}$.
+
+    \item[1.24] Given finite measure $\mu$ on $(X,\mathcal{M})$ with outer measure $\mu^*$. Suppose that $E \subset X$ satisfies $\mu^*(E) = \mu^*(X)$ but $E \not \in \mathcal{M}$.
+    
+    \begin{enumerate}
+        \item \textbf{Claim:} If $A,B \in \mathcal{M}$ and $A \cap E = B \cap E$, then $\mu(A) = \mu (B)$.
+
+        \textbf{Proof:} $A,B \in \mathcal{M}$ so it holds that 
+        \begin{align*}
+            \mu (A \cup B) = \mu(A \cap B^c) + \mu(B) = \mu(A) + \mu(A^c \cap B)
+        \end{align*}
+        Since $E \subset (A \cup B^c)$, we also have
+        \begin{align*}
+            \mu(X) = \mu^*(X) = \mu^*(E) < \mu^*(A \cup B^c) = \mu((A^c \cap B)^c) = \mu(X) - \mu(A^c \cap B)
+        \end{align*}
+        implying that $\mu(A^c \cap B) = 0$. In the same way, we can show that $\mu(A \cap B^c) = 0$. Thus $\mu(A) = \mu(B)$.
+
+        \item \textbf{Claim:} Given $\mathcal{M}_E = \{A \cap E: A \in \mathcal{M} \}$ and the function $\nu$ defined by $\nu(A \cap E) = \mu(A)$, $\mathcal{M}_E$ is a $\sigma$-algebra on $E$ and $\nu$ is a measure on $\mathcal{M}_E$.
+
+        \textbf{Proof:} $\mathcal{M}_E$ is clearly a $\sigma$-algebra. $A^c \in \mathcal{M}$ and $((A \cap E)^c) \cap E = (A^c \cup E^c) \cap E = A^c \cap E$. Also, $\bigcup_i(A_i \cap E) = (\bigcup_i A_i) \cap E$ is an element of $\mathcal{M}_E$.
+
+        As for the function $\nu$, $\nu(\emptyset) = 0$. To show countable additivity, note that for any countable disjoint sequence $\{E_i\}_1^\infty$ for which $E_i \in \mathcal{M}_E$, there must exist corresponding sets $A_i \in \mathcal{M}$ such that $E_i = A_i \cap E$. Thus the sequence $\{A_i\}_1^\infty$ may not be disjoint itself, however we can create a new one, $\{A'_i\}_1^\infty$ by letting $A'_i = A_i \setminus \big(\bigcup_{i=1}^\infty\bigcup_{j=i+1}^\infty (A_i \cap A_j)\big)$. This new sequence is disjoint and for every $A'_i$, it still holds that $E_i = A'_i \cap E$. Hence
+        \begin{align*}
+            \nu\big(\bigcup_1^\infty E_i\Big) = \nu\Big(\bigcup_1^\infty (A'_i \cap E)\Big) = \nu\Big(\big(\bigcup_1^\infty A'_i \big) \cap E \Big) = \mu\Big(\bigcup_1^\infty A'_i \Big) = \sum\limits_1^\infty \mu(A'_i) = \sum\limits_1^\infty \nu(E_i)
+        \end{align*}
+        and we have countable additivity for $\nu$. Thus $\nu$ is a measure on $\mathcal{M}_E$.
+    \end{enumerate}
+    
+    \item[1.30] We're given $E \in \mathcal{L}$ and $m(E) > 0$ and want to show that for any $\alpha < 1$, there is an open interval $I$ such that $m(E \cap I) > \alpha m(I)$.
+
+    \textbf{Proof:} Assume that there exists some $\alpha < 1$ such that $m(E \cap I) \le \alpha m(I)$ for all open interavals $I$. 
+    
+    By Theorem 1.18 in Folland, we know that $E$ contains some compact set $K$ which must be bounded. This set must also have finite measure, since any compact set must be bounded and so can be contained within a bounded interval of finite measure. This is all to say that we can assume $m(E) < \infty$ without loss of generality.
+
+    Also by Theorem 1.18, we can always find an open set $U$ containing $E$ such that $m(U) \le m(E) + \epsilon$ for any $\epsilon > 0$. Any open set, can be represented by a countable union of disjoint open intervals, so $U = \bigcup_i I_i$. For each such interval
+    \begin{align*}
+        m(I_i) = m(I_i \setminus E) + m(I_i \cap E) \le m(I_i \setminus E) + \alpha m(I_i)
+    \end{align*}
+    implying that for the entire open set $U$
+    \begin{align*}
+        (1-\alpha)m(U) = \sum_{i=1}^\infty (1-\alpha)m(I_i) \le \sum_{i=1}^\infty m(I_i \setminus E) = m\big(\bigcup_i(I_i \setminus E)\big) = m(U\setminus E) < \epsilon
+    \end{align*}
+    If we let $\epsilon = (1-\alpha)\mu(E)$, this implies that $m(U) < m(E)$. But subadditivity of $m$ means that $U \supset E$ implies $mu(U) \ge m(E)$, so we have a contradiction. Thus it must be the case that for any $\alpha < 1$, there exists an open intervals $I$ such that $m(E \cap I) > \alpha m(I)$.
+
+    \item[2.3] Given that $\{f_n\}$ is a sequence of measurable functions on X, prove that $\{x: \text{lim }f_n(x) \text{ exists}\}$ is a measurable set.
+
+    \textbf{Proof:} Assume $f_n:X \rightarrow \overline{\mathbb{R}}$. From Proposition 2.7 in Folland, we know that when $f = \text{lim } f_n(x)$ exists, $f = g_3 = g_4$ where $g_3(x) = \underset{n \rightarrow \infty}{\text{ lim sup}} = f_n(x)$ and $g_4(x) = \underset{n \rightarrow \infty}{\text{ lim inf}} = f_n(x)$. We also know that $g_3$ and $g_4$ are measurable functions.
+
+    \textbf{Claim:} Fixing $a \in \overline{\mathbb{R}}$, the function $h$ such that $h(x) = a$ when $g_3(x) = g_4(x) = \pm \infty$ and $h = g_3 - g_4$ otherwise, is also measurable. 
+
+    \textbf{Proof:} $h^{-1}(a) = \{-\infty, \infty\} \in \mathcal{M}$. Since $\{a\} \in \mathcal{B}_{\overline{R}}$, we can decompose any set $E \in \mathcal{B}_{\overline{R}}$ into $E = (E \setminus \{a\}) \cup \{a\}$, both of which are Borel sets. Thus
+    \begin{align*}
+        h^{-1}(E) = h^{-1}((E \setminus \{a\}) \cup \{a\}) = h^{-1}((E \setminus \{a\})) \cup h^{-1}(\{a\})
+    \end{align*}
+    which is a union of measurable sets. Thus $h$ is measurable. $_\square$
+
+    Let $a > 0$. Then the set $F = h^{-1}((0,\infty])^c$ is measurable. The set $I = (g_3^{-1}(\infty) \cap g_4^{-1}(\infty)) \cup (g_3^{-1}(-\infty) \cap g_4^{-1}(-\infty))$ is also measurable and so
+    \begin{align*}
+        \{x: \text{lim }f_n(x) \text{ exists}\} = F \cup I
+    \end{align*}
+    is measurable as well.
+
+    If we instead have $f: X \rightarrow \mathbb{C}$, then corollary 2.5 tells us that $f$ is measurable iff Re $f$ and Im $f$ are measurable. Thus the sequences $\{\text{Re }f_n\}$ and $\{\text{Im }f_n\}$ are composed of measurable functions, implying that the sets on which their limlits are defined are also measurable. Since
+    \begin{align*}
+        \{x: \text{lim }f_n(x) \text{ exists}\} = \{x: \text{lim Re }f_n(x) \text{ exists}\} \cap \{x: \text{lim Im }f_n(x) \text{ exists}\}
+    \end{align*}
+    this means that $\{x: \text{lim }f_n(x) \text{ exists}\}$ is measurable as well.
+
+    \item[2.4] If $f:X \rightarrow \overline{\mathbb{R}}$ and $f^{-1}((r,\infty]) \in \mathcal{M}$ for each $r \in \mathbb{Q}$, then $f$ is measurable.
+
+    \textbf{Proof:} Any set $(a,\infty]$ can be approximated by a sequence $\{a_n\} \subset (\mathbb{Q} \cap (a,\infty])$ such that $f^{-1}((a,\infty]) = \bigcup f^{-1}((a_n,\infty])$ and so is a member of $\mathcal{M}$. Such intervals are enough to generate $\mathcal{B}_{\overline{\mathbb{R}}}$ so $f$ is measurable. 
+
+    \item[2.9] We're given that $f:[0,1] \rightarrow [0,1]$ is the Cantor function and $g(x) = f(x) + x$.
+    \begin{enumerate}
+        \item \textbf{Claim:} $g$ is a bijection from [0,1] to [0,2], and $h = g^{-1}$ is continuous.
+        
+        \textbf{Proof:}
+        We know that $f$ is continuous and non-decreasing and that $x$ (the identity function) is continuous and increasing. Thus $g$ is continuous and increasing. As $g(0) = 0$ and $g(1) = 2$, $g$ must be a bijection and $h = g^{-1}$ exists.
+
+        Given that $h^{-1} = g$, for any open interval $(a,b)$, $h^{-1}(a,b) = g(a,b) = (g(a),g(b))$. Since any open set is just a countable union of open intervals, $h$ is continuous.
+
+        \item \textbf{Claim:} If $C$ is the Cantor set, $m(g(C)) = 1$.
+
+        \textbf{Proof:} By definition, $C = [0,1] \setminus \bigcup_n E_n$ where $\{E_n\}$ is a countable disjoint sequence of open intervals. $f$ is constant valued on each interval $E_n$ such that $g|E_n$ becomes a translation. Theorem 1.21 in Folland then tells us that $m(g(E_n)) = m(E_n)$ for all $n \in \mathbb{N}$. Thus
+        \begin{align*}
+            m(g([0,1] \setminus C)) = m(g(\bigcup_n E_n)) = m(\bigcup_n E_n) = m([0,1] \setminus C) = 1
+        \end{align*} 
+        Since $g$ is strictly increasing, $g(C)$ and $g([0,1]\setminus C)$ are disjoint. So
+        \begin{align*}
+            m(g(C)) + m(g([0,1]\setminus C)) = m([0,2]) = 2 
+        \end{align*}
+        implying $m(g(C)) = 1$.
+
+        \item \textbf{Claim:} Given that $g(C)$ contains a Lebesgue nonmeasurable set $A$ and $B = g^{-1}(A)$, $B$ is Lebesgue measurable but not Borel.
+
+        \textbf{Proof:} $A \subset g(C)$ so $B \subset C$. $C$ is a null set and $m$ is a complete measure so $B$ is Lebesgue measurable.
+        However, if $B$ were Borel-measurable, then $g = (g^{-1})^{-1}$ is a continuous function and so Borel-measurable. This would imply that $A$ were Borel-measurable which it is not. Thus $B$ can't be Borel.
+
+        \item \textbf{Claim:} There exists a Lebesgue measurable function $F$ and a continuous function $G$ on $\mathbb{R}$ such that $F \circ G$ is not Lebesgue measurable.
+
+        \textbf{Proof:} Define $F(x) = 1$ if $x \in B$ and $F(x) = 0$ otherwise. Also let $G(x) = g^{-1}$. $F$ is Lebesgue measurable since it's inverses are either the $\emptyset$, $B$, or $X$. We already have shown that $G$ is continuous. Therefore
+        \begin{align*}
+            (F \circ G)^{-1}((0,\infty)) = G^{-1}(B) = A
+        \end{align*}
+        and so $F \circ G$ is no Lebesgue measurable.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

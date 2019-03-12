@@ -1,0 +1,94 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245A: HW \#5}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{November 6, 2018}
+
+\begin{document}
+\begin{enumerate}
+    \item[2.20] If $f_n, g_n, f, g, \in L^1$, $f_n \rightarrow f$, and $g_n \rightarrow g$ a.e., $|f_n| \le g_n$, and $\int g_n \rightarrow \int g$, then $\int f_n \rightarrow \int f$.
+    
+    \textbf{Proof:} Proposition 2.12 tells us that given a measure $\mu$, for any $\overline{\mu}$-measurable function $f'$, we can find a $\mu$-measureable function $f$ such that $f' = f$\ $\overline{\mu}$-a.e. Functions which are $\mu$-measurable are also $\overline{\mu}$-measurable. Thus by proposition 2.11, we have that $f$ and $g$ are $\overline{\mu}$-measurable and so are $\mu$-measurable after a possible redefinition on a null set.
+
+    By taking real and imaginary parts it suffices to assume that all $f_n,g_,f,g$ are real-valued, in which case $g_n + f_n \ge 0$ a.e. and $g_n - f_n \ge 0$ a.e. We also have that $g_n + f_n \rightarrow g + f$. Thus by corollary 2.19 of Fatou's Lemma
+    \begin{align*}
+        \int g + \int f & = \int \text{lim inf} \int (g_n + f_n) \le \text{lim inf} \int(g_n + f_n) = \int g + \text{lim inf} \int f_n \\
+        \int g - \int f & = \int \text{lim inf} \int (g_n - f_n) \le \text{lim inf} \int(g_n - f_n) = \int g - \text{lim sup} \int f_n
+    \end{align*}
+    $g \in L^+$ therefore $\text{lim inf} \int f_n \ge \int f \ge \text{lim sup} \int f_n$, implying that $\int f = \text{lim} \int f_n$.
+    
+    \item[2.21] Suppose $f_n, f \in L^1$ and $f_n \rightarrow f$ a.e. Then $\int |f_n - f| \rightarrow 0$ iff $\int |f_n| \rightarrow \int |f|$.
+    
+    \textbf{Proof:} Assume $\int |f_n - f| \rightarrow 0$. Then by proposition 2.22 and the fact that $f_n - f \in L^1$, we have that
+    \begin{align*}
+        \Big| \int f_n \Big| - \Big| \int f \Big| \le \Big| \int f_n - \int f \Big| = \Big|\int f_n - f \Big| \le \int |f_n - f|.
+    \end{align*}
+    Since we can bound the right hand side of the inequality with arbitrary $\epsilon > 0$ by taking $n$ sufficiently large, it follows that $\int |f_n| \rightarrow \int |f|$
+
+    Likewise, let $g_n = |f_n| + |f| $, $g = 2|f|$, $h_n = |f_n - f|$, and $h = 0$ such that $g_n \rightarrow g$ a.e. and $h_n \rightarrow h$ a.e. Then $g_n,h_n,g,h \in L^1$, and
+    \begin{align*}
+        |h_n| \rightarrow |f_n - f| \le |f_n| + |f| = g_n \in L^1.
+    \end{align*} 
+    If, in addition, $\int |f_n| \rightarrow \int |f|$ such that $\int g_n \rightarrow \int g$, we meet all the criteria of the generalized Dominated Convergence Theorem. Thus we can infer that
+    \begin{align*}
+        \int h_n = \int h \implies \int |f_n - f| \rightarrow 0.
+    \end{align*}
+
+    \item[2.32] Suppose $\mu(X) < \infty$. If $f$ and $g$ are complex-valued measurable functions on $X$, define
+    \begin{align*}
+        \rho(f,g) = \int \frac{|f - g|}{1 + |f - g|}\,d\mu.
+    \end{align*}
+    Then $\rho$ is a metric on the space of measurable functions if we identify functions that are equal a.e., and $f_n \rightarrow f$ with respect to this metric iff $f_n \rightarrow f$ in measure.
+
+    \textbf{Proof:} The integrand of $\rho(f,g)$ is continuous and so is a measurable function. It is also non-negative and real-valued, so $\rho(f,g) \ge \int 0 = 0$ for any $f,g$. Also by prop 2.23b, $\rho(f,g) = 0 $ iff it's integrand equals zero a.e. This only occurs when $f = g$ a.e. That $|f - g| = |g - f|$ implies symmetry of $\rho(f,g)$. Subbadditivity follows from that fact that $|f - h| < |f - g| + |g - h|$ such that
+    \begin{align*}
+        & |f - h| + |f - h|\big(|f - g| + |g - h|\big) < |f - g| + |g - h| + |f - h|\big(|f - g| + |g - h|\big) \\ 
+        & \implies |f - h| \big(1 + |f - g| + |g - h|\big) < \big(1 + |f - h|\big)\big(|f - g| + |g - h|\big) \\
+        & \implies \frac{|f - h|}{1 + |f - g|} < \frac{|f - g| + |g - h|}{1 + |f - g| + |g - h|} < \frac{|f - g|}{1 + |f - g|} + \frac{|g - h|}{1 + |g - h|}
+    \end{align*}
+    And since the resulting composite functions are all real-valued and measurable, we have by the basic properties of the Lebesgue integral that
+    \begin{align*}
+        \rho(f,h) = \int \frac{|f - h|}{1 + |f - h|} < \int \frac{|f - g|}{1 + |f - g|} + \int \frac{|g - h|}{1 + |g - h|} = \rho(f,g) + \rho(g,h)
+    \end{align*}
+    So $\rho$ is a metric.
+
+    Regarding the convergence of $\{f_n\}$, assume that $f_n \rightarrow f$ with respect to $\rho$ and let \\ $E_{n,\epsilon} = \{x: |f_n(x) - f(x)| > \epsilon\}$. Then
+    \begin{align*}
+        \rho(f_n, f) = \int \frac{|f_n - f|}{1 + |f_n - f|} \ge \int_{E_{n,\epsilon}} \frac{|f_n - f|}{1 + |f_n - f|} \ge \frac{\epsilon}{1 + \epsilon}\mu(E_{n,\epsilon})
+    \end{align*}
+    implying that $\mu(E_{n,\epsilon}) \le \frac{1 + \epsilon}{\epsilon}\rho(f_n,f) \rightarrow 0$ such that $\mu(E_{n,\epsilon}) \rightarrow 0$. Thus $f_n \rightarrow f$ in measure.
+
+    Likewise assume that $f_n \rightarrow f$ in measure. Also note that $\frac{|f_n - f|}{1 + |f_n - f|} < 1$ for any $n$. Then for any $E_{n,\epsilon}$ we have that
+    \begin{align*}
+        \rho(f_n,f) = \int \frac{|f_n - f|}{1 + |f_n - f|} \le \int \chi_{E_{n,\epsilon}} + \frac{\epsilon}{1 + \epsilon} \chi_{E_{n,\epsilon}^c} = \mu(E_{n,\epsilon}) + \frac{\epsilon}{1 + \epsilon} \mu(E_{n,\epsilon}^c) \label{eqn:star} \tag{$\star$}
+    \end{align*}
+    But $\mu(E_{n,\epsilon}) \rightarrow 0$ as $n$ increases and $\mu(E_{n,\epsilon}^c) \le \mu(X) < \infty$ such that we can make the right-hand-side of \eqref{eqn:star} arbitrarily small by letting $n \rightarrow \infty$ and $\epsilon \rightarrow 0$. Thus $\rho(f_n, f) \rightarrow 0$ or $f_n \rightarrow f$ with respect to $\rho$.
+
+
+    \item[2.40] In Egoroff's theorem, the hypothesis ``$\mu(X) < \infty$'' can be replaced by ``$|f_n| \le g$ for all n, where $g \in L^1(\mu)$.''
+     
+    \textbf{Proof:} Given a sequence $\{f_n\}$ such that $f_N \rightarrow f$ a.e., assume that there exists $g \in L^1$ such that $|f_n| \le g$ for all $n$. Then it also holds that $|f_n -    f| \le 2g$ and by the dominated convergence theorem, we have that $0 = \int |f - f| = \text{lim} \int |f_n - f|$. But if this is the case then for any $\epsilon >  0$, there exists $n$ such that $\int |f_n - f| < \epsilon$.
+
+    Let $E_n(k) = \bigcup_{m=n}^\infty \{x: |f_m - f| > k^{-1}\}$, such that $E_n(k)$ is decreases in size as $n \rightarrow \infty$ and $\bigcap_{n=1}^\infty E_n(k) = \emptyset$. Then $k^{-1}\mu(E_n(k)) \le \int |f_n - f| < \epsilon$ and, since $\epsilon$ is arbitrary, this means that $\mu(E_n(k)) \rightarrow 0$ as $n \rightarrow \infty$. The reset of the proof follow as in Folland.
+    
+    \item[2.41] If $\mu$ is $\sigma$-finite and $f_n \rightarrow f$ a.e., there exists measurable $E_1, E_2, \cdots \subset X$ such that \\ $\mu((\bigcup_1^\infty E_j)^c) = 0$ and $f_n \rightarrow f$ uniformly on each $E_j$.
+    
+    \textbf{Proof:} As $\mu$ is $\sigma$-finite, there exists some collection $\{A_i\}$ such that $\mu(A_i) < \infty$ for all $i$ and $X = \bigcup_i A_i$. Then by Egoroff's theorem, for any $\epsilon > 0$ we can find a collection $\{F_i\}$ such that $F_i \subset A_i$, $\mu(F_i) < \epsilon$, and $f_n \rightarrow f$ uniformly on each $F_i^c$. Letting $E_i = F_i^c$, we just need to show that $\mu((\bigcup_1^\infty E_i)^c) = 0$. But
+    \begin{align*}
+        \mu((\bigcup_1^\infty E_i)^c) = \mu(\bigcap_1^\infty E_i^c) = \mu(\bigcap_1^\infty F_i) < \mu(F_i) < \epsilon
+    \end{align*}
+    and we can make $\epsilon$ as small as we want such that $\mu((\bigcup_1^\infty E_i)^c) = 0$ must hold.
+    
+    \item[2.42] Let $\mu$ be a counting measure on $\mathbb{N}$. Then $f_n \rightarrow f$ in measure iff $f_n \rightarrow f$ uniformly.
+    
+    \textbf{Proof:} If $f_n \rightarrow f$ in measure then $f_n \rightarrow f$ everywhere. Otherwise, $\mu(\{x: |f_n(x) - f(x)| > \epsilon\}) \ge \epsilon \chi_{\{i\}} = \epsilon$ for some $\epsilon > 0$ and $i \in \mathbb{N}$, invalidating our assumption. The counting measure is also $\sigma$-finite since we can represent $\mathbb{N}$ as the union of sets of a single integer $\{i\}$, each set having measure equal to 1 and the compliment of their union being the empty set. As such, we can apply the result of problem 2.41 to determine that $f_n \rightarrow f$ uniformly.
+
+    Now if $f_n \rightarrow f$ uniformly then for any $k \in \mathbb{N}$ there exists $n_k$ such that $|f_n(x) - f(x)| < k^{-1}$ for all $x$ and $n > n_k$. For any $\epsilon > 0$ there exists $k$ such that $\epsilon > k^{-1}$ and so \\ $\mu(\{x: |f_n(x) - f(x)| > \epsilon\}) \le \mu(\{x: |f_n(x) - f(x)| > k^{-1}\}) = 0$ for any $n > n_k$. This means that $f_n \rightarrow f$ in measure.
+    
+\end{enumerate}
+\end{document}
