@@ -1,0 +1,77 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245B: HW \#4}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{February 7, 2019}
+
+\begin{document}
+\begin{enumerate}
+    \item[18.10)] \textbf{Claim:} Let $f_n$ be a sequence of continuous functions on $\mathbb R$ that converge at every point. Prove there exists an interval and a number $M$ such that $\text{sup}_n \vert f_n \vert$ is bounded by $M$ on that interval.
+    
+    \textbf{Proof:} We're given that the sequence $\langle f_n \rangle$ converges at every point. For any $m \in \mathbb N$ we can form the set $A_m = \{x:\text{sup}_n \vert f_n \vert > m\}$ which is just the union of open sets $\bigcup_n \vert f_n \vert^{-1}((m,\infty))$ which is itself open. If there is no open interval in $X$ such that  $\text{sup}_n \vert f_n \vert \le m$, this means there is no open set in $X$ satisfying this condition, implying  that $A_m$ is dense in $X$. If this holds for every $m \in \mathbb N$, then the Baire Category Theorem tells us that $\bigcap_{m \in \mathbb N} A_m = \{x:\text{sup}_n \vert f_n \vert = \infty\}$ is dense in $X$, contradicting our assumption on the convergence of $\langle f_n \rangle$.
+    
+    \item[4.76)] Given that $X$ is normal and second countable let $\mathcal{B}$ represent a countable basis. For every pair $(U,V) \in \mathcal{B} \times \mathcal{B}$ satisfying $\overline{U} \subset V$, let $f_{U,V} \in C(X,I)$ be some function defined using Urysohn's Lemma for which $f_{U,V}(\overline{U}) = 0$ and $f_{U,V}(\overline{V}^c) = 1$. Let $\mathcal{F} \subset C(X,I)$ be a set of functions $f_{U,V}$ defined in this manner, which will be countable since $\mathcal{B} \times \mathcal{B}$ is countable.
+    
+    Now for any closed set $A$ and point $x \in A^c$ we know there exists some basis element $V \subset A^c$ containing $x$. Since $X$ is normal we can find open sets $B_1, B_2$ containing $V^c$ and $x$ respectively. But since $B_2$ is open, it must also contain a basis element $U$ containing $x$. Thus $x \in U \subset \overline{U} \subset B_2 \subset V$ and there is a continuous function $f_{U,V} \in \mathcal{F}$ which separates $x$ and $A$.     
+    
+    \item[5.3)] Define $T: \mathcal{X} \rightarrow \mathcal{Y}$ by $Tx = \text{lim } T_n$. Clearly $T$ is a linear map since for $a,b \in K$ we have
+    \begin{align*}
+        T(ax + by) = \text{lim}\ T_n(ax+by) = a(\text{lim } T_nx) + b(\text{lim } T_ny) = a(Tx) + b(Ty)
+    \end{align*}
+    It is also bounded since
+    \begin{align*}
+        \Vert Tx \Vert = \Vert \text{lim } T_n x \Vert = \text{lim } \Vert T_n x \Vert \le \text{lim } \Vert T_n \Vert \Vert x \Vert
+    \end{align*}
+    where $\text{lim } \Vert T_n \Vert < \infty$ since all $\text{lim } \Vert T_n x \Vert < \infty$. Lastly we have that
+    \begin{align*}
+        \text{lim } \Vert T_n - T \Vert = \underset{n \rightarrow \infty}{\text{lim}} \text{ sup } \{\Vert T_nx - Tx \Vert: \Vert x \Vert = 1\} = \text{ sup } \{\Vert \text{lim } T_nx - Tx \Vert: \Vert x \Vert = 1\} = 0
+    \end{align*}
+    meaning that $\Vert T_n - T \Vert \rightarrow 0$ and thus $L(\mathcal{X},\mathcal{Y})$ is complete.
+    
+    \item[5.8)] To verify that $\Vert \mu \Vert = \vert \mu \vert (X)$ is a norm note that any is non-negative and only equals 0 on sets of measure zero. Since any complex measure can be expressed as $\mu = \int f \,d\nu$ we have that $\Vert \alpha \mu \Vert = \int \vert \alpha f \vert \, d\nu = \vert \alpha \vert \int \vert f \vert \,d\nu = \vert \alpha \vert \Vert \mu \Vert$. Also, proposition 3.14 in Folland tells us that for any two measures,
+    \begin{align*}
+        \Vert \mu_1 + \mu_2 \Vert = \vert \mu_1 + \mu_2 \vert (X) \le \vert \mu_1 \vert (X) + \vert \mu_2 \vert (X).
+    \end{align*}
+    So $\Vert \cdot \Vert$ is a norm.
+
+    Given an absolutely convergent series $\langle \mu_n \rangle \subset \mathcal{M}(X)$ for which $\sum \Vert \mu_n \Vert < \infty$ it follows that any series $\sum \mu_n(E)$ converges absolutely on any measurable set $E$ since it is bounded above by $\sum \vert \mu_n \vert (X)$. Let $\mu = \sum \mu_n$. Then $\mu$ is non-negative and $\mu(\emptyset) = 0$. To show that countable additivity holds, assume we have a countable disjoint sequence of measurable sets $\langle E_k \rangle \subset X$ for which $\mu(E) = \bigcup E_n$. Tonelli's theorem tells us that $\mu(E)$ is bounded since
+    \begin{align*}
+        \sum_k \vert \mu(E_k) \vert = \sum_k \sum_n \vert \mu_n(E_k) \vert = \sum_n \sum_k \vert \mu_n(E_k) \vert \le \sum_n \sum_k \vert \mu_n \vert (E_k) = \sum_n \vert \mu_n(E) \vert \le \sum_n \Vert \mu \Vert
+    \end{align*}
+    Then we can apply Fubini's theorem to show that
+    \begin{align*}
+        \sum_k \mu(E_k) = \sum_{n,k} \mu_n(E_k) = \sum_n \mu_n(E) = \mu(E).
+    \end{align*}
+    So $\mu \in \mathcal{M}(X)$.
+
+    I'm not sure about this last part. Need to show that the series $\sum \mu_n$ converges to $\mu$?
+
+    \item[5.27)] Let $\langle r_j \rangle_1^\infty$ be an enumeration of the rational numbers and given some $n \in \mathbb N$ let $I_j^{(n)}$ be the interval centered at $r_j$ of length $n^{-1}2^{-j}$. Then the set $U_n = \cup_1^\infty I_j^{(n)}$ is an open and dense set in $\mathbb R$ of measure less than $n^{-1}$. We can see that $U_n^c$ is nowhere dense since if it contained an open set, it would also have to contain an open interval and thus some rational number. If we let $U = \cap_1^\infty U_n$, then $U$ has measure zero and it's compliment is $\cup_1^\infty U_n^c$, a countable unions of nowhere dense sets. This set is by definition meager.
+         
+    \item[5.42)] \begin{enumerate}
+        \item First we need to find the closure of $E_n$. Assume we have a sequence $\langle f_i \rangle \subset E_n$ such that $f_i \rightarrow f$. For each $f_i$ there exists a point $x_i \in [0,1]$ such that $\vert f_i(x) - f_i(x_i) \vert \le n \vert x - x_i \vert$ for all $x \in [0,1]$. The sequence formed from these points exists in a compact set and so has a convergence subsequence. Let $x_0$ be the limit of this subsequence. Then we have that for any $\epsilon > 0$ there always exists an index $m$ for which $\Vert f - f_m \Vert_u < \epsilon$ and $x_0$ satisfies $\vert f_m(x) - f_m(x_0) \vert < n \vert x - x_0 \vert$ for all $x \in [0,1]$. This means that
+        \begin{align*}
+            \vert f(x) - f(x_0) \vert & \le \vert f(x) - f_m(x) \vert + \vert f_m(x) - f_m(x_0) \vert + \vert f_m(x_0) - f(x_0) \vert \\
+            & \le \epsilon + n \vert x - x_0 \vert + \epsilon
+        \end{align*}
+        and since $\epsilon$ was arbitrary, we end up with the desired inequality $\vert f(x) - f(x_0) \vert \le n \vert x - x_0 \vert$ for all $x \in [0,1]$. So $E_n$ itself is actually closed.
+
+        To show that it has empty interior, assume otherwise. Then there is some $g \in E_n^o$ and $\epsilon > 0$ such that $\mathcal{B}_\epsilon(g) \subset E_n^o$. We know that $g$ can be uniformly approximated by piecewise linear functionals having slopes of magnitude greater than $2n$ everywhere. This means that there is a function $h \in C([0,1])$ such that $\Vert h - g \Vert_u < \epsilon$ with slope greater than $2n$ or less than $-2n$. But then for any point $x_0 \in [0,1]$ we can always find a point $x_1 \in [0,1]$ such that $\vert h(x_1) - h(x_0) \vert > 2n \vert x - x_0 \vert$. So $h \ne E_n$ and there is no open set contained within $E_n$.
+        
+        \item If a function $f \in C([0,1])$ is anywhere differentiable then it contains at least one point $x_0 \in [0,1]$ such that for any $\epsilon > 0$ there exists a $\delta > 0$ such that
+        \begin{align*}
+            \frac{\vert f(x) - f(x_0) \vert}{\vert x - x_0 \vert} < \epsilon \quad \text{for all} \quad x \in \mathcal{B}_\delta(x_0).
+        \end{align*}
+        Since any such $f$ has a compact domain. We know that it's image is compact and hence bounded. This means $\alpha = \Vert f \Vert_u$ is finite giving us another bound
+        \begin{align*}
+            \frac{\vert f(x) - f(x_0) \vert}{\vert x - x_0 \vert} < \frac{\alpha}{\delta} \quad \text{for all} \quad x \in [0,1] \setminus \mathcal{B}_\delta(x_0).
+        \end{align*}
+        So any continuous function $f$ that is somewhere differentiable is a member of any set $E_n$ for which $n > \text{max }\{\epsilon,\frac{\alpha}{\delta}\}$ given a fixed $\epsilon$ and $\delta$. This means that the set of all functions that are somewhere differentiable, let's call it $D$, is a subset of $\cup E_n$. But then $D$ is meager as it is the subset of a meager set. And so, the set of nowhere differentiable functions must be residual in $C([0,1])$.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

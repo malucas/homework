@@ -1,0 +1,127 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245B: HW \#5}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{February 14, 2019}
+
+\begin{document}
+\begin{enumerate}
+    \item [5.9] \begin{enumerate} \item Given some $f \in C([0,1])$, if $f \in C^{(k)}([0,1])$ then $f$ is $k$ times continuously differentiable on $(0,1)$ and one-sided derivatives exist at 0 and 1 for $f^{(j)}$ where $j \in \{0,\dots,k-1\}$. Conversely if $f$ is $k$ times continuously differentiable on $(0,1)$ and $\text{lim}_{x \searrow 0} f^{(j)}(x)$ and $\text{lim}_{x \nearrow 1} f^{(j)}(x)$ exist for $j \le k$ then we can show that $f^{(k)} \in C^{(k)}([0,1])$ as follows.
+    
+    Assume $f^{(j-1)}$ is continuous on $[0,1]$ and let $\alpha = \text{lim}_{x \searrow 0} f^{(j)}(x)$, then for any $\epsilon > 0$ we have $\delta > 0$ such that $\vert f^{(j)}(x) - \alpha \vert \le \epsilon$ for all $x \le \delta$. The mean value theorem then tells us that
+    \begin{align*}
+        \text{Re}(f^{(j)}(c)) = \text{Re}(\frac{f^{(j-1)}(x) - f^{(j-1)}(0)}{x})
+    \end{align*}
+    for some $c \in (0,x)$ implying that
+    \begin{align*}
+        \vert \text{Re}(\frac{f^{(j-1)}(x) - f^{(j-1)}(0)}{x}) - \text{Re}(\alpha) \vert = \vert \text{Re}(f^{(j)}(c)) - \text{Re}(\alpha) \vert \le \epsilon.
+    \end{align*}
+    In the same way, we can determine that
+    \begin{align*}
+        \vert \text{Im}(\frac{f^{(j-1)}(x) - f^{(j-1)}(0)}{x}) - \text{Im}(\alpha) \vert = \vert \text{Im}(f^{(j)}(c)) - \text{Im}(\alpha) \vert \le \epsilon
+    \end{align*}
+    where $\epsilon$, and hence $c$, can be made to be arbitrarily close to 0. Thus $f^{(j)}(0) = \alpha$. 
+    
+    An analogous argument can be made to show that $f^{(j)}(1) = \text{lim}_{x \nearrow 1} f^{(j)}(x)$ and that $f^{(j)} \in C([0,1])$ as a result. By induction we have that $f \in C^{(k)}([0,1])$.
+
+    \item We see that $\Vert \cdot \Vert$ is a norm by first noting that $\Vert f \Vert$ is the sum of non-negative values and hence non-negative. Also $\Vert 0 \Vert = 0$ and if $f \ne 0$ then $\Vert f \Vert \ge \Vert f \Vert_u > 0$. Furthermore,
+    \begin{align*}
+        \Vert f + g \Vert & = \sum_0^k \Vert f^{(j)} + g^{(j)} \Vert_u \le \sum_0^k \Vert f^{(j)} \Vert_u + \Vert g^{(j)} \Vert_u = \Vert f \Vert + \Vert g \Vert \\ 
+        \Vert \lambda f \Vert & = \sum_0^k \Vert \lambda f^{(j)} \Vert_u = \sum_0^k \vert \lambda \vert \Vert f^{(j)} \Vert_u = \vert \lambda \vert \sum_0^k \Vert f^{(j)} \Vert_u = \vert \lambda \vert \Vert f \Vert
+    \end{align*}
+
+    Assume that we have a sequence $\langle f_n \rangle \subset C^1([0,1])$ such that $f_n \rightarrow f$ and $f_n' \rightarrow g$ uniformly. We know, since $C([0,1])$ is closed that $f$ and $g$ are continous. We also have that, for $n > N$, $\Vert f_n' - g \Vert_u \epsilon$ such that $\vert f_n' \vert \le \vert g \vert + \epsilon$ for all $n > N$. Thus we can apply the dominated convergence theorem to see
+    \begin{align*}
+        f(x) - f(0) = \lim f_n(x) - f_n(0) = \lim \int_0^x f_n' = \int_0^x \lim f_n' = \int_0^x g.
+    \end{align*}
+    Thus $f' = g$ and $f \in C^1([0,1])$. 
+    
+    A generalization of this can be used to perform an induction. Take some sequence $\langle f_n \rangle \subset C^k([0,1])$ which is Cauchy, and let's assume that $C^{(k-1)}([0,1])$ is a complete space wrt $\Vert \cdot \Vert$. Our sequence is then also Cauchy in $C^{(k-1)}([0,1])$ and converges to some $f \in C^{(k-1)}([0,1])$. Since $C([0,1])$ is complete, $\langle f_n^{(k)} \rangle$ also converges to some $g \in C([0,1])$. By our previous argument we know that $f^{(k)} = g$, hence $f \in C^k([0,1])$. Furthermore $f_n \rightarrow f$ in $C^k([0,1])$ since $\Vert f_n - f \Vert = \sum_0^{(k-1)} \Vert f_n^{(j)} - f^{(j)} \Vert_u + \Vert f_n^{(k)} - g^{(k)} \Vert_u$ which is the sum of two values which converge to 0 as $n \rightarrow \infty$.
+    \end{enumerate}
+
+    \newpage
+
+    \item [5.15] We're given that $\mathcal{X}$ and $\mathcal{Y}$ are normed vector spaces with $T \in L(\mathcal{X},\mathcal{Y})$ and $\mathcal{N}(T) = \{x \in \mathcal{X}: Tx = 0\}$.
+    
+    \begin{enumerate} 
+        \item We see that $\mathcal{N}(T)$ is a subspace of $\mathcal{X}$ since it includes the zero vector and for any two $x,y \in \mathcal{N}(T)$, $T(x+y) = Tx+Ty = 0$ and so $\mathcal{N}(T)$ is closed under vector addition.
+        
+        Assume we have a convergent sequence $\langle x_n \rangle \subset \mathcal{X}$ such that $x_n \rightarrow x$. Then
+        \begin{align*}
+            \Vert Tx \ Vert = \Vert T(x - x_n) \Vert \le C \Vert x - x_n \Vert
+        \end{align*}
+        where the last expression can be made arbitrarily small by picking $n$ large enough. Thus $Tx = 0$ and $x \in \mathcal{N}(T)$, meaning that $\mathcal{N}(T)$ is closed.
+
+        \item Since for any $x_\mathcal{N} \in \mathcal{N}(T)$ we have that $T(x + x_\mathcal{N}) = Tx + Tx_\mathcal{N} = Tx$, it follows that some $S$ exists such that $T = S \circ \pi$. We just define $S$ as $S(x\mathcal{N}(T)) = T(x)$, where $x$ is a representative element of $\mathcal{X}/\mathcal{N}(T)$. This is well defined since for $x\mathcal{N}(T) = y\mathcal{N}(T)$ we have $(x-y) \in \mathcal{N}(T)$ such that $T(x) = T(x) - T(x-y) = T(y)$. To show that $S$ is unique, note that $\pi$ is surjective and that if we had another map $R \in L(\mathcal{X}/\mathcal{N}(T), \mathcal{Y})$ such that $T = R \circ \pi$, then there would have to be some coset in $K \in \mathcal{X}/\mathcal{N}(T)$ such that $S(K) \ne R(K)$ such that $R \circ \pi \ne S \circ \pi = T$. So $S$ must be unique.
+        
+        Finally, exercise 12 tells us that for any $\epsilon > 0$ there exists $x \in \mathcal{X}$ such that $\Vert x \Vert = 1$ and $\Vert x + \mathcal{N}(T) \Vert \ge 1 - \epsilon$. Thus
+        \begin{align*}
+            \frac{\Vert S(x+\mathcal{N}(T)) \Vert}{\Vert x+\mathcal{N}(T) \Vert} \le \frac{\Vert T (x + x_\mathcal{N}(T)) \Vert}{1 - \epsilon} \le \frac {\Vert T \Vert \Vert x \Vert}{1-\epsilon} = \frac {\Vert T \Vert}{1-\epsilon}
+        \end{align*}
+        which implies $\Vert S \Vert \le \Vert T \Vert$. But we also have that $\Vert T \Vert = \Vert S \circ \pi \Vert \le \Vert S \Vert \Vert \pi \Vert = \Vert S \Vert$ and so $\Vert S \Vert = \Vert T \Vert$.
+    \end{enumerate}
+
+    \item [5.20] If $\mathcal{M}$ has finite dimension, let $\{x_1,\dots,x_n\}$ be a basis for it. For any $i \in \{1,\dots,n\}$ we can define a continuous linear functional $f_i$ on $\mathcal{M}$ by $f_i(x) = \lambda_ix$ such that $\vert f_i(x) \vert \le \vert \lambda_i \vert x_i$ for all $x \in \mathcal{M}$. $\vert \lambda_i \vert x_i$ is a semi-norm so we can apply the Hahn-Banach Theroem to generate bounded linear functions $F_i$ on $\mathcal{X}$ for which $F_i \vert \mathcal{M} = f_i$. 
+    
+    The kernel of any linear functional is a closed set so let $\mathcal{N} = \cap_1^n\text{ker}(F_i)$ which is a closed. Then $\mathcal{M} \cap \mathcal{N} = \{0\}$ since $\mathcal{M} \cap (\cap_1^n \text{ker}(F_i)) = \cap_1^n \text{ker}(f_i) = \{0\}$. To show that $\mathcal{M} + \mathcal{N} = \mathcal{X}$ note that for any $x \in \mathcal{X}$ we have $\sum F_i(x)x_i \in \mathcal{M}$. But $F_j(x - \sum F_i(x)x_i) = F_j(x) - F_j(x)(F_j(x_j)) = 0$ such that $x - \sum F_i(x)x_i \in \mathcal{N}$ and $x = m + n$ for some $m \in \mathcal{M}$ and $n \in \mathcal{N}$.
+    
+    \item [5.21] We're given $\alpha: \mathcal{X}^* \times \mathcal{Y}^* \rightarrow (\mathcal{X} \times \mathcal{Y})^*$ defined by $\alpha(f,g)(x,y) = f(x) + g(y)$. Let $\alpha^{-1}: (\mathcal{X} \times \mathcal{Y})^* \rightarrow \mathcal{X}^* \times \mathcal{Y}^*$ be defined by $\alpha^{-1}(h)(x,y) = (h(x,0),h(0,y))$. Then 
+    \begin{align*}
+        \alpha^{-1}(h_1 + h_2) & = (h_{1x}+h_{2x},h_{1y}+h_{2y})) = \alpha^{-1}(h_1) + \alpha^{-1}(h_2)\\
+        \alpha^{-1}(\lambda h) & = (\lambda h_x, \lambda h_y) = \lambda(\alpha^{-1}(h))
+    \end{align*}
+    and also
+    \begin{align*}
+        \Vert \alpha^{-1} \Vert  = \underset{\Vert h \Vert = 1}{\text{sup}} \Vert (h_x,h_y) \Vert = \underset{\Vert h \Vert = 1}{\text{sup}} \Vert h_x \Vert + \Vert h_y \Vert \le 2 \Vert h \Vert
+    \end{align*}
+    so $\alpha^{-1}$ is linear and bounded.
+
+    Furthermore
+    \begin{align*}
+        \alpha \alpha^{-1} (h) = \alpha(h_x,h_y) = h_x + h_y = h \\
+        \alpha^{-1} \alpha (f,g) = \alpha^{-1}(f+g) = (f+g(x,0),f+g(0,y)) = (f,g)
+    \end{align*}
+    such that $\alpha^{-1}$ is a right and left inverse of $\alpha$, implying that $\alpha$ is bijective. Thus $\alpha$ is an isomorphism. To show that it is isometric, note that
+    \begin{align*}
+        \Vert \alpha(f,g) \Vert & = \Vert f + g \Vert = \underset{\Vert (x,y) \Vert = 1}{\text{sup}} \vert f(x)+g(y) \vert = \underset{\text{max}(\Vert x \Vert, \Vert y \Vert) = 1}{\text{sup}} \vert f(x)+g(y) \vert \\ & = \underset{\Vert x \Vert = 1}{\text{sup}} \vert f(x) \vert + \underset{\Vert y \Vert = 1}{\text{sup}} \vert g(y) \vert = \Vert f \Vert + \Vert g \Vert \\ & = \Vert (f,g) \Vert
+    \end{align*}
+
+    \item [5.22] \begin{enumerate}
+        \item Given $T \in L(\mathcal{X}, \mathcal{Y})$ and $T^\dagger: \mathcal{X}^* \rightarrow \mathcal{Y}^*$ defined by $T^\dagger f = f \circ T$, we know that $T^\dagger$ is linear since it is the composition of linear functions. Also
+        \begin{align*}
+            \Vert T^\dagger \Vert = \underset{\Vert f \Vert = 1}{\text{sup}}\Vert T^\dagger f \Vert \le \underset{\Vert f \Vert = 1}{\text{sup}} \Vert f \Vert \Vert T \Vert = \Vert T \Vert
+        \end{align*}
+        So $T^\dagger \in L(\mathcal{X}^*, \mathcal{Y}^*)$. 
+
+        For any $\epsilon < \Vert T \Vert $ we can find an $x \in \mathcal{X}$ such that $\Vert T \Vert - \epsilon < \Vert Tx \Vert$. We also have, by Prop 5.8, that there exists some $f \in \mathcal{Y}^*$ such that $\Vert f \Vert = 1$ and  $f(Tx) = \Vert Tx \Vert$. Thus
+        \begin{align*}
+            \Vert T \Vert - \epsilon < \Vert Tx \Vert = f(Tx) < \Vert T^\dagger \Vert
+        \end{align*}
+        ans so $\Vert T \Vert = \Vert T^\dagger \Vert$.
+
+        \item Given that $\hat{x}: f \mapsto f(x)$ and $\widehat{Tx}: f\mapsto f(Tx)$ we have
+        \begin{align*}
+            T^{\dagger\dagger}(\hat{x})(f) = \hat{x} \circ T^\dagger f = (T^\dagger f)(x) = f(Tx) = \widehat{Tx}(f)
+        \end{align*}
+        Thus $T^{\dagger\dagger} \vert \widehat{\mathcal{X}} = T$. Since $\mathcal{X}$ and $\mathcal{Y}$ are identified with their natural images, this gives us our result.
+
+        \item s
+        
+    \end{enumerate}
+    
+    \item [5.25] Let $\langle f_n \rangle $ be a countable dense subset in $\mathcal{X}^*$. For each $n$ choose $x_n \in \mathcal{X}$ with $\Vert x_n \Vert = 1$ and $\vert f_n(x_n) \vert \ge \frac{1}{2} \Vert f_n \Vert$. Let $\mathcal{M}$ be the closure of the subspace generated by $\langle x_n \rangle$. If there exists $x \in \mathcal{X} \setminus \mathcal{M}$ then by Hahn-Banach we can construct a function $f \in \mathcal{X}^*$ for which $f(x) \ne 0$, $f(\{\mathcal{M}\}) = \{0\}$, and $\Vert f \Vert = 1$. But then since $\langle f_n \rangle$ is dense, there exists some $f_n$ for which $\Vert f - f_n \Vert < 1/3$ such that 
+    \begin{align*}
+        \Vert f \Vert \le \Vert f - f_n \Vert + \Vert f_n \Vert < \frac{1}{3} + 2 \vert f_n(x_n) \vert = \frac{1}{3} + 2 \vert f_n(x_n) - f(x_n) \vert < \frac{1}{3} + \frac{2}{3} = 1
+    \end{align*}
+    Here we have a contradiction and so it must hold that $\mathcal{X} = \mathcal{M}$. To find a countable dense subset in $\mathcal{X}$ note that any point $x \in \mathcal{X}$ can be approximated by some $\sum_{i=1}^n a_ix_i$ such that $\sum a_ix_i \in B_\epsilon(x)$. If $B$ is a countable dense subset of $K$ then for each $a_i$ we can find an element $b_{\beta_i}$ such that $\vert b_{\beta_i} - a_i \vert < \epsilon / n$. But then we have that
+    \begin{align*}
+        \Vert x - \sum b_{\beta_i}x_i \Vert \le \Vert x - \sum a_ix_i \Vert + \Vert \sum a_ix_i -\sum b_{\beta_i}x_i \Vert = 2\epsilon
+    \end{align*}
+    This means that the set $\{\sum_{i=1}^n b_i x_i: b_i \in B, n \in \mathbb N\}$ is dense in $\mathcal{X}$. It is countable since the set of all such linear combinations maps into $B^{\mathbb N}$.
+\end{enumerate}
+\end{document}

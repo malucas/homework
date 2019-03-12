@@ -1,0 +1,99 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245B: HW \#6}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{February 21, 2019}
+
+\begin{document}
+\begin{enumerate}
+\item [5.29] \begin{enumerate}
+    \item $\mathcal{X}$ contains $0$ and for $f,g \in \mathcal{X}$
+    \begin{align*}
+        \sum n \vert (f + \lambda g)(n) \vert \le \sum n \vert f(n) \vert + n \vert \lambda g(n) \vert \le \sum n \vert f(n) \vert + \vert \lambda \vert \sum \vert g(n) \vert
+    \end{align*}
+    meaning that $\mathcal{X}$ is a supspace of $\mathcal{Y}$. It is proper since the function $f(n) = n^{-1}$ is contained within $\mathcal{X}$ but not $\mathcal{Y}$. To show that $\overline{\mathcal{X}} = \mathcal{Y}$ not that for any $f \in \mathcal{Y}$ we can pick $N$ such that $\sum_{N+1}^\infty f(n) < \epsilon$. We can then define $g_\epsilon$ by
+    \begin{align*}
+        g_\epsilon(n) = \begin{cases} f(n) \text{ for } n \le N \\ 0 \text{ for } n > N \end{cases}
+    \end{align*}
+    which is contained in $\mathcal{X}$ as it is a finite sum. Furthermore,$\Vert f - g_\epsilon \Vert = \sum_{N+1}^\infty f(n) < \epsilon$ so $\mathcal{X}$ is dense in $\mathcal{Y}$. Since $\mathcal{X} \ne \overline{\mathcal{X}}$, we know that $\mathcal{X}$ is not complete.
+    
+    \item We want to show that $T$ maps closed sets to closed sets. This is equivalent to ensuring that for every convergent sequence $f_n \rightarrow f$ such that $Tf_n \rightarrow g$ for some $g \in \mathcal{Y}$, we have $Tf_n \rightarrow Tf$. We can then pick integers $N$ and $M$ such that $\sum_{N+1}^\infty nf(n) < \epsilon$, $\sum_{N+1}^\infty g(n) < \epsilon$, $\Vert Tf_m - g \Vert < \epsilon$ and $\Vert f - f_m \Vert < \epsilon/N$. This gives us
+    \begin{align*}
+        \sum_{n=1}^\infty \vert Tf(n) - Tf_m(n) \vert & \le \sum_{n=1}^{N} n \vert f(n) - f_m(n) \vert + \sum_{N+1}^\infty n \vert f(n) \vert \\
+        & + \sum_{N+1}^\infty \vert Tf_m(n) - g(n) \vert + \sum_{N+1}^\infty \vert g(n) \vert \\
+        & < N \Vert f - f_m \Vert + \epsilon + \Vert Tf_m - g \Vert + \epsilon = 4 \epsilon
+    \end{align*}
+    and so $Tf_n \rightarrow Tf$ meaning $T$ is closed.
+
+    $T$ is not bounded since we can define
+    \begin{align*}
+        f_k(n) = \begin{cases} n^{-2} \text{ for } n \le k \\ 0 \text{ for } n > k \end{cases}
+    \end{align*}
+    such that $f_k \in \mathcal{X}$ and $\Vert f_k \Vert < \sum_1^\infty n^{-2} < \infty$ but $\Vert Tf_k \Vert$ can be made arbitrarily large by taking $k$ large enough.
+
+    \item We know that $T$ is not bounded and so not continuous, hence $S = T^{-1}$ cannot be open. It is also obviously surjective since $T$ is defined on $\mathcal{X}$. Boundedness follows from
+    \begin{align*}
+        \Vert Sf \Vert = \sum_1^\infty \vert n^{-1}f(n) \vert \le \sum_1^\infty f(n) = \Vert f \Vert.
+    \end{align*}
+\end{enumerate}
+
+\item [5.37] Let $T^\dagger f = f \circ T$ and note that it is a linear map from $\mathcal{Y}^*$ to $\mathcal{X}^*$. Then for any $f \in \mathcal{Y}^*$ for which $\Vert f \Vert = 1$ we have
+\begin{align*}
+    \vert \widehat x(T^\dagger f) \vert = \vert f(Tx) \vert < \Vert f \Vert \Vert T(x) \Vert = \Vert Tx \Vert
+\end{align*}
+such that $\widehat x \circ T^\dagger \in L(\mathcal{Y}^*, K)$. We can subsequently form the set $\mathcal{A} = \{\widehat x \circ T^\dagger: \Vert x \Vert = 1\}$ and observe that 
+\begin{align*}
+    \sup_{A \in \mathcal{A}} \Vert Af \Vert = \sup_{\Vert x \Vert = 1} \Vert \widehat x \circ T^\dagger f \Vert \le \Vert Tx \Vert < \infty.
+\end{align*}
+The uniform boundedness principle then tells us that $\sup_{\Vert x \Vert = 1} \Vert \widehat x \circ T^\dagger \Vert < \infty$ for $\Vert f \Vert = 1$.
+
+By Hahn-Banach we can always find a function $f_0 \in \mathcal{Y}^*$ for which $\Vert f_0 \Vert = 1$ and $f_0(Tx) = \Vert Tx \Vert$. This means that for $\Vert x \Vert = 1$,
+\begin{align*}
+    \Vert Tx \Vert = f_0(Tx) = \widehat x \circ T^\dagger f_0 \le \sup_{\Vert x \Vert = 1} \Vert \widehat x \circ T^\dagger \Vert \Vert f_0 \Vert < \infty
+\end{align*}
+and so $T$ is bounded.
+
+\item [5.38] Given $Tx = \lim T_nx$, we see that $T$ is linear since
+\begin{align*}
+    T(x \lambda y) = \lim T_n(x + \lambda y) = \lim T_n(x) + \lambda \lim T_n(y) = Tx + \lambda Ty.
+\end{align*}
+To show boundedness note that $\sup_{n \in \mathbb N}\Vert T_n x \Vert < \infty$ for all $x \in \mathcal{X}$. The Uniform Boundedness Principle then tells us that $C = \sup_{n \in \mathbb N} \Vert T_n \Vert < \infty$. But then
+\begin{align*}
+    \Vert Tx \Vert = \Vert \lim T_n x \Vert = \lim \Vert T_n x \Vert \le \sup \Vert T_n x \Vert \le \sup \Vert T_n \Vert \Vert x \Vert = C \Vert x \Vert
+\end{align*}
+and so $T$ is bounded.
+
+\item [5.45] Define a family of seminorms $p_{n,k}=\Vert f^{(k)}\vert_{[-n,n]} \Vert_u$ on $\mathcal{X} = C^\infty(\mathbb R)$ and let $\mathcal{T}$ be the topology which they generate. For every $f \ne 0$ we have that $f(x) \ne 0$ for some $x \in \mathbb R$ such that $p_{n,k}(f) \ne 0$ for any $n \ge \vert x \vert$. Proposition 5.16 then tells us that $\mathcal{X}$ is Hausdorff.
+
+To show completeness, take any Cauchy sequence $\langle f_n \rangle \subset \mathcal{X}$. Proposition 5.14b tells us that $f_n \rightarrow f$ uniformly on any set $[-n,n]$, where $f(x) = \lim f_n(x)$. Thus $f$ is continuous on any compact set and so $f \in C(\mathbb R)$. We can make the same argument for any $\langle f_n^{(k)} \rangle$ such that $f_n^{(k)} \rightarrow h_k$ where $h_k \in C(\mathbb R)$. As all of these sequences are Cauchy, they are each eventually dominated by $\vert h_k \vert + 1$ so we can apply the Dominated Convergence Theorem to get
+\begin{align*}
+    h_k = \lim f_n^{(k)} = \lim \int_0^x f_n^{(k+1)} = \int_0^x \lim f_n^{(k+1)} = \int_0^x h_{k+1}
+\end{align*}
+which tells us that $h_k' = h_{k+1}$ or equivalently $f^{(k)} = h_{k}$. Thus $\mathcal{X}$ is complete and a Fr\'echet space.
+
+If $f_n \rightarrow f$, then prop 5.14b tells us that $f_n^{(k)} \rightarrow f^{(k)}$ uniformly on any set $[-n,n]$. Any compact set $K$ can be encompasses by such a set and so $\langle f_n^{(k)} \rangle$ converges uniformly on all compact sets.
+
+Likewise, if $f_n^{(k)} \rightarrow f^{(k)}$ uniformly on all compact sets, this includes all sets $[-n,n]$. This means $\langle f_n \rangle$ converges with respect to each pseudonorm defining the toplogy on $\mathcal{X}$ and so, by prop 5.14b, $f_n \rightarrow f$.
+
+\item [5.51] The norm topology if finer than the weak topology on $\mathcal{X}$, so any weakly open set is also open in the norm topology. But this means that weakly closed sets are also norm-closed. Conversely, we know that each $f \in \mathcal{X}^*$ is continuous in the weak topology. If we have a norm-closed subspace $\mathcal{M} \subset \mathcal{X}$ then for each $x \in \mathcal{X}\setminus\mathcal{M}$ we can find some $f_x \in \mathcal{X}^*$ for which $f_x(x) \ne 0$ and $f_x(\mathcal{M})=0$. By continuity we know that $\ker(f_x)$ is weakly-closed, so $\mathcal{M} = \cap_{x\in\mathcal{X}\setminus\mathcal{M}} \ker(f_x)$ is also weakly-closed.
+
+\item [5.53] \begin{enumerate} 
+    \item Given that $T_n \rightarrow T$ strongly, exercise 5.47 tells us that $M = \sup_n \Vert T_n \Vert < \infty$. Observing that
+    \begin{align*} 
+        \Vert T_n x_n - Tx \Vert \le \Vert T_n x_n - T_n x \Vert + \Vert T_n x - Tx \Vert \le \Vert T_n \Vert \Vert x_n - x \Vert +\Vert T_n x - T x \Vert,
+    \end{align*}
+    for any $\epsilon > 0$ we can pick $N$ such that $\Vert x_n - x \Vert < \epsilon/M$ and $\Vert T_n x - Tx \Vert < \epsilon$ for $n > N$. This gives us an upper bound
+    \begin{align*}
+        \Vert T_n x_n - Tx \Vert \le \Vert T_n \Vert \Vert x_n - x \Vert +\Vert T_n x - T x \Vert \le M \frac{\epsilon}{M} + \epsilon = 2\epsilon.
+    \end{align*}
+    Since $\epsilon$ was arbitrary this tells us that $T_nx_n \rightarrow Tx$.
+
+    \item We know that $S_nx \rightarrow Sx$ for $x \in \mathcal{X}$ since $\langle S_n \rangle$ converges strongly. But then the result from part (a) tells us that $T_nS_nx \rightarrow TSx$ since $\langle S_nx \rangle \subset \mathcal{X}$. Since this holds for all $x \in \mathcal{X}$ we have that $T_nS_n \rightarrow TS$ strongly.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

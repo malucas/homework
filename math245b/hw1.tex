@@ -1,0 +1,46 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245B: HW \#1}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{January 17, 2019}
+
+\begin{document}
+\begin{enumerate}
+    \item \begin{enumerate}
+        \item Theorem 3.1 assumes $\mathcal{F}$ is paritially ordered by set inclusion. Also $\bigcup \mathcal{C} \in \mathcal{F}$ for any chain in $\mathcal{F}$, so each chain has an upper bound. These are the prerequisits for Zorn's lemma and the conclusion, $\mathcal{F}$ has a maximal element, follows.
+        
+        \item $\mathcal{Y}$ is nonempty since each $X_\alpha$ is nonempty and we can always pick the pair $(\{\alpha\}, \langle x_\alpha \rangle)$ for some $\alpha \in A$.
+        
+        We know that $\preceq$ is a partial ordering by checking the definition. If $(B, \langle x_\alpha \rangle_{\alpha \in B}) \preceq (C, \langle y_\alpha \rangle_{\alpha \in C})$ and $(C, \langle y_\alpha \rangle_{\alpha \in C}) \preceq (D, \langle z_\alpha \rangle_{\alpha \in D})$, it follows that $B \subset D$ and \\$x_\alpha = z_\alpha \forall \ \alpha \in B$. Thus $(B, \langle x_\alpha \rangle_{\alpha \in B}) \preceq (D, \langle z_\alpha \rangle_{\alpha \in D})$. Obviously this relation is reflexive. And if $(B, \langle x_\alpha \rangle_{\alpha \in B}) \preceq (C, \langle x_\alpha \rangle_{\alpha \in C})$ and $(C, \langle y_\alpha \rangle_{\alpha \in C}) \preceq (B, \langle x_\alpha \rangle_{\alpha \in B})$ then $B = C$ and $\langle x_\alpha \rangle = \langle y_\alpha \rangle$ and equality must hold.
+    \end{enumerate}
+
+    %item \begin{enumerate}
+    %    \item s
+    %\end{enumerate}
+    
+    \item[3.] \begin{enumerate}
+        \item Take the set of all finite subsets of $\mathbb{N}$. It is down-closed and finite chains are closed. But it is not chain-closed since $\mathbb{N}$ is not included in this set. Likewise there is not maximal element of the set. For any finite subset, we can always add another integer no in that set.
+        
+        \item $\mathcal{C}_\sigma$ contains $\emptyset$ and $\mathbb{N}$. Furthermore each successive set $\{\sigma(1) \cdots \sigma(n)\}$ is formed by adding a single unique element to the previsous set. Thus we can't insert an additional set anywhere into $\mathcal{C}_\sigma$ such that it will still be a chain. This means that any chain which includes $\mathcal{C}_\sigma$ must be $\mathcal{C}\sigma$ itself, making it a maximal chain in $\mathcal{P}(\mathbb{N})$.
+        
+        \item It is possible to create a bijection between $\mathbb{N}$ and $\mathbb{Q} \cap (0,1)$ and so between $\mathcal{P}(\mathbb{N})$ and $\mathcal{P}(\mathbb{Q} \cap (0,1))$. We can construct a chain by taking set of rational numbers from $\mathbb{Q} \cap (0,1)$ which converge to $r$ for each $r \in \mathbb{R}$. For any two $r_a, r_b$ not equal to eachother, there is a uncountably infinite number of reals between the two. Thus there is an uncountable number of sets in the chain between any two sets $A$ and $B$ (definted by $r_a$ and $r_b$). This then means that the corresponding chain in $\mathcal{P}(\mathbb{N})$ has the same property.
+    \end{enumerate}
+    
+    \item[4.8] Given that $X$ has the cofinite topology, pick any $x \in X$. Every neighborhood $U$ of $x$ contains all but a finite number of points. Let $J$ be the largest index of any member of the sequence $\{x_j\}$ not included in $U$ (there are only a finite number of points to check). Then $x_j \in U$ for all $j > J$, meaning $x_j \rightarrow x$.
+    
+    \item[4.13] We're given the $U$ is open and $A$ is dense in $X$, meaning $X = A \cup Acc(A)$. By proposition 4.1 we know that $\overline{U} = U \cup Acc(U)$. Also it's clear that $\overline{U \cap A} \subseteq \overline{U}$, so we just need to show that $\overline{U \cap A} \subseteq \overline{U}$ or that 
+    \begin{align*}
+        U \cup Acc(U) \subseteq (U \cap A) \cup Acc(U \cap A)
+    \end{align*}
+    A point $x \in U$ is either in $U \cap A$ or is an accumulation point of $A$. If the latter is the case, then we also have $x \in Acc(U \cap A)$. Likewise, any $x \in Acc(U)$ is also an accumulation point for $U \cap A$. Thus the above inclusion holds and $\overline{U} = \overline{U \cap A}$.
+    
+    \item[4.15] We already know that $g$ is continuous on $A$. This means that $g^{-1}$ maps any closed set $V$ (let's say in $\mathbb{C}$) to an closed set in the relative topology of $A$. Since $A$ itself is closed, this means that $g^{-1}(V))$ must also be closed in the topolgoy of $X$. We also know that, since $A$ is closed, $A = \partial A \cup A^o$ and thus $A^c \cup \partial A$ is a closed set. 
+    
+    Let $h$ represent the extended function $g$. Then $h^{-1}(0)$ is the union of some closed set and $A^c \cup \partial A$ is also closed. In general, $h^{-1}$ maps any closed set $V \subset \mathbb{C}$ to a closed subset of $X$. If $V \ni 0$ then the mapping is the same as with $g$. Otherwise $h^{-1}(V) = g^{-1}(V) \cup (A^c \cup \partial A)$. As such, $h$ is continuous.
+\end{enumerate}
+\end{document}
