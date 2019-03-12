@@ -1,2 +1,2 @@
 # homework
-assignments and work from random books
+Assignments and work from random books.
