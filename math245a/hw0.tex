@@ -1,0 +1,64 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\pagestyle{fancy}
+\fancyhead[LO]{MATH245A: HW \#0}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{October 3, 2018}
+
+\begin{document}
+\begin{enumerate}
+    \item[A.3)] 
+    \begin{enumerate}
+        \item Given a set $A \subseteq B$, we know that for each element $a \in A$, its the case that $a \in f^{-1}(f(a))$. Since $f^{-1}(f(A)) = \bigcup\limits_{a \in A} f^{-1}(f(a))$, it holds that $A \subseteq f^{-1}(f(A))$.
+        
+        \item If $f$ is injective, then for every $a \in A$ it holds that $f^{-1}(f(a)) = a$. Thus it must also hold that $f^{-1}(f(a)) \in A$ for arbitrary $a$. This implies that $f^{-1}(f(A)) \subseteq A$ and we have equality.
+
+        Likewise, if the equality $A = f^{-1}(f(A))$ holds for every $A \subseteq S$, then $f$ must be injective. If not, then pick some non-empty set, $A$, containing two distinct elements, $a$ and $b$, for which $f(a)  = f(b)$. Then we can create a new set $A' = A \setminus \{ a \}$ for which $f(A') = f(A)$. But this implies that $A' = f^{-1}(f(A')) = f^{-1}(f(A)) = A$ which gives us a contradiction $\Rightarrow\!\Leftarrow$.
+    \end{enumerate}
+
+    \item[B.2)] It is a basic property of sets that countable unions of countable sets are countable. We can represents the set of dyadic rationals, $D$, as:
+    \begin{align*}
+        D = \bigcup\limits_{n \in \mathbb N} \{\frac{k}{2^n}|k\in\mathbb Z\}
+    \end{align*}
+    Since $\mathbb N$ is countable, if $\{\frac{k}{2^n}|k \in \mathbb Z\}$ is countable then $D$ is as well. 
+    
+    Note that $\{\frac{k}{2^n}|k \in \mathbb Z\} \cong \mathbb Z$. Furthermore $\mathbb{Z} = \mathbb{N} \cup \{0\} \cup \{-n|n \in \mathbb{N}\}$, meaning that $\mathbb{Z}$ (being a countable union of countable sets) is countable. This means that every $\{\frac{k}{2^n}|k \in \mathbb Z\}$ is countable and we're done.
+
+    \item[C.1)] We're given that $E \subset \mathbb{R}$ and $E \ne \emptyset$.
+
+    Let $\text{inf}\ E = \text{sup}\ E = \gamma$ and assume that $E$ is not a singleton such that it contains at least two unique elements $a$ and $b$. As $\mathbb{R}$ has a linear ordering, also assume $a < b$ without loss of generality. Since $\gamma$ is the supremum of $E$ we have that $ a < b \le \gamma$. But, $\gamma$ is also the infimum such that $\gamma \le a < b$. This leads to a contradiction as we now have that $a < b \le a < b$. And so $E$ must be a singleton.
+
+    Likewise if we assume that $E$ is a singleton, then it's sole element, $e \in E$, is it's own least upper bound. Assume there is some other $\gamma \in \mathbb{R}$ such that $\text{sup}\ E = \gamma \ne e$. Then, since $e < \gamma$, we can always find $\delta \in \mathbb{R}$ such that $e < \delta < \gamma$, implying that $\gamma$ is not actually the supremum. The element, $e$, is also it's own greatest lower bound by analogous reasoning about its greatest uppper bound. Thus $\text{inf}\ E = \text{sup}\ E = e$.
+
+    \item[C.5)] Just take the subsets $A = (0,1)$ and $B = (1,2)$. Their closures are $\bar{A} = [0,1]$ and $\bar{B} = [1,2]$ with interesection $\bar{A} \cap \bar{B} = [0,1] \cap [1,2] = \{1\} \ne \emptyset$.
+
+    \item[C.6)] Let $S$ be the set of interior points of $E$ as defined in the problem statement. If $x \in S$ then $\exists\ \epsilon > 0 \text{ s.t. } B_\epsilon(x) \subseteq E$. This ball is an open set and $E^\mathrm{o}$ is the union of all open sets contained in $E$. Thus $x \in B_\epsilon(x) \subseteq E^\mathrm{o}$ and so $S \subseteq E^\mathrm{o}$.
+
+    Likewise, $E^\mathrm{o}$ is an open set and so by definition, for any $y \in E^\mathrm{o},\ \exists\ \epsilon > 0 \text{ s.t. } B_\epsilon(y) \subseteq E^\mathrm{o}$. This immediately implies that every element of $E^\mathrm{o}$ is an interior point and so $E^\mathrm{o} \subseteq S$. This, combined with the previous inclusion implies that $S = E^\mathrm{o}$.
+
+    \item[D.3)] We have from the problem statement that every subsequence $\{x_{n_m}\}$ of $\{x_n\}$ has a futher subsequence $\{x_{n_{m_k}}\}$ which converges to $x$. Now assume that there is a subsequence $\{x_{n_m}\}$ which does not converge to $x$. We know that this subsequence contains at least one subsubsequence which converges to $x$. Call $S$ the set of all such subsubsequeces in $\{x_{n_m}\}$. This set can be partially ordered by inclusion. Also note that any union of subsubsequences that converge to $x$ also converges to $x$ and so must be contained in $S$.
+    
+    Every linearly ordered subset of S has an upper bound of $X$. Thus, by Zorn's Lemma, $S$ has a maximal element, let's call it the subsubsequence $\{x_{n_{m'_k}}\}$. As this is the maximal subsubsequence of $\{x_{n_m}\}$, it must be the case that $\{x_{n'_m}\} = \{x_{n_m}\} - \{x_{n_{m'_k}}\}$ does not contain a convergent subsubsequence. This contradicts or initial assumption. Thus it must hold that every subsequence $\{x_{n_m}\}$ converges to $x$. But if this is the case, then it must also hold that $\{x_n\} \rightarrow x$.
+
+    \item[E.4)] 
+    \begin{enumerate} 
+        \item Given that $f$ is continuous and $f(0) > 0$, we can find a positive real, $\gamma$, such that ${f(0) > \gamma > 0}$ and use it to find an open set $U = [f(0) - \gamma, f(0) + \gamma]$ containing $f(0)$. By the continuity of $f$, we have that $V = f^{-1}(U)$ is also open. It's also the case that $0 \in V$, since $f^{-1}(0) \subseteq V$.
+
+        $V$ being open, we can find an open interval $(-a,a) \subset V$ containing $0$. This interval is completely contained in $V$ so that $f((-a,a)) \subset U$. Now, we constructed $U$ to be a set of positive real numbers. Thus $f(x) > 0$ for all $x \in (-a,a)$.
+
+        \item Given $f(x) \ge 0$ for all rational $x$, assume there is some real (and necessarily irrational) $x'$, such that $f(x') < 0$. Then by an analogous argument to that in part a), there must existe a nonempty interval $(x'-\gamma, x'+\gamma)$ where $f(x) < 0$ for all $x$ in said interval. But we know that $\mathbb{Q}$ is dense in $\mathbb{R}$ and that if such an interval exists it must contain a rational number. Thus we have a contradiction.
+
+        Now, if we're only given that $f(x) > 0$ for all $x \in \mathbb{Q}$, it is possible to construct a function such that $f(x) = 0$ for some $x \in \mathbb{R}$ that's not rational. For example, take $f(x) = (x - \sqrt{2})^2$. In this case, $f(x) > 0 \ \forall \ x \in \{x | x \ne \sqrt{2},\ x \in \mathbb{R}\}$ and $f(\sqrt{2}) = 0$.
+    \end{enumerate}
+
+    \item[E.5)] By the definition of continutity, $f^{-1}(U)$ is open for any open set $U \subseteq X'$. This in turn implies that if $U$ is closed, it's inverse is also closed.
+
+    Let's assume that $f$ is continuous. Pick any $x \in \overline{E}$, then by proposition 0.22 in Folland, there exists a sequence $\{x_n\}$ contained in $E$ that converges to $x$. As such, the sequence $\{f(x_n)\}$ is contained in $f(E)$ and we know that $f(x) \in X'$. We can show that $\{f(x_n)\}$ converges to $f(x)$ by noting that for any open ball $B_\epsilon(f(x))$ in $X'$, there exists an open region $U = f^{-1}(B_\epsilon(x))$ in $X$ which itself contains a ball $B_\delta(x) \subseteq U$ containing $x$. Given that $\{x_n\}$ converges to $x$, we know that $\exists\ N$ such that $x_n \in B_\delta(x)\ \forall\ n > N$. This then implies that $f(x_n) \in B_\epsilon(f(x))\ \forall\ n > N$. Since our initial selection of $\epsilon > 0$ was arbitrary, we see that $\{f(x_n)\}$ must converge to $f(x)$. This in turn means that $f(x) \in \overline{f(E)}$ and thus $f(\overline{E}) \subseteq \overline{f(E)}$.
+
+    Now assume that $f(\overline{E}) \subseteq \overline{f(E)}$ for all $E \subseteq X$. Let's also assume that $f$ is not continuous, i.e. there exists some closed set $V \subseteq X'$ such that $U = f^{-1}(V)$ is not also closed. Then $U \subset \overline{U}$ and $f(\overline{U}) \supseteq f(U) = \overline{f(U)}$ since $f(U) = V$ is closed. This contradicts our first assumption, thus $f$ must be continuous.
+
+\end{enumerate}
+\end{document}
