@@ -1,0 +1,141 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage[]{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\pagestyle{fancy}
+\fancyhead[LO]{ECE239AS: HW \#1}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{April 19, 2019}
+
+\begin{document}
+\begin{enumerate}
+
+\item \begin{enumerate}
+    \item We can decompose the inner-product of $w^\star$ and $w^{(k)}$ to get the relation
+    \begin{align*}
+        \langle w^\star, w^{(k)} \rangle = \langle w^\star, w^{(k-1)} + y^{(k)}x^{(k)} \rangle = \langle w^\star, w^{(k-1)} \rangle + \langle w^\star, y^{(k)}x^{(k)} \rangle \ge \langle w^\star, w^{(k-1)} \rangle + 1
+    \end{align*}
+    which by induction implies that 
+    \begin{align*}
+        \langle w^\star, w^{(k)} \rangle \ge k.
+    \end{align*}
+    Also
+    \begin{align*}
+        & \Vert w^{(k)} \Vert^2 = \Vert w^{(k-1)} + y^{(k)}x^{(k)} \Vert^2 \le \Vert w^{(k-1)} \Vert^2 + \Vert x^{(k)} \Vert^2 \le \Vert w^{(k)} \Vert^2 + R^2 \\
+        & \implies \Vert w^{(k)} \Vert^2 \le kR^2
+    \end{align*}
+    Cauchy-Schwarz gives us that $\langle w^\star, w^{(k)} \rangle \le \Vert w^\star \Vert \Vert w^{(k)} \Vert$.
+    Combining all three relations we get
+    \begin{align*}
+        & k^2 \le \Vert w^\star \Vert^2 \Vert w^{(k)} \Vert^2 \le B^2(kR^2) \\
+        & \implies k \le (RB)^2
+    \end{align*}
+    \item Pick any $d \ge m$ and let $B$ be some orthonormal basis for $\mathbb R^d$. 
+    Let $\{x_i\}$ be a sequence of unique elements in $B$ and associate with each a label $y_i = 1$. 
+    Immediately $\max \Vert x_i \Vert \le 1$. If we let $w^\star = \sum_i x_i$ we see that
+    \begin{align*}
+        &\Vert w^\star \Vert^2 = \sum_{i,j} x_i^Tx_j = \sum_i x_i^Tx_i = m \\
+        & \text{and} \quad y_ix_i^Tw^\star = x_i^Tx_i = 1.
+    \end{align*}
+    If we initialize our perceptron to $w^{(0)}=0$ and run it on $\{x_i\}$, at each update $k$ we will add $x_k$ to $w^{(k-1)}$ such that $w^{(k)}$ will correctly classify $x_i$ for any $i \le k$ and misclassify any $i > k$. 
+    Thus it will take exactly $m$ steps for the perceptron to converge.
+    \end{enumerate}
+
+\item \begin{enumerate}
+    \item Applying stochastic gradient descent to the loss function $\ell(w) = \underset{i \in \mathcal M}{\sum} - y_i(w^Tx_i)$ gives
+    \begin{align*}
+        w^{(t+1)} = w^{(t)} - \eta \nabla(\ell(w))_i = w^{(t)} + \eta y_ix_i
+    \end{align*}
+    where $\nabla_w\ell(w)_i$ reprsents the contribution of $x_i$ to the gratident of the loss and where (in the last expression) we set $x_i$ to zero if $i \notin \mathcal M$ for some randomly chosen sample. 
+    This the the same formula as that of the modified perceptron.
+    \item Note that any separating plane specified by $x_i$ is also specified by $\eta x_i$. Take two perceptrons $w^{(t+1)} = w^{(t)} + y_ix_i$ and $v^{(t+1)} = v^{(t)} + \eta y_ix_i$ and let $w^{(0)} = v^{(0)} = 0$. Then $\eta w^{(1)} = \eta y_{i_1} x_{i_1} = v^{(1)}$. If we assume that $\eta w^{(t)} = v^{(t)}$ then
+    \begin{align*}
+        \eta w^{(t+1)} = \eta w^{(t)} + \eta y_{i_t} x_{i_t} = v^{(t)} + \eta y_{i_t} x_{i_t} = v^{(t+1)}.
+    \end{align*}
+    By induction, we see that $v{(t)}$ is a scalar multiple of $w^{(t)}$ at every step $t$. Thus they allways separate the same points and both perceptions will converge after the same number of iterations.
+    \end{enumerate}
+
+\item \begin{enumerate}
+    \item \begin{align*}
+        \nabla_w J(w,x) & = -\sum_{i=1}^n \alpha_i(x)[y_i(1 - h_w(x_i))x_i - (1-y_i)h_w(x_i)]x_i \\ & = \sum_{i=1}^n \alpha_i(x)(h_w(x_i) - y_i)x_i
+    \end{align*}
+    \item \begin{align*}
+        H = \sum_{i=1}^n \alpha_i(x) x_i \frac{\partial}{\partial w} h_w(x_i) = \sum_{i=1}^n \alpha_i(x) x_i [h_w(x_i)(1 - h_w(x_i))] x_i^T
+    \end{align*}
+    $H$ is PSD since $\alpha_i(x)h_w(x_i)(1 - h_w(x_i)) > 0$ and so it's a sum of PSD matrices.
+    \item Given a query point $x$ and some step size $\eta$ the gradient descent update rule is
+    \begin{align*}
+        w^{(k+1)} = w^{(k)} - \eta \sum_{i=1}^n \alpha_i(x)(h_w(x_i) - y_i)x_i
+    \end{align*}
+    \item This is not a parametric method. We are not presupposing a specific model with parameters to estimate. Our loss function will always estimate differring $w$'s depending on the query point we select.
+    \end{enumerate}
+
+\item \begin{enumerate}
+    \item Likelihood and log-likelihood are:
+    \begin{align*}
+        \mathcal L(w) & = \prod_i p(y_i | x_i) = \frac{1}{y!}(e^{-e^{w^Tx}})e^{w^Txy} \\
+        \log \mathcal L(w) & = \sum_i -\log(y!) - e^{w^Tx} + yw^Tx
+    \end{align*}
+    The corresponding optimization problem involves finding
+    \begin{align*}
+        \hat w = \underset{w}{\arg \max} \log \mathcal L(w) = \underset{w}{\arg \max} \sum_i - e^{w^Tx} + yw^Tx
+    \end{align*}
+    The gradient of $\log \mathcal L(w)$ is
+    \begin{align*}
+        & \nabla_w \log \mathcal L(w) = \sum_i -e^{w^Tx_i}x_i + y_ix_i = 0
+    \end{align*}
+    such that a gradient descent update step can be expresed as
+    \begin{align*}
+        w^{(k)} = w^{(k-1)} - \eta \sum_i (e^{(w^{(k-1)})^Tx_i}x_i + y_ix_i)
+    \end{align*}
+    \item \begin{enumerate}
+        \item The gaussian distribution can be rewritten as
+        \begin{align*}
+            f(y) = e^{\log f(y)} = e^{-\frac{y^2 - y\mu + \mu^2}{2\sigma^2} - \frac{1}{2} \log(2\pi\sigma^2)}
+        \end{align*}
+        Thus we can $f(y)$ as a GLM by using the following assignments
+        \begin{align*}
+            \theta = \mu, \ \phi = \sigma^2, \ a(\phi) = \phi, \ b(\phi) = 2\phi, \ c(y,\phi) = -\frac{y^2}{2\phi} - \frac{1}{2}\log(2\pi\phi)
+        \end{align*}
+        \item The Bernoulli distribution can be written as a pmf (restricted to $\{0,1\}$) where $f(y) = p^yp^{(y-1)}$. This expresison can be rewritten as
+        \begin{align*}
+            f(y) = e^{y \log p + (1-y) \log (1-p)} = e^{y \log \frac{p}{1-p} + \log (1-p)}
+        \end{align*}
+        The corresponding GLM parameters and equations arebsal
+        \begin{align*}
+            \theta = \log \frac{p}{1-p}, \ \phi = 0, \ a(\phi) = 1, \ b(\theta) = \log \frac{1}{1+e^\theta}, \ c(y,\phi) = 0
+        \end{align*}
+        \item Distribution 
+        \begin{align*}
+            f(y) = \frac{1}{y!}e^{-\mu}\mu^y = e^{y\log\mu - \mu - \log y!}
+        \end{align*}
+        GLM components
+        \begin{align*}
+            \theta = \log \mu, \ \phi = 0, \ a(\phi) = 1, \ b(\theta) = e^\theta, \ c(y,\theta) = -\log y!
+        \end{align*}
+        \end{enumerate}
+    \end{enumerate}
+
+\item Let $\tilde Y = [Y^T \ 0]^T$ and $\tilde X = [X^T \ \sqrt \lambda I]^T$ and minimize the squared error:
+\begin{align*}
+    \min \ \Vert \tilde Y - \tilde X \theta \Vert^2 & = \min \ \Vert \tilde Y \Vert^2 -2\tilde Y \tilde X \theta + \Vert \tilde X \theta \Vert^2 \\
+    & = \min \ \Vert Y \Vert^2 - 2Y^TX\theta + \theta^T(X^TX + \lambda I)\theta \\
+    & = \min \ \Vert Y \Vert^2 - 2Y^TX\theta + \Vert X \theta \Vert^2 + \lambda \Vert \theta \Vert^2 \\
+    & = \min \ \Vert Y - X\theta \Vert^2 + \lambda \Vert \theta \Vert^2
+\end{align*}
+Minimizing the last expression solves the ridge regression problem.
+
+\item Given that our samples are i.i.d. we can represent their joint distribution as a product such that
+\begin{align*}
+    & \mathcal L(\mu, \sigma^2) = \log P(D) = \sum_i \{-\frac{(x_i - \mu)^2}{2 \sigma^2} - \log(\sqrt 2 \pi \sigma^2)\} = \sum_i \ \\
+    & \frac{\partial}{\partial u} \mathcal L = \sum_i -\frac{(x_i - \mu)^2}{\sigma^2} = 0 \\
+    & \frac{\partial}{\partial \sigma^2} = -\frac{N}{2\sigma^2} + \frac{1}{2\sigma^2}\sum_i (xi - \mu)^2
+\end{align*}
+Setting both derivatives equal to zero gives us
+\begin{align*}
+    \hat \mu  = \frac{1}{N} \sum_i x_i \quad \text{and} \quad \hat \sigma^2 = \frac{1}{N} \sum_i (x_i - \hat \mu)^2
+\end{align*}
+
+\end{enumerate}
+\end{document}

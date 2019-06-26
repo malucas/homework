@@ -1,0 +1,39 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\pagestyle{fancy}
+\fancyhead[LO]{ECE239AS: HW \#5}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{June 10, 2019}
+
+\begin{document}
+\begin{enumerate}
+    \item \
+    \item \
+    \item \begin{enumerate}
+        \item Theorem 7.4 in UML tells us that 
+        $$ \vert L_{\mathcal P}(h) - \hat L_D(h) \vert \le \min_{n:h \in \mathcal H_n} \epsilon_n(m, w(n) \cdot \delta) \quad \forall h \in \mathcal H$$ 
+        with probability at least $1 - \delta$
+        If we assume that $\mathcal H$ is countable then we can consider it to be a union of singletons such that 
+        $$\epsilon(h) = \sqrt{\frac{\log(2/(w(h) \cdot \delta))}{2m}} \quad \forall h \in \mathcal H, \ \sum_{h \in \mathcal H} w(h) = 1.$$
+        $epsilon(h)$ is minimized when all of the weight is concentrated on one function $h' \in \mathcal H$ such that $w(h') = 1$.
+        In this case $e(h) = \sqrt{\frac{\log(2/\delta)}{2m}}$.
+        Thus if we replace $\delta$ with $\delta/2$, set $m = \alpha N$, and let $D = \mathcal V$, it follows that
+        $$ \vert L_P(h) - \hat L_{\mathcal V}(h) \vert \le \sqrt{\frac{\log(4/\delta)}{2\alpha N}} \quad \forall h \in \mathcal H$$
+        with probability at leat $1 - \delta/2$.
+        
+        \item $h^{SRM}$ is an element of $\mathcal H$ and so, by definition, $\hat L_{\mathcal V} (h^{Val}) \le \hat L_{\mathcal V} (h^{SRM})$. The result from part (a) then tells us that
+        $$ \hat L_{\mathcal V} (h^{Val}) \le \hat L_{\mathcal V} (h^{SRM}) \le L_{\mathcal P} (h^{SRM}) + \sqrt{\frac{\log(4/\delta)}{2\alpha N}} $$
+        with probability at least $1 - \delta/2$.
+
+        \item We can combine the previous result with part (a) to get 
+        $$ L_{\mathcal P} (h^{Val}) \le \hat L_{\mathcal V} (h^{Val}) + \sqrt{\frac{\log(4/\delta)}{2\alpha N}} \le L_{\mathcal P} (h^{SRM}) + \sqrt{\frac{\log(4/\delta)}{2\alpha N}} + \sqrt{\frac{\log(4/\delta)}{2\alpha N}} $$
+        with probability at least $(1-\delta/2)$. This in turn implies that
+        $$ \big\vert L_{\mathcal P} (h^{Val}) - L_{\mathcal P} (h^{SRM}) \big\vert \le 2\sqrt{\frac{\log(4/\delta)}{2\alpha N}} $$
+        with probability at least $1 - \delta$. 
+    \end{enumerate}
+\end{enumerate}
+\end{document}

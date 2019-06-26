@@ -1,0 +1,116 @@
+\documentclass[11pt,letter]{article}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\pagestyle{fancy}
+\fancyhead[LO]{ECE239AS: HW \#4}
+\fancyhead[CO]{Marcus Lucas}
+\fancyhead[RO]{May 31, 2019}
+
+\begin{document}
+\begin{enumerate}
+\item \begin{enumerate}
+    \item For any function $f: \mathcal X \to \{0,1\}$ we can construct a corresponding distrubution
+    \begin{align*}
+        \mathcal P = 
+        \begin{cases}
+            \frac{1}{\vert \mathcal X \vert} & (x,y): y = f(x) \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{align*}
+    for which $L_{\mathcal P}(f) = 0$
+    \item There are $T = 2^{\vert \mathcal X \vert}$ possible functions $f_i: \mathcal X \to \{0,1\}$ for which we can define corresponding disturbutions $\mathcal P_i$ as above.
+    Assume we draw a training set $\vert C \vert$ from $\mathcal X \times \{0,1\}$ of $m \le \vert \mathcal X \vert / 2$ samples.
+    We have an equal probability of drawing any of $k = \vert \mathcal X \vert^m$ sequences from $\mathcal X$. 
+    Denote the family of such sequences by $S_1, \dots, S_k$ and let $S_j^i$ denote the $j^{th}$ sequence of tuples corresponding to $f_i$ such that $S_j^i = (x_{j_1},f(x_{j_1}), \dots, (x_{j_m},f(x_{j_m}))$.
+    \\ \\
+    With this setup, for a specific distribution $\mathcal P_i$ we have
+    \begin{align*}
+            \underset{S \sim \mathcal P_i^m}{\mathbb E} [L_{\mathcal P_i}(A(S))] = \frac{1}{k} \sum_{j=1}^k L_{\mathcal P_i} (A(S_j^i))
+    \end{align*}
+    We can also exploit properties of the $\max(\cdot)$ and $\min(\cdot)$ functions to write
+    \begin{align*}
+        \max_{i \in [T]} \frac{1}{k} \sum_{i=1}^k L_{\mathcal P_i} (A(S_j^i))
+        & \ge \frac{1}{T} \sum_{i=1}^T \frac{1}{k} \sum_{j=1}^k L_{\mathcal P_i}(A(S_j^i)) \\
+        & = \frac{1}{k} \sum_{j=1}^k \frac{1}{T} \sum_{i=1}^T L_{\mathcal P_i}(A(S_j^i)) \\
+        & \ge \min_{j \in [k]} \frac{1}{T} \sum_{i=1}^T L_{\mathcal P_i}(A(S_j^i))
+    \end{align*}
+    \\ \\
+    Now let $p = \vert \mathcal X \vert - m$ such that $p \ge m$, and let $v_1, \dots, v_p$ represent the samples not included in $S_j$.
+    Then
+    \begin{align*}
+        L_{\mathcal P_i}(h) 
+        = \frac{1}{\vert \mathcal X \vert} \sum_{x \in \mathcal X} \mathbbm 1_{[h(x) \ne f_i(x)]} 
+        \ge \frac{1}{2p} \sum_{r = 1}^p \mathbbm 1_{[h(v_r) \ne f_i(v_r)]}
+    \end{align*}
+    and
+    \begin{align*}
+        \frac{1}{T} \sum_{i=1}^T L_{\mathcal P_i}(A(S_j^i)) 
+        \ge \frac{1}{T} \sum_{i=1}^T \frac{1}{2p} \sum_{r = 1}^p \mathbbm 1_{[h(v_r) \ne f_i(v_r)]}
+        \ge \frac{1}{2} \min_{r \in [p]} \frac{1}{T} \sum_{i = 1}^T \mathbbm 1_{[h(v_r) \ne f_i(v_r)]}.
+    \end{align*}
+    For any fixed $r$ we can split $\{f_i\}$ into disjoint pairs $(f_i,f_{i'})$ for which $f_i(x) = f_{i'}(x)$ except at $x = v_r$. 
+    For such pairs,
+    \begin{align*}
+        \mathbbm 1_{[h(v_r) \ne f_i(v_r)]} = \mathbbm 1_{[h(v_r) \ne f_{i'}(v_r)]} = 1
+    \end{align*}
+    such that the previous inequality becomes
+    \begin{align*}
+        \frac{1}{T} \sum_{i=1}^T L_{\mathcal P_i}(A(S_j^i)) \ge \frac{1}{2}.
+    \end{align*}
+    This, combined with the earlier results, implies 
+    \begin{align}
+        \max_{i \in [T]} \underset{S \sim \mathcal P_i^m}{\mathbb E} [L_{\mathcal P_i}(A(S))] \ge \frac{1}{4} \tag{$\star$}.
+    \end{align}
+    \\ \\
+    Lemma B.1 in UML tells us that for any radom variable $Z$
+    \begin{align*}
+        \mathbb P[Z > a] = \frac{\mathbb E[Z] - a}{1 - a}.
+    \end{align*}
+    Given our result $(\star)$, we can apply this lemma to determine that for any learning algoithm $A$, there exists some distribution $\mathcal P$ such that
+    \begin{align*}
+        \mathbb P[L_{\mathcal P}(A(S)) > 1/8] = \frac{\mathbb E[L_{\mathcal P}(A(S))] - 1/4}{1 - 1/4} \ge \frac{1/4 - 1/8}{7/8} = 1/7.
+    \end{align*}
+    \end{enumerate}
+\item Take $(d+1)$ vectors $x_k \in \mathbb R^d$, augment them each with a 1, and form the matrix $\tilde X$ for which 
+\begin{align*}
+\tilde X^T \tilde w = \begin{bmatrix} x_1^T & 1 \\ \vdots & \vdots \\ x_{d+1}^T & 1 \end{bmatrix} \begin{bmatrix} \theta \\ b \end{bmatrix} = \begin{bmatrix}y_1 \\ \vdots \\ y_{d+1} \end{bmatrix}
+\end{align*}
+We can always pick each $x_k$ such that $\tilde X$ is full rank in which case can we assign any values to $y_k$ by setting $\theta,b$ properly.
+This means $\mathcal H$ shatters our set of $(d+1)$ vectors, since for any labeling $h$, we can always pick form a vector $y$ for which $h(x_k) = y_k$ for all $k$.
+\\ \\
+Now if we form $\tilde X$ out of $(d+2)$ vectors, there will always be some $x_j$ that is linearly dependent on the other vectors such that
+\begin{align*}
+    x_j = \sum_{k\ne j} \alpha_kx_k.
+\end{align*}
+But this means we have no control over the value of $y_j$. For any $\theta,b$ that we pick,
+\begin{align*}
+    y_j = \tilde x_j \tilde \theta = \sum_{k \ne j} \alpha_k y_k
+\end{align*}
+Then if we try to assign labels $\text{sign}(\alpha_k)$ to each $x_k$ by setting each $y_k$ accordingly we see that
+\begin{align*}
+    y_j = \sum_{k \ne j} \vert \alpha_k y_k \vert \ge 0.
+\end{align*}
+In such a case, $h(x_j)$ must equal 1 and so any size $(d+2)$ set cannot be shattered.
+\item $\mathcal H_B$ for $d=2$ represents the set of all axis-aligned halfspaces in $\mathbb R^2$.
+The result from question 2 tells us that, since $\mathcal H_B$ is a subset of the class of all halfspaces in $\mathbb R^2$, the VC dimension of $\mathcal H_B$ is at most 3.
+Furthermore, any triangle of 3 points in $\mathbb R^2$ can be shattered by $\mathcal H_B$ so the VC dimension is in fact 3.
+\\ \\
+Regarding the VC dimension of $\mathcal H$, we can obtain a lower bound as follows.
+Let $g_r$ be a piece-wise constant function with at most $r+1$ pieces defined as
+\begin{align*}
+    g_r(x)  = \sum_{t=1}^{r+1} \alpha_t \mathbbm 1_{x \in (\theta_{t-1},\theta_{t}]} \quad \alpha_i \in \{-1,1\}
+\end{align*}
+where $-\infty  = \theta_0 \le \theta_1 \le \dots \le \theta_r \le \theta_{r+1} = \infty$.
+Let $\mathcal G_r$ represent the set of all such functions of a particular element $x_i$ of the vector $x$ and note that $\mathcal G_T \subset \mathcal H$.
+This can be seen by re-expressing $g_T$ as
+\begin{align*}
+    g_T(x_i) = \text{sign}\big(\sum_{t=1}^{T} w_t \ \text{sign}(x_i - \theta_t)\big) = \text{sign}\big(\sum_{t=1}^T w_t h(x_i,\theta_t,b_t)\big)
+\end{align*}
+where $w_1 = 0.5$, $w_t = (-1)^t$ for $t > 1$, and $b_t = 1$ for all $t$.
+Then any set of $T+1$ points with unique positions along a single axis $x_i$ can be labeled by some $g_t \in \mathcal G_T$ and is thus shattered by $\mathcal H \supset \mathcal G_T$.
+So the VC dimension of $\mathcal H$ is lower-bounded by $T+1$.
+\end{enumerate}
+\end{document}
