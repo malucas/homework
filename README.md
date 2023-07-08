@@ -1,2 +1,2 @@
 # homework
-Assignments and other exercises.
+Assignments from various UCLA courses (mostly math).
