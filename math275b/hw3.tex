@@ -1,0 +1,175 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275B: Homework 3}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+\newcommand{\var}{\text{var}}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{D.4.6.2}
+\textit{Claim:} $f$ is said to be \textbf{Lipschitz continous} if
+$\vert f(t) - f(s) \vert \le K \vert t-s \vert$ for $0 \le s, < 1$.
+Show that $X_n = (f((k+1)2^{-n}) - f(k2^{-n}))/2^{-n}$ on $I_{k,n}$
+defines a martingale, $X_n \to X_\infty$ a.s. and in $L^1$, and
+\begin{equation*}
+  f(b) - f(a) = \int_a^b X_\infty(\omega)\ d\omega.
+\end{equation*}
+
+\textit{Proof:} For any $n$, 
+$E \vert X_n \vert = \sum_{k=0}^{(2^n-1)} \vert (f((k+1)2^{-n}) - f(k2^{-n})) \vert
+\le \sum_{k=0}^{(2^n-1)} K \vert 2^{-n} \vert = K$, so $X_n \in L^1$. $X_n$ is clearly 
+adapted to $\mathcal{F}_n = \left\{ I_{k,i}: 0 \le i \le n, 0 \le k < 2^n \right\}$
+since it is a simple function constructed on sets in $\mathcal{F}_n$.
+Lastly, for any set $I_{k,n}$,
+\begin{equation*}
+  \begin{aligned}
+    E[X_{n+1};I_{k,n}] & = \left(f(\frac{2k+2}{2^{(n+1)}}) - f(\frac{2k+1}{2^{(n+1)}}) 
+      + f(\frac{2k+1}{2^{(n+1)}}) - f(\frac{2k}{2^{(n+1)}}) \right)/2^{-n} \\
+    & = \left(f(\frac{2k+2}{2^{(n+1)}}) - f(\frac{2k}{2^{(n+1)}}) \right)/2^{-n}
+      = \left(f(\frac{k+1}{2^{-n}}) - f(\frac{k}{2^{-n}}) \right)/2^{-n} = E[X_{n};I_{k,n}],
+  \end{aligned}
+\end{equation*}
+indicating the $E[X_{n+1};I_{k,n}] = X_n$. Thus $X_n$ is a martingale.
+
+By definition $\vert X_n \vert \le K$ for any $n$. Thus,
+$E(\vert X_n \vert ; \vert X_n \vert > K) = 0$ such that $X_n$
+is uniformly integrable. Almost sure and $L^1$ convergence
+follow from theorem D.4.6.7. The theorem also tell us that 
+there exists $X_\infty \in L^1$ such that $X_n = E(X\vert\mathcal{F}_n)$.
+So for any $a,b \in [0,1)$ for which $a\le b$, let $A_n$ denote
+the largest interval $I_{k,n} \in \mathcal{F}_n$ contained within $[a,b)$.
+Then $A_n \to [a,b)$ and $X_\infty \mathbf{1}_{A_n} 
+\to X_\infty \mathbf{1}_{[a,b)}$. An application of the dominated 
+convergence theorem proves the last part of the claim.
+
+\subsection*{D.4.6.7}
+\textit{Claim:} Show that if $\mathcal{F}_n \uparrow \mathcal{F}_\infty$
+and $Y_n \to Y$ in $L^1$ then $E(Y_n \vert \mathcal{F}_n) \to 
+E(Y \vert \mathcal{F}_\infty)$ in $L^1$.
+
+\textit{Proof:} Jensen's inequality tells us that 
+$\vert E(Y_n \vert \mathcal{F}_n) - E(Y \vert \mathcal{F}_n) \vert 
+\le E(\vert Y_n - Y \vert \vert \mathcal{F}_n)$.
+That $Y_n \to Y$ in $L^1$, implies $E \vert Y_n - Y \vert \to 0$.
+This implies $E(\vert Y_n - Y \vert \vert \mathcal{F}_n) \to 0$ in $L^1$
+since $E(\vert Y_n - Y \vert; A) \le E(\vert Y_n -Y \vert)$ for
+$A \in \mathcal{F}_n$. Theorem D.4.6.8 tells us that 
+$\vert E(Y \vert \mathcal{F}_n) - E(Y \vert \mathcal{F}_\infty) 
+\vert \to 0$ in $L^1$ as well.
+Applying the triangle inequality, we can conclude that
+\begin{equation*}
+  \vert E(Y_n \vert \mathcal{F}_n) - E(Y \vert \mathcal{F}_\infty) \vert
+  \le \vert E(Y_n \vert \mathcal{F}_n) - E(Y_n \vert \mathcal{F}_n) \vert
+  + \vert E(Y_n \vert \mathcal{F}_n) - E(Y \vert \mathcal{F}_\infty) \vert
+  \to 0 \ \text{in} \ L^1.
+\end{equation*}
+
+\subsection*{D.4.8.7}
+\textit{Claim:} Let $S_n$ be a symmetric simple random walk starting
+at $0$, and let $T = \inf \left\{n: S_n \notin (-a,a)\right\}$
+where $a$ is an integer.
+Find constants $b$ and $c$ so that $Y_n = S_n^4 - 6nS_n^2 + bn^2 + cn$
+is a martingale, and use this to compute $ET^2$.
+
+\textit{Proof:} $Y_n \in L^1$ because it is a finite sum of $L^1$ random variables.
+It is adapted to $\mathcal{F}_n$ because each of the terms in its definition
+are themselves adapted. To verify $E(Y_{n+1} \vert \mathcal{F}_n) = Y_n$
+we exploit the indepedence of $\xi_{n+1}$ from $\mathcal{F}_n$ along with the
+fact that even moments of $\xi_{n}$ equal 1 while odd momments equal 0:
+\begin{equation*}
+\begin{aligned}
+  E(Y_{n+1} \vert \mathcal{F}_n)
+  & = E \big((S_n + \xi_{n+1})^4 - 6(n+1)(S_n + \xi_{n+1})^2 +b(n+1)^2 + c(n+1) \vert \mathcal{F}_n \big) \\
+  & = E \big( S_n^4 + S_n^3 \xi_{n+1} + S_n^2 \xi_{n+1}^2 + S_n \xi_{n+1}^3 + \xi_{n+1}^4 \\
+    & \quad -6(n+1)(S_n^2 + S_n \xi_{n+1} + \xi_{n+1}^2) + b(n+1)^2 + c(n+1) \vert \mathcal{F}_n \big) \\
+  & = S_n^4 + S_n^2 + 1 - 6(n+1)(S_n^2 + 1) + b(n^2 + 2n + 1) + c(n + 1) \\
+  & = Y_n + 1 - 6(n+1) + b(2n+1) + c.
+\end{aligned}
+\end{equation*}
+From the last expression it is clear that if we let $b=3$ and $c=2$,
+then $Y_n$ becomes a martingale.
+
+Applying the stopping theorem for the bounded stopping time $T \wedge n$
+gives us
+\begin{equation*}
+  E(Y_0) = E(Y_{T \wedge n}) = E(S_{T \wedge n}^4 
+- 6(T \wedge n)S_{T \wedge n}^2 + 3(T \wedge n)^2 + 2(T \wedge n)) = 0.
+\end{equation*}
+We know from the first part of the proof of Theorem D.4.8.7 that $E(T) < \infty$.
+The MCT then tells us that $E(T \wedge n)^i \uparrow E(T)^i$ for positive integers $i$.
+Likewise the bounded convergence theorem (noting $\vert S_n \vert \le a$ )
+tells us that $S_{T \wedge n}^i \to S_T^i$.
+Thus our expectation equation becomes $E(S_{T}^4 - 6TS_{T}^2 + 3T^2 + 2T) = 0$.
+
+From D.4.8.7 (and symmetry) we know that $P(S_N = a) = P(S_N = -a) = 1/2$
+such that $E(S_{T}^4) = a^4$ and $E(TS_{T}^2) = \sum_{i=0}^\infty i a^2 P(T=i) = E(T)a^2$.
+We also know tha from D.4.8.7 that $E(T) = a^2$ so our expectation equation reduces to
+$a^4 - 6 a^2 a^2 + 3E(T^2) + 2 a^2 = 0$ such that 
+\begin{equation*}
+  E(T^2) = \frac{5a^4-2a^2}{3}
+\end{equation*}
+
+\subsection*{D.5.1.1}
+\textit{Claim:} Let $\xi_1, \xi_2, \dots$ be i.i.d. 
+$\in \left\{1,2,\dots,N\right\}$ and taking each value with
+probability $1/N$. Show that 
+$X_n = \vert \left\{\xi_1, \dots, \xi_n\right\} \vert$
+is a Markov chain and compute its transition probability.
+
+\textit{Proof:} $X_n$ equals the number of unique elements, $\xi_i$,
+that have been chosen by step $n$, not the specific elements.
+For any $X_n$, $X_{n+1}$ can only ever equal $X_n$ or $X_n + 1$
+and the likelihood of either outcome depends strictly on the value of $X_n$.
+If $X_n = i$, the chance of picking a new element is just $\frac{N-i}{N}$.
+Thus $P(X_{n+1} = j \vert X_n = i) = \frac{N-i}{N}$ and
+$P(X_{n+1} = i \vert X_n = i) = \frac{i}{N}$. All other transition 
+probabilities are zero.
+
+
+\subsection*{D.5.1.2}
+\textit{Claim:} Let $\xi_1, \xi_2, \dots$ be i.i.d.
+$\in \left\{1,-1\right\}$, taking each value with probability $1/2$.
+Let $S_0=0$, $S_n=\xi_1 + \cdots + \xi_n$ and $X_n = \max \{S_m:0\le m\le n\}$.
+Show that $X_n$ is not a Markov chain.
+
+\textit{Proof:} In general it's unclear from the value of $X_n$ if $X_n = S_n$. 
+If we also know $X_{n-1} = i-1$, then $X_{n}=i$ ensures $X_n = S_n$
+such that
+\begin{equation*}
+  P(X_{n+1} = i+1| X_n = i, X_{n-1} = i-1) 
+  = P(X_{n+1} = i \vert X_n = i, X_{n-1} = i-1) = 1/2.
+\end{equation*}
+If we're only given that $X_n$, there is a nonzero chance that
+$X_n > S_n$, i.e. $P(X_n > S_n \vert X_n = i) > 0 $ for $i \ne n$..
+In that case, since $\xi_{n+1}$ is independent of the previous outcomes,
+\begin{eqnarray}
+\begin{aligned}
+  P(X_{n+1} = i \vert X_n = i)
+  & = P(\xi_{n+1} = - 1  \cap X_n = S_n\vert X_n = i) + P(X_n > S_n \vert X_n = i) \\ 
+  & = P(\xi_{n+1} = -1) P(X_n = S_n\vert X_n = i) + P(X_n > S_n \vert X_n = i) \\ 
+  & > 1/2 \left( P(X_n = S_n\vert X_n = i) + P(X_n > S_n \vert X_n = i) \right) = 1/2,
+\end{aligned}
+\end{eqnarray}
+implying $P(X_{n+1} = i \vert X_n = i, X_{n}=i-1) \ne P(X_{n+1} = i \vert X_n = i)$.
+This contradiction shows that $X_n$ cannot be a Markov chain.
+
+\end{document}

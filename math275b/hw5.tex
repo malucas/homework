@@ -1,0 +1,121 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275B: Homework 5}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+\newcommand{\var}{\text{var}}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{D.5.5.6}
+\textit{Claim.} 
+Use theorems 5.5.7 and 5.5.9 to show that for a simple random walk,
+the expected number of visits to $k$ between successive visits to
+0 is 1.
+
+\begin{proof}
+ We know by theorem 5.5.4 that simple random walks in one
+ dimension are recurrent. Also, since 
+ $\rho_{ij} > \sum_{k=0}^{j-i-1}p(i+k,i+k+1) = \frac{1}{2^{(j-i)}}$
+ for any ${i,j} \in \mathbb{Z}$ it follows that $p$ is 
+ irreducible as well.
+
+ Simple random walks are doubly stochastic random processes
+ so $\nu(k) \equiv 1$ is a stationary distribution of $p$.
+ Theorem D.5.5.9 tells us $\nu(k)$ is unique up to a constant
+ multiple. But $\mu_0(k)$ is also a stationary distribution
+ of $p$ by theorem D.5.5.7, so $\mu_0(k)$ is equivalent to $v(k)$
+ up to a constant multiple. Since $\mu_0(0) = 1$, it follows
+ that $\mu_0(k) \equiv 1$. This proves the claim,
+ as $\mu_0(k) = E_0 \left( \sum_{n=0}^{T_0-1}1_{\left\{X_n 
+ = k\right\}} \right)$ is defined to be the expected number of visits
+ to $k$ starting from $0$ up until $0$ is reached again.
+\end{proof}
+
+\subsection*{B.6.4}
+\textit{Claim:}
+On $\Omega = [0,1)$, define $T: \Omega \to \Omega$ by $Tx = (2x)[1]$.
+Use $\mathcal{F} = \mathcal{B}\left( [0,1) \right)$, $P=dx$. Define:
+\begin{equation*}
+  X(x) = \begin{cases}
+    0, & 0 \le x < \frac{1}{2} \\ 1, & \frac{1}{2} \le x < 1.
+  \end{cases}
+\end{equation*}
+Show that the sequence $X_n(x) = X(T^{n-1}x)$ consists of independent
+zeros and ones with probability $\frac{1}{2}$ each.
+\begin{proof}
+  For any $n$,
+  \begin{equation*}
+    P(X_n = 0) = P(XT^{n-1} = 0) = P(x \in A) 
+    \quad \text{for} \quad
+    A = \bigcup_{k=0}^{2^{n-1}-1} \left[\frac{2k}{2^{n}}, 
+      \frac{2k+1}{2^{n}}\right).
+  \end{equation*}
+  Clearly $P(A) = \frac{1}{2}$, 
+  implying that $P(X_n = 0) = P(X_n = 1) = \frac{1}{2}$.
+
+  For any sequence $w_{n+1}, \dots, w_{n+k}$ 
+  of zeros and ones,
+  \begin{equation*}
+    P(X_{n+1}=w_{n+1}, X_{n+2}=w_{n+2}, \dots, X_{n+k}=w_{n+k})
+    = P(A_1 \cap A_2 \cap \cdots \cap A_k)
+  \end{equation*}
+  where
+  \begin{equation*}
+    A_i = \bigcup_{k=1}^{2^{n+i-1}-1} \left[\frac{2k}{2^{n+i}}, 
+      \frac{2k+1}{2^{n+i}}\right).
+  \end{equation*}
+  The sets $A_i$ are defined such that the intersection above has measure 
+  $P(A_1 \cap A_2 \cap \cdots \cap A_k) = \frac{1}{2^{k}}$.
+  From this we can conclude that
+  \begin{equation*}
+    P(X_{n+1}=w_{n+1}, \dots, X_{n+k}=w_{n+k})
+    = \frac{1}{2^k}
+    = P(X_{n+1}=w_{n+1}) \cdots P(X_{n+k}=w_{n+k}),
+  \end{equation*}
+  and so every sequence $w$ is independent.
+\end{proof}
+
+% \subsection*{B.6.15}
+% \textit{Claim:}
+% Show that $X_1, X_2, \dots$ is ergodic iff for every
+% $A \in \mathcal{B}_k$, $k = 1,2,\dots$:
+% \begin{equation*}
+%   \frac{1}{n} \sum_1^n \chi_A(X_n, \dots, X_{n+k})
+%   \overset{\text{a.s.}}{\to} P\left( (X_1, \dots, X_{k+1}) \in A \right).
+% \end{equation*}
+
+% \begin{proof}
+
+% \end{proof}
+
+% \subsection*{B.6.16}
+% \textit{Claim:}
+% Let $X_1, X_2, \dots$ and $Y_1, Y_2, \dots$ be two sationary, ergodic
+% processes on $(\Omega, \mathcal{F}, P)$. Toss a coin with probability
+% $p$ of head independently of $X$ and $Y$. If it comes up heads,
+% observe $X$, if tails, observe $Y$. Show that the resultant
+% process is stationary but not ergodic.
+
+% \begin{proof}
+  
+% \end{proof}
+\end{document}

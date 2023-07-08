@@ -1,0 +1,126 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275B: Homework 4}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+\newcommand{\var}{\text{var}}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{D.5.2.4}
+\textit{Claim.} Let $T_y  = \inf\{n \ge 1: X_n = y\}$.
+Show that:
+\begin{equation*}
+  p^n(x,y) = \sum_{m=1}^n P_x(T_y = m)p^{n-m}(y,y)
+\end{equation*}
+
+\begin{proof}
+  Let $Y_m: \Omega_0 \to \mathbb{R}$
+  define a family of random varibles for which $Y_m(w) = 1$ 
+  if $w_{(n-m)} = y$ and $Y_m(w) = 0$ otherwise. Then,
+  using $\theta_n$ to specify the left-shift of a sequence 
+  $w$ by $n$ steps, we can use the strong Markov property
+  to determine:
+  \begin{equation*}
+  \begin{aligned}
+    p^n(x,y) & = E_x(Y_N \circ \theta_N; N \le n)
+    = E_x(E_x(Y_N \circ \theta_N \vert \mathcal{F}_N); N \le n)
+    = E_x(E_{X_N}Y_N; N \le n) \\ 
+    & = E_x(p^{n-N}(y,y); N \le n) 
+    = \sum_{m=1}^n p^{n-m}(y,y) E_x(; N = m)
+    = \sum_{m=1}^n p^{n-m}(y,y) P_x(T_y = m).
+  \end{aligned}
+  \end{equation*}
+\end{proof}
+
+\subsection*{D.5.3.3}
+\textit{Claim.} Show that in the Ehrenfest chain,
+all states are recurrent.
+
+\begin{proof}
+  The set $S = \{1,2,\dots,r\}$ is obviously closed
+  since probabilities $\rho_{ij} > 0$ are only defined
+  for $i,j \in S$. Likewise $S$ is irreducible since for
+  any $i,j \in S$ where $i<j$:
+  \begin{equation*}
+    \rho_{ij} \ge p^{j-i}(i,j) 
+    = \prod_{k=0}^{j-i-1} p(i+k,i+k+1)
+    = \prod_{k=0}^{j-i-1} \frac{r-k}{r} > 0.
+  \end{equation*}
+  Theorem 5.3.3 in Durrett tells us that because $S$ is
+  finite, closed, and irreducible, all states in $S$ 
+  are recurrent, proving the claim.
+\end{proof}
+
+\subsection*{D.5.5.2}
+\textit{Claim.} Let $w_{xy} = P_x(T_y < T_x)$.
+Show that $\mu_x(y) = w_{xy}/w_{yx}$.
+
+\begin{proof}
+  Here I'll instead show that $\mu_x(y) w_{yx} = w_{xy}$.
+  Starting with the definition of $\mu_x(y)$ in
+  theorem D.5.5.7:
+  \begin{equation*}
+  \begin{aligned}
+    \mu_x(y) w_{yx} 
+    & = \left( \sum_{n=0}^\infty P_x(X_n = y, T_x > n) \right) P_y(T_x < T_y)
+    = \sum_{n=0}^\infty P_x(X_n = y, T_x > n) P_y(T_x < T_y) \\
+    & = \sum_{n=0}^\infty P_x(X_n = y, T_x > n, X_m \ne y 
+    \ \text{for} \ n < m < T_x).
+  \end{aligned}
+  \end{equation*}
+  The last summand just describes the probablity that
+  $X_n = y$ is the last occurance of $y$ (starting from $y$)
+  before $X_m = x$ for some $m > n$. But this description 
+  describes all the possible sequences $w \in \Omega_0$ for which
+  $X_0 = x$ and $T_y < T_x$ are satisfied.
+  Furthermore, each set $\{X_0 = x, X_n=y, X_m \ne y \ \text{for} \
+  n < m < T_x \}$ is disjoint from the others for unique $n$,
+  such that the sum of their probabilities gives 
+  $P_x(T_y<T_x) = w_{xy}$.
+\end{proof}
+
+\subsection*{D.5.6.2}
+\textit{Claim.} Show that if $S$ is finite and $p$ is irreducible
+and aperiodic, then there is an $m$ that $p^m(x,y) > 0$ for all 
+$x,y \in S$.
+
+\begin{proof}
+  $S$ is irreducible so for any $x,y \in S$, $\rho_{xy} > 0$.
+  Theorem D.5.6.4 then tells us that $d_x = d_y$ for all
+  $x,y \in S$. Since $S$ is also aperiodic, actually $d_x = 1$
+  for all $x \in S$.
+  
+  Lemma then D.5.6.5 tells us that for each $x \in S$ there exists
+  a positive integer $m_x$ such that for $m \ge m_x$, $p^m(x,x) > 0$.
+  Since $S$ is finite, let $m_0 = \max_{x \in S} m_x$ such that
+  $p^m(x,x) > 0$ for any $x \in S$ and $m > m_0$.
+
+  Lastly, since $\rho(x,y)>0$ for each pair $x,y \in S$, 
+  there exists some positive integers $n_{xy}$ such that 
+  $p^{n_{xy}}(x,y) > 0$. Note that for such integers, 
+  it must hold that $p^{n_{xy}+m}(x,y) 
+  > p^{n_{xy}}(x,y)p^{m}(y,y) > 0$ for any $m \ge m_0$ as well. 
+  Thus let $n_0 = m_0 + \max_{x,y \in S} n_{xy}$.
+  Then the claim holds for any $x,y \in S$ and $m > n_0$.
+\end{proof}
+
+\end{document}

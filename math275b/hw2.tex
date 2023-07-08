@@ -1,0 +1,174 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275B: Homework 2}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+\newcommand{\var}{\text{var}}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{B.21.23}
+
+\textit{Claim:} Let $\mathcal{F}_1 \subset \mathcal{F}_2 \subset \cdots$
+be an increasing family of $\sigma$-fields and let $\mathcal{F}_\infty
+= \sigma(\cup_{n=1}^\infty \mathcal{F}_n)$. If $N$ is a stopping time,
+define
+\begin{equation*}
+  \mathcal{F}_N = \left\{ A \in \mathcal{F}_\infty : A \cap (N \le n)
+  \in \mathcal{F}_n \ \forall \ n \right\}.
+\end{equation*}
+\begin{itemize}
+  \item[1.] Prove that $\mathcal{F}_N$ is a $\sigma$-field.
+  \item[2.] If $M$ is another stopping time with $M \le N$ a.s.,
+  and we define $\mathcal{F}_M$ analogously, prove that
+  $\mathcal{F}_M \subset \mathcal{F}_N$.
+  \item[3.] If $X_n$ is a martingale with respect to $\left\{\mathcal{F}_n\right\}$
+  and $N$ is a stopping time bounded by the real number $K$, prove that 
+  $E\left[X_K \vert \mathcal{F}_N\right] = X_N$.
+\end{itemize}
+
+\textit{Proof:} 
+\begin{itemize}
+  \item [1.]
+  For $A \in \mathcal{F}_N$, if $A \cap (N \le n) \in \mathcal{F}_n$ then its
+  compliment $A^c \cup (N \le n)^c \in \mathcal{F}_n$. 
+  $\mathcal{F}_n$ is also closed under intersections such that 
+  $A^c \cup (N \le n)^c \cap (N \le n) = A^c \cap (N \le n) 
+  \in \mathcal{F}_n$ for all $n$, so $A^c \in \mathcal{F}_N$.
+
+  \item [2.]
+  $M \le N$ implies that $(N \le n) \subset (M \le n)$.
+  Thus if $A \in \mathcal{F}_M$ such that $A \cap (M \le n) \in \mathcal{F}_n$
+  for all $n$, it follows that $A \cap (M \le n) \cap (N \le n)
+  = A \cap (N \le n) \in \mathcal{F}_n$. Hence $A \in \mathcal{F}_N$
+  for any $A \in \mathcal{F}_M$ implying $\mathcal{F}_M \subset \mathcal{F}_N$.
+
+  \item [3.]
+  For any $A \in \mathcal{F}_N$,
+  \begin{equation*}
+    E\left[X_N; A\right] = \sum_{k=0}^K E\left[X_N; A \cap (N=k)\right]
+    = \sum_{k=0}^K E\left[X_k; A \cap (N=k)\right].
+  \end{equation*}
+  As in Durrett 21.24, we can can make the observation that
+  since $A \in \mathcal{F}_N$,
+  $A \cap (N=k) = A \cap (N \le k) - A \cap (N \le k-1)$
+  is $\mathcal{F}_j$ measurable for $j \ge k$.
+  Thus
+  \begin{equation*}
+    E\left[X_k; A \cap (N=k)\right]
+    =  E\left[X_{k+1}; A \cap (N=k)\right]
+    = \cdots =  E\left[X_K; A \cap (N=k)\right]
+  \end{equation*}
+  such that 
+  \begin{equation*}
+    E\left[X_N; A\right] = \sum_{k=0}^K E\left[X_K; A \cap (N=k)\right]
+    = E \left[X_K; A \right].
+  \end{equation*}
+  This proves the claim.
+\end{itemize}
+
+\subsection*{D.4.2.1}
+\textit{Claim:} Suppose $X_n$ is a martingale w.r.t. $\mathcal{G}_n$
+and let $\mathcal{F}_n = \sigma(X_1, \dots, X_n)$.
+Then $\mathcal{G}_n \supset \mathcal{F}_n$ and $X_n$ is a martingale
+w.r.t. $\mathcal{F}_n$.
+
+\textit{Proof:} By definition $X_n$ is measurable w.r.t. $\mathcal{G}_n$.
+Because $\mathcal{G}_1 \subset \mathcal{G}_2 \subset \cdots$,
+$X_i \in \mathcal{G}_n$ for 
+$i \in \left\{1,\dots, n\right\}$
+such that $\sigma(X_i) \subset \mathcal{G}_n$. 
+$\mathcal{F}_n$ is the smallest $\sigma$-algebra containing
+each $\sigma(X_i)$
+so $\mathcal{F}_n \subset \mathcal{G}_n$ as well.
+Clearly $X_n \in \mathcal{F}_n$, so we can verify that it's
+a martingale w.r.t. $\mathcal{F}_n$ by noting that
+$$E[X_n \vert \mathcal{F}_{n-1}] 
+= E[E[X_n \vert \mathcal{G}_{n-1}] \vert \mathcal{F}_{n-1}]
+= E[X_{n-1} \vert \mathcal{F}_{n-1}] = X_{n-1}$$
+
+\subsection*{D.4.2.6}
+\textit{Claim:} Let $Y_1,Y_2, \dots$ be nonnegative i.i.d. random variables
+with $EY_m = 1$ and $P(Y_m =1) < 1$. By example 4.2.3 that 
+$X_n = \prod_{m \le n} Y_m$ defines a martingale. (i) Use Theorem 4.2.12
+and an argument by contradiction to show $X_n \to 0$ a.s. (ii) Use the strong
+law of large numbers to conclude $(1/n) \log X_n \to c < 0$.
+
+\textit{Proof:} (i) $Y_1,Y_2,\dots$ are nonnegative, thus $X_1,X_2,\dots$
+are nonnegative. Also $X_n$, being a martingale, is a supermartingale. 
+Thus theorem 4.2.12 tells us that $X_n \to X$ a.s.
+for some $X$.
+
+Assume $X \ne 0$ on some positive measure set $A$. 
+Since $P(Y_m =1) < 1$ it follows that 
+$P(\vert Y_m - 1 \vert > 1/k) > \epsilon$ for some integer $k$
+and $\epsilon >0$. The second Borel-Cantelli lemma tells us that 
+$P(\vert Y_m - 1 \vert > 1/k \ \text{i.o.}) = 1$. This means that
+$P(\vert X_n - X \vert > X/k \ \text{i.o.}) = 1$ such that 
+$X_n$ does not converge to $X$ on the set $A$ where $X \ne 0$.
+
+(ii) We can rewrite the random sequence as 
+$(1/n)\log X_n = (1/n) \sum_{m \le n} \log Y_m = S_n/n$. The random variables
+$\log Y_m$ are i.i.d. so the SLLN tells us that $S_n/n \to E\log Y_m$.
+Note that $\log(x)$ is a concave function and in particular,
+$\log(x) \le x-1$ for $x \ne 1$. Thus $E \log Y_m < E(Y_m - 1) = 0$
+where the strict inequality comes from the fact that $Y_m \ne 1$
+on a set of positive measure.
+
+\subsection*{D.4.4.9}
+\textit{Claim:} Let $X_n$ and $Y_n$ be martingales with $EX_n^2 < \infty$
+and $EY_n^2 < \infty$.
+\begin{equation*}
+  EX_nY_n - EX_0Y_0 = \sum_{m=1}^n E(X_m - X_{m-1})(Y_m - Y_{m-1})
+\end{equation*}
+
+\textit{Proof:} We know from theorem 4.4.7 of Durrett that
+$E(X_m-X_{m-1})Y_{m-1} = 0$ which lets us immediately reduce the
+right-hand side above to $\sum_{m=1}^n E(X_m - X_{m-1})Y_m$.
+Noting that $$E(X_{m-1}Y_m) = E(E[X_{m-1}Y_m \vert \mathcal{F}_{m-1}])
+= E(X_{m-1}E[Y_m \vert \mathcal{F}_{m-1}]) = E(X_{m-1}Y_{m-1}),$$
+the right-hand side further reduces to
+\begin{equation*}
+  \sum_{m=1}^n EX_mY_m - EX_{m-1}Y_{m-1} = EX_nY_n - EX_0Y_0
+\end{equation*}
+proving the claim.
+
+\subsection*{RP.3.8}
+\textit{Claim:} Suppose $X_1,X_2,\dots$ are i.i.d. random variables
+with mean zero and finite variance $\sigma^2$.
+If $T$ is a stopping time with finite mean, show that
+\begin{equation*}
+  \var(\sum_{i=1}^T X_i) = \sigma^2 E(T)
+\end{equation*}
+
+\textit{Proof:}
+Let $Y_i = X_i^2$ such that $E(Y_i) = E(X_i^2)  = \sigma^2$. 
+Then $Y_1, Y_2, \dots$ are clearly i.i.d. with mean $\mu = \sigma^2$. 
+This along with $T$ being finite allows us to apply 
+Wald's equation (Cor. 3.15) from R\&P,
+\begin{equation*}
+  E(\sum_{i=1}^T Y_i) = \mu E(T).
+\end{equation*}
+Furthermore, $\var(\sum_{i=1}^T X_i) = \sum_{i=1}^T \var(X_i) 
+= \sum_{i=0}^T X_i^2 = \sum_{i=0}^T Y_i$ 
+for zero mean i.i.d. random varianbles. Substituting this and
+$\mu = \sigma^2$ into the equation above proves the claim.
+\end{document}

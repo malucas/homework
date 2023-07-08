@@ -1,0 +1,238 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275B: Homework 1}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+\newcommand{\var}{\text{var}}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{B.21.18}
+
+\textit{Claim:} Suppose $\mathcal{F} \subset \mathcal{G}$ are two
+$\sigma$-fields and $X$ and $Y$ are bounded $\mathcal{G}$
+measurable random variables. Prove that
+\begin{equation*}
+  \mathbb{E}\left[X \mathbb{E} \left[Y \vert \mathcal{F} \right] \right]
+  = \mathbb{E}\left[Y \mathbb{E} \left[X \vert \mathcal{F} \right] \right].
+\end{equation*}
+
+\textit{Proof:} The functions $X$, $Y$, 
+$\mathbb{E} \left[X \vert \mathcal{F} \right]$, and 
+$\mathbb{E} \left[Y \vert \mathcal{F} \right]$
+are all $\mathcal{G}$ measurable and bounded
+meaning that their products are $\mathcal{G}$ measurable
+and bounded (hence integrable w.r.t. $\mathcal{G}$) as well. Thus
+\begin{equation*}
+  \mathbb{E}\left[X \mathbb{E} \left[Y \vert \mathcal{F} \right] \right]
+  = \mathbb{E}\left[\mathbb{E} \left[ X \mathbb{E} 
+    \left[Y \vert \mathcal{F} \right] \vert \mathcal{F} \right] \right]
+  = \mathbb{E}\left[\mathbb{E} \left[ X \vert \mathcal{F} \right] 
+    \mathbb{E} \left[Y \vert \mathcal{F} \right] \right]
+    = \mathbb{E}\left[\mathbb{E} \left[ Y \mathbb{E} 
+    \left[X \vert \mathcal{F} \right] \vert \mathcal{F} \right] \right]
+  = \mathbb{E}\left[Y \mathbb{E} \left[X \vert \mathcal{F} \right] \right]
+\end{equation*}
+where the first and last equalities follow from the definition
+of conditional expectation (applied to the entire probability space $\Omega$) 
+while the second and third equalities follow from Proposition 21.20 (Bass),
+taking into account that $\mathbb{E} \left[X \vert \mathcal{F} \right]$
+and $\mathbb{E} \left[Y \vert \mathcal{F} \right]$ are both
+$\mathcal{F}$ measurable.
+
+\subsection*{B.21.19}
+
+\textit{Claim:} Let $\mathcal{F} \subset \mathcal{G}$ be two
+$\sigma$-fields and let $X$ be a bounded $\mathcal{G}$ measurable
+random variable. Prove that if
+\begin{equation*}
+  \mathbb{E}\left[X Y \right]
+  = \mathbb{E}\left[X \mathbb{E} \left[Y \vert \mathcal{F} \right] \right]
+\end{equation*}
+for all bounded $\mathcal{G}$ measurable random variables $Y$,
+then $X$ is $\mathcal{F}$ measurable.
+
+\textit{Proof:} From the previous problem we can infer that
+\begin{equation*}
+ \mathbb{E} \left[XY \right]
+ = \mathbb{E}\left[X \mathbb{E} \left[Y \vert \mathcal{F} \right] \right]
+ = \mathbb{E}\left[Y \mathbb{E} \left[X \vert \mathcal{F} \right] \right]
+\end{equation*}
+for any bounded $Y \in \mathcal{G}$.
+Then for any set $A \in \mathcal{G}$, 
+\begin{equation*}
+  \mathbb{E}\left[1_A X\right]
+- \mathbb{E}\left[1_A \mathbb{E} \left[X \vert \mathcal{F} \right] \right]
+= \mathbb{E}\left[1_A (X - \mathbb{E} \left[X \vert \mathcal{F} \right]) \right]
+= 0
+\end{equation*}
+Thus if $A = \left\{ X > \mathbb{E} \left[X \vert \mathcal{F} \right] \right\}$
+it follows that $A$ must be a set of measure zero. Else it would contain
+some set $A'$ over which 
+$\mathbb{E}\left[1_A (X - \mathbb{E} 
+\left[X \vert \mathcal{F} \right]) \right] > 0$.
+A similar argument can be made for 
+$A = \left\{ X < \mathbb{E} \left[X \vert \mathcal{F} \right] \right\}$
+such that $X = \mathbb{E} \left[X \vert \mathcal{F} \right]$ a.e.
+except possibly on a $\mathcal{G}$ measurable set of measure zero.
+In particular the equality must hold on every positve measure 
+set in $\mathcal{F}$.
+
+Since $\mathbb{E} \left[X \vert \mathcal{F} \right]$ is by definition
+$\mathcal{F}$ measureable, it follows that $X$ is almost
+$\mathcal{F}$ measureable as well.
+Let $N_{\mathcal{G}} \in \mathcal{G}$ be the measure zero set
+where $\mathbb{E} \left[X \vert \mathcal{F} \right]$ and $X$ differ.
+It follows that there exists a measure zero set 
+$N_{\mathcal{F}} \in \mathcal{F}$ containing the points 
+where the functions differ, as they are equal on every 
+positive measure set in $\mathcal{F}$. Thus
+\begin{equation*}
+  X^{-1}((c,\infty]) 
+  = (X^{-1}((c,\infty]) \cap N_{\mathcal{F}}^c) 
+    \cup (X^{-1}((c,\infty]) \cap N_{\mathcal{F}})
+  = (\mathbb{E} \left[X \vert \mathcal{F} \right]^{-1}((c,\infty]) \cap N_{\mathcal{F}}^c) 
+    \cup (X^{-1}((c,\infty]) \cap N_{\mathcal{F}})
+\end{equation*}
+The first set intersection on the right-hand side obsiously lies in
+$\mathcal{F}$. Thus there must be an $\mathcal{F}$ measure zero
+set over which we can modify $X$ so as to render the second intersection
+(and thus $X$) $\mathcal{F}$ measurable. 
+In lieu of a modification, $X$ may only be  $L^1(\mathcal{F})$ equivalent 
+to $\mathbb{E} \left[X \vert \mathcal{F} \right]$.
+
+\subsection*{D.4.1.3}
+
+\textit{Claim:} Imitate the proof in the remark after Theorem 1.5.2
+to prove the Cauchy-Schwarz inequality.
+\begin{equation*}
+  E(XY \vert \mathcal{G})^2 \le E (X^2 \vert \mathcal{G})
+  E(Y^2 \vert \mathcal{G})
+\end{equation*}
+
+\textit{Proof:} For any set $A \in \mathcal{G}$ and real value $\theta$
+we can write
+\begin{equation*}
+  \int_A (X+\theta Y)^2 \ dP = \int_A X^2 \ dP + 2 \theta \int_A XY \ dP
+  + \theta^2 \int_A Y^2 \ dP.
+\end{equation*}
+As is mentioned in the refenced remark, the fact that the quadratic expression
+on the right-hand side is positive for all $\theta$ implies
+that it must have either one or zero real roots.
+In particular, its descriminant must be less than or equal to zero
+such that
+\begin{equation*}
+  \left(\int_A XY \ dP\right)^2 \le \int_A X^2 \ dP \int_A Y^2 \ dP
+\end{equation*} 
+always holds. But this relation implies the claim up to equivalence on $\mathcal{G}$.
+To see this let
+\begin{equation*}
+  B = \left\{ E(XY \vert \mathcal{G})^2 > E (X^2 \vert \mathcal{G})
+    E(Y^2 \vert \mathcal{G}) \ge \epsilon > 0\right\}.
+\end{equation*}
+The integral inequality that we derived implies that $B$ must have measure 
+zero for all $\epsilon$. Thus the claim can only be violated
+on a set of measure zero.
+
+\subsection*{D.4.1.6} 
+
+\textit{Claim:} Show that if $\mathcal{G} \subset \mathcal{F}$
+and $EX^2 \le \infty$, then
+\begin{equation*}
+  E(\left\{X-E(X \vert \mathcal{F})\right\}^2)
+  + E(\left\{E(X \vert \mathcal{F}) - E(X \vert \mathcal{G}) \right\}^2)
+  = E(\left\{X-E(X \vert \mathcal{G})\right\}^2).
+\end{equation*}
+
+\textit{Proof:} The proof of Theorem 4.1.15 (Durrett) demonstrates that 
+$E(X \vert \mathcal{F})$ and $E(X \vert \mathcal{G})$
+can be viewed as orthogonal projections of $X \in L^2$
+onto $L^2(\mathcal{F})$ and $L^2(\mathcal{G})$.
+It shows that $E((X - E(X \vert \mathcal{F}))Z) = 0$ 
+for any $Z \in L^2(\mathcal{F})$.
+Because $\mathcal{G} \subset \mathcal{F}$,
+$L^2(\mathcal{G})$ is a subspace of $L^2(\mathcal{F})$
+and we can write
+\begin{equation*}
+\begin{aligned}
+  E(\left\{X - E(X \vert \mathcal{G})\right\}^2)
+  & = E(\left\{X - E(X \vert \mathcal{F}) 
+  + E(X \vert \mathcal{F}) - E(X \vert \mathcal{G})\right\}^2) \\
+  & = E(\left\{X - E(X \vert \mathcal{F}) \right\}^2
+  + 2 E(\left\{ X - E(X \vert \mathcal{F})\right\}
+  \left\{ E(X \vert \mathcal{F}) - E(X \vert \mathcal{G})\right\}) \\
+  & \quad + \left\{ E(X \vert \mathcal{F}) - E(X \vert \mathcal{G})\right\}^2) \\
+  & = E(\left\{X - E(X \vert \mathcal{F}) \right\}^2
+  + 2 E(\left\{ X - E(X \vert \mathcal{F})\right\}E(X \vert \mathcal{F})) \\
+  & \quad - 2 E(\left\{ X - E(X \vert \mathcal{F})\right\}E(X \vert \mathcal{G}))
+  + \left\{ E(X \vert \mathcal{F}) - E(X \vert \mathcal{G})\right\}^2) \\
+  & = E(\left\{X - E(X \vert \mathcal{F}) \right\}^2)
+  + E(\left\{ E(X \vert \mathcal{F}) - E(X \vert \mathcal{G})\right\}^2)
+\end{aligned}
+\end{equation*}
+where the cancellations of the middle terms of the second-to-last equation
+follow from 
+$(X - E(X \vert \mathcal{F}))$ being orthogonal to both
+$E(X \vert \mathcal{F})$ and $E(X \vert \mathcal{G})$.
+
+\subsection*{D.4.1.7}
+
+\textit{Claim:} An important special case of the previous result occurs
+when $\mathcal{G} = \left\{\emptyset,\Omega\right\}$.
+Let $\var (X \vert \mathcal{F}) 
+= E(X^2 \vert \mathcal{F}) - E(X \vert \mathcal{F})^2$.
+Show that
+\begin{equation*}
+  \var(X) = E(\var(X \vert \mathcal{F})) + \var(E(X \vert \mathcal{F})).
+\end{equation*}
+
+\textit{Proof:} When $\mathcal{G}$ is the trivial sub-algebra
+we know that $E(X \vert \mathcal{G}) = EX$.
+Thus the statement proved in the previous problem becomes
+\begin{equation*}
+  \var(E) = E(\left\{X-EX \right\}^2)
+  = E(\left\{X-E(X \vert \mathcal{F})\right\}^2)
+  + E(\left\{E(X \vert \mathcal{F}) - EX \right\}^2)
+\end{equation*}
+Expanding the right hand expression above gives us
+\begin{equation*}
+\begin{aligned}
+  \var(E) & = E(X^2) - 2 E(XE(X \vert \mathcal{F})) + E(E(X \vert \mathcal{F})^2)
+  + E(E(X \vert \mathcal{F})^2) - 2 EX \cdot E(E(X \vert \mathcal{F})) + E((EX)^2) \\
+  & = E(E(X^2 \vert \mathcal{F})) - 2 E(E(X \vert \mathcal{F}) E(X \vert \mathcal{F})) + E(E(X \vert \mathcal{F})^2)
+  + E(E(X \vert \mathcal{F})^2) - 2(EX)^2 + (EX)^2\\
+  & = E(E(X^2 \vert \mathcal{F})) - 2 E(E(X \vert \mathcal{F})^2) + E(E(X \vert \mathcal{F})^2)
+  + E(E(X \vert \mathcal{F})^2) - (EX)^2\\
+  & = E(E(X^2 \vert \mathcal{F}) - E(X \vert \mathcal{F})^2)
+  + E(E(X \vert \mathcal{F})^2) - E(E(X \vert \mathcal{F}))^2 \\ 
+  & = E(\var(X \vert \mathcal{F})) + \var(E(X \vert \mathcal{F}))
+\end{aligned}
+\end{equation*}
+where I make use of Theorem 4.1.14 (Durrett) and the fact that 
+$E(X \vert \mathcal{F}) \in \mathcal{F}$ to determine 
+\begin{equation*}
+  E(XE(X \vert \mathcal{F})) 
+  = E(E(XE(X \vert \mathcal{F})  \vert \mathcal{F}))
+  = E(E(X \vert \mathcal{F}) E(X \vert \mathcal{F})).
+\end{equation*}
+I also exploit the equivalence $EX = E(E(X \vert \mathcal{F}))$ several times.
+
+\end{document}
