@@ -1,1 +1,1 @@
-# Math 245 - Graduate Real Analysis
+Math 245 - Graduate Analysis
