@@ -1,0 +1,93 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275A: Homework 7}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{3.2.1}
+
+Define a collection of sets $A_{n,m_n}$ for $n \in \mathbb{N}^+$
+and $m_n \in \{1,\dots,2^n\}$ where 
+$A_{n,m_n} = (0,1) \setminus [\frac{m_n-1}{2^n}, \frac{m_n}{2^n}]$.
+Define the collection of distributions $\mu_{n,m_n}$
+to be uniform on each respective $A_{n,m_n}$
+such that their corresponding distribution functions $F_{n,m_n}$
+are have a constant positive slope, excepting the interval 
+$(\frac{m_n-1}{2^n}, \frac{m_n}{2^n})$ where the slope is zero.
+Let $F_1 = F_{1,1}, F_2 = F_{1,2}, F_3 = F_{2,1}, \dots$.
+Then the sequence $F_k$ converges pointwise to $F$, 
+the distribution function for the uniform distribution $\mu$.
+And so $\mu_k \implies \mu$. 
+
+At the same time, for any $x \in (0,1)$ there is an infinite
+subcollection of density functions $f_k(x)$ which evaluate to
+zero at $x$. Thus $f_k(x)$ does not converge to $f(x) = 1$
+anywhere in $(0,1)$.
+
+
+\section*{3.2.2.iii}
+\textit{Claim:}
+Let $X_1, X_2, \dots$ be independent with distribution $F$,
+and let $M_n = \max_{m \le n}X_m$. Then $P(M_n \le x) = F(x)^n$.
+Prove that if $F(x) = 1-e^{-x}$ for $x \ge 0$ then for all
+$y \in (-\infty, \infty)$
+\begin{equation*}
+  P(M_n - \log n \le y) \to \exp(-e^-y)
+\end{equation*}
+
+\textit{Proof:}
+First note that
+\begin{equation*}
+\begin{aligned}
+  P(M_n - \log n \le y) &= P(M_n \le \log n + y) \\
+  &= F(\log n + y)^n \\
+  &= (1 - e^{-\log n - y})^n \\
+  &= (1 - n^{-1}e^{-y})^n
+\end{aligned}
+\end{equation*}
+We can apply Lemma 3.1.1 from Durrett to the last equation
+(where $c_n = -n^{-1}e^{-y} \to 0$, $a_n = n \to \infty$,
+and $c_n a_n = -e^{-y})$ to determine that
+$P(M_n - \log n \le y) \to \exp(-e^{-y})$.
+
+\section*{3.2.4}
+\textit{Claim:}
+Let $g \ge 0$ be continuous. If $X_n \implies X_\infty$ then
+\begin{equation*}
+  \underset{n \to \infty}{\lim \inf} \ E g(X_n) \ge E g(X_\infty)
+\end{equation*}
+
+\textit{Proof:}
+We know from Fatou's lemma that, in general
+\begin{equation*}
+  \underset{n \to \infty}{\lim \inf} \ E g(X_n) 
+  \ge E (\underset{n \to \infty}{\lim \inf} \ g(X_n)) 
+\end{equation*}
+
+\section*{3.2.10}
+
+\section*{3.2.13}
+
+\section*{Extra 1}
+
+\end{document}

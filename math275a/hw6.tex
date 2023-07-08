@@ -1,0 +1,136 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275A: Homework 6}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{2.1.10}
+\textit{Claim:}
+If $X$ and $Y$ are integer-valued r.v.'s then
+$P(X+Y=n) = \sum_m P(X=m) P(Y=n-m)$.
+
+\textit{Proof:}
+This follows almost by inspection. For a given $n$,
+$P(X+Y=n)$ is the probability that $X$ equals
+some integer $m$ and $Y$ equals some other 
+integer $n-m$ such that they sum to $n$.
+The total probability that $X+Y=n$ is just
+$\sum_m P(X=m \cap Y=n-m)$ where $m \in \mathbb{Z}$.
+Applying independence of $X$ and $Y$ completes the proof.
+
+\section*{2.1.11}
+\textit{Claim:}
+Use 2.1.10 to show that if $X = \text{Poisson}(\lambda)$
+and $Y = \text{Poisson}(\mu)$ are independent then 
+$X+Y=\text{Poisson} (\lambda + \mu)$
+
+\textit{Proof:}
+Take advantage of independence and 
+just do the computation.
+\begin{equation*}
+\begin{aligned}
+  P(X+Y = n) &= \sum_m P(X=m)P(Y=n-m) \\
+  &= \sum_m e^{-\lambda} \lambda^m / m! \cdot e^{-\mu} \mu^{(n-m)} / (n-m)! \\
+  &= e^{-\lambda - \mu} \sum_m \frac{\lambda^m \mu^{(n-m)}}{m!(n-m)!} \\
+  &= e^{-\lambda - \mu} \sum_m \frac{\lambda^m \mu^{(n-m)}n!}{m!(n-m)!n!} \\
+  &= e^{-\lambda - \mu} \sum_m \frac{(\lambda + \mu)^n}{n!}
+\end{aligned}
+\end{equation*}
+
+\section*{3.1.3}
+\text{Claim:}
+Suppose $P(X_i=1)=P(X_i=-1)=1/2$. Show that if $a \in (0,1)$
+\begin{equation*}
+  \frac{1}{2n} \log P(S_{2n} \ge 2na) \to -\gamma(a)
+\end{equation*}
+where $\gamma(a) = \frac{1}{2}\{(1+a)\log(1+a)+(1-a)\log(1-a)\}$.
+
+\textit{Proof:}
+We can make use of the definition of $P(S_n=2n)$ and
+Sterling's approximation to arrive at
+\begin{equation*}
+  P(S_n=k) = (1+\frac{k}{n})^{-n-k} (1-\frac{k}{n})^{-n+k}
+  (\pi n)^{1/2} (1+\frac{k}{n})^{-1/2} (1-\frac{k}{n})^{-1/2}
+\end{equation*}
+Let assume that $k/n=a$. Then for $j \in \mathbb{N}$ we can
+rewrite the last equation as
+\begin{equation*}
+  P(S_n=k+j) = (1+a+\frac{j}{n})^{-n(1+a)-j} (1-a-\frac{j}{n})^{-n(1-a)+j}
+  (\pi n)^{1/2} (1+(a+\frac{j}{n})^2)^{-1/2}
+\end{equation*}
+Observe that
+\begin{equation*}
+\begin{aligned}
+  P(S_n\ge k) &= \sum_j P(S_n=k+j) \\
+  &= \sum_j (1+a+\frac{j}{n})^{-n(1+a)-j} (1-a-\frac{j}{n})^{-n(1-a)+j}
+  (\pi n)^{1/2} (1+(a+\frac{j}{n})^2)^{-1/2} \\
+  & \le \sum_j (1+a)^{-n(1+a)-j} (1-a)^{-n(1-a)+j}
+  (\pi n)^{1/2} (1+a^2)^{-1/2} \\
+  & = (1+a)^{-n(1+a)} (1-a)^{-n(1-a)} (\pi n)^{1/2} (1+a^2)^{-1/2}
+  \sum_j (1+a)^{-j} (1-a)^{j} \\
+  & = C P(S_n = k) 
+\end{aligned}
+\end{equation*}
+such that $\frac{1}{2n} \log P(S_{2n}>2k)$ 
+and $\frac{1}{2n} \log P(S_{2n}>2k)$ will converge to the same value.
+Finally note that
+\begin{equation*}
+\begin{aligned}
+  \frac{1}{2n} \log P(S_{2n}=2k)
+  &= \frac{1}{2n} (-2n)(1+a) \log(1+a) + \frac{1}{2n} (-2n)(1-a) \log(1-a) 
+  + \frac{1}{2n} \log \left((\pi 2n)^{1/2} (1+a)\right)\\
+  &= -(1+a) \log(1+a) -(1-a) \log(1-a) = -\gamma(a)
+\end{aligned}
+\end{equation*}
+
+\section{Extra 1}
+\textit{Claim:}
+Let $X_1,X_2,\dots$ be random variables with absolutely continuous
+distributions $\mu_n,\mu$ and density functions $f_n, f$.
+
+(a)
+\begin{equation*}
+  \sup_{A \in \mathcal{B}(\mathbb{R})}
+  \vert \mu_n A - \mu A \vert
+  = \frac{1}{2} \int_{\mathbb{R}}\vert f_n(x) - f(x) \vert \ dx
+\end{equation*}
+(b) If $f_n(x) \to f(x)$ pointwise then $\Vert \mu_n - \mu \Vert \to 0$.
+
+\textit{Proof:}
+(a)
+
+\section{Extra 2}
+\textit{Claim:}
+Give $\mathbb{Z}$ the sigma algebra of all subsets.
+
+(a) Let $X$ and $Y$ be $\mathbb{Z}$-valued r.v.'s with distributions
+$\mu$ and $\nu$. Prove that $P(X \ne Y) \ge \Vert \mu - \nu \Vert$.
+
+(b) Let $\mu$ and $\nu$ be probability distributions on $\mathbb{Z}$.
+Prove that there are $\mathbb{Z}$-valued r.v.'s $X'$ and $Y'$ on some
+probability space that have distributions $\mu$ and $\nu$ and satisfy
+$P(X' \ne Y') \ge \Vert \mu - \nu \Vert$.
+
+\textit{Proof:}
+
+\end{document}

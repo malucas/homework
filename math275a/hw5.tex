@@ -1,0 +1,220 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275A: Homework 5}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Extra}
+\textit{Claim:} Let $\Omega$ be a set. 
+For subsets $A_1, A_2, \dots$ and $A$ in $\Omega$,
+let us say that $A_n \to A$ \textbf{pointwise} if
+$\mathbf{1}_{A_n} \to \mathbf{1}_{A}$ pointwise.
+\begin{itemize}
+  \item[(a)] Assume that $A_1 \subset A_2 \subset \cdots$
+  and $A$ is their union. Show that $A_n \to A$ pointwise.
+
+  \item[(b)] Prove carefully that $A_n$ converges pointwise
+  to some limit set if and only if 
+  $\{A_n \ \text{i.o.}\} = \{A_n \ \text{eventually}\}$.
+
+  \item[(c)] Let $\mathcal{F}$ be a sigma-algebra and let
+  $\mu : \mathcal{F} \to [0,\infty)$ be finitely additive.
+  Prove that $\mu$ is a measure if and only if
+  \begin{equation*}
+    \mu A_n \to \mu A \quad \text{whenever} \quad
+    A_n \to A \ \text{pointwise}
+  \end{equation*}
+  where all sets are in $\mathcal{F}$.
+\end{itemize}
+
+\textit{Proof:}
+\begin{itemize}
+  \item[(a)] Assuming the $A_n \uparrow A$, it follows that
+  for every $\omega \in A$, there exists an $N$ such that
+  $\omega \in A_n$ for $n \ge N$.
+  Thus $\mathbf{1}_{A_n}(\omega) = \mathbf{1}_A(\omega)$
+  for all such $n$, implying that 
+  $\mathbf{1}_{A_n} \to \mathbf{1}_A$ pointwise.
+
+  \item[(b)] $(\implies)$ 
+  By definition $\{A_n \ \text{eventually}\} \subset \{A_n \ \text{i.o.}\}$.
+  To estabilish the reverse inclusion note that if $A_n \to A$ pointwise 
+  then any $\omega \in \{A_n \ \text{i.o.}\}$ must also be a member of 
+  $\{A_n \ \text{eventually}\}$. Otherwise, $\mathbf{1}_{A_n}(\omega)
+  \not \to \mathbf{1}_A(\omega)$ at that point, 
+  violating our assumption on $\langle A_n \rangle$.
+  
+  $(\impliedby)$ 
+  Let $A = \{A_n \ \text{i.o.}\} = \{A_n \ \text{eventually}\}$.
+  For any $\omega \in A$, we know there exists finite $N$
+  such that $\omega$ eventually lies in $A_n$ for $n \ge N$.
+  Thus $\mathbf{1}_{A_n}(\omega) \to \mathbf{1}_{A}(\omega)$.
+  For any $\omega' \in A^c$, $\omega'$ must lie within
+  only finitely many $A_n$'s (since it can't hit an $A_n$ inifinitely often) 
+  implying that $\mathbf{1}_{A_n}(\omega') \to 0$.
+  Thus $\mathbf{1}_{A_n} \to \mathbf{1}_{A}$ pointwise.
+
+  \item[(c)] $(\implies)$ Assume $\mu$ is a measure and that
+  $A_n \to A$ pointwise. We know from part (b) that
+  $A = \lim \sup A_n = \lim \inf A_n$. 
+  Let $B_n = \cup_{i=n}^\infty A_i$ such that 
+  $B_1 \supset B_2 \supset \dots \supset A$ and 
+  $\mu B_n \downarrow \mu A$ (continuity from above).
+  Let $C_n = \cap_{i=n}^\infty A_i$ such that 
+  $C_1 \subset C_2 \subset \dots \subset A$ and 
+  $\mu C_n \uparrow \mu A$ (continuity from below).
+  Because $C_n \subset A_n \subset B_n$ for each $n$
+  such that $\mu C_n \le \mu A_n \le \mu B_n$,
+  it must hold that $\mu A_n \to \mu A$.
+  
+
+  $(\impliedby)$ Note that finite additivity implies that 
+  $\mu(\emptyset)=0$, since $\emptyset$ is disjoint from itself
+  and so $\mu \emptyset = \mu \emptyset + \mu \emptyset$.
+  Assume that $\mu A_n \to \mu A$ whenever $A_n \to A$ pointwise.
+  Let $A_n$ be a telescoping sequence of sets for which $A_n \uparrow A$.
+  Then $A_n \to A$ pointwise as established in part (a) 
+  and $\mu A_n \to \mu A$ by our assumption.
+  This establishes continuity of the measure $\mu$ from below which 
+  can be shown to be equivalent to countable additivity
+  (assuming finite additivity). 
+  
+\end{itemize}
+
+\section*{2.3.8}
+\textit{Claim:} Let $A_n$ be a sequence of indepenedent events
+with $P(A_n) < 1$ for all $n$. Show that $P(\cup A_n) = 1$
+implies $\sum P(A_n) = \infty$ and hence $P(A_n\ \text{i.o.}) = 1$.
+
+\textit{Proof:} The independence of the sequence $\langle A_n \rangle$
+along with $P(\cup A_n) = 1$ implies that
+$P(\cap A_n^c) = \prod P(A_n^c) = \prod (1-P(A_n))=0$.
+Taking the log of that infinite product yields $\sum \log (1-P(A_n)) = -\infty$.
+
+Since $P(A_n) < 1$, each term $\log(1-P(A_n))$ is finite and negative.
+What's more, $\frac{-\log(1-P(A_n))}{P(A_n)} \to 1$ for $P(A_n) \to 0$.
+So we can apply the limit comparison test to determine that
+$\sum \log (1-P(A_n))$ diverges if and only if $\sum P(A_n)$
+does as well (which they both do). 
+The last part of the claim follows from BCII.
+
+
+\textit{Alternate Proof?:}
+After establishing that $\prod (1-P(A_n))=0$
+it seems that we could also note that
+$P(A_n) < 1$ implies  $1-P(A_n)>0$ for all $n$.
+Hence $\prod_{i=1}^m (1-P(A_n)) = P(\cap_{i=1}^m A_i^c) > 0$ 
+for finite $m$, such that $P(\cap_{i=m}^\infty A_i^c)$ must equal zero. 
+Now $\{A_n \ \text{i.o.}\}^c = \{A_n^c \ \text{eventually}\}
+= \lim P(\cap_n^\infty A_n^c) = 0$,
+so that $\{A_n \ \text{i.o.}\}$ must equal 1.
+The first Borel-Cantelli lemma then implies that 
+$\sum P(A_n) = \infty$.
+
+\section*{2.3.11}
+\textit{Claim:} Let $X_1, X_2, \dots$ be independent with $P(X_n=1)=p_n$
+and $P(X_n=0)=1-p_n$. Show that (i) $X_n \to 0$ in probability
+if and only if $p_n \to 0$ and (ii) $X_n \to 0$ a.s. if and only if
+$\sum p_n < \infty$.
+
+\textit{Proof:} (i) If $X_n \to 0$ in probability then
+for any $\epsilon > 0 $, $P(\vert X_n \vert > \epsilon) \to 0$.
+Since each $X_n$ is an indicator function, $P(\vert X_n \vert > \epsilon)
+= P(X_n = 1) = p_n$ for $\epsilon < 1$.
+Thus $p_n$ goes to zero in the limit. This same equation tells us that 
+if $p_n \to 0$, then $P(X_n=1) = P(\vert X_n \vert > \epsilon) \to 0$.
+
+(ii) If $X_n \to 0$ a.s. then  $P(X_n=1 \ \text{i.o.})$
+must go to zero, since for every $\omega \in \Omega$
+excluding some null set, $X_n(\omega) \to 0$ and cannot equal $1$
+beyond some finite integer $N$.
+The events $X_n = 1$ are independent, so by the second Borel-Cantelli lemma,
+$\sum P(X_n=1) = \sum p_n$ must be finite.
+If on the other hand we are given that $\sum p_n < \infty$,
+it follows form the first Borel-Cantelli lemma that 
+$P(X_n=1 \ \text{i.o.}) = 0$. Thus for every $\omega$ excluding some null set,
+$X_n(\omega) = 1$ for only finitely many $n \in \mathbb{N}$.
+So $X_n(\omega) \to 0$ almost surely.
+
+\section*{2.3.12}
+\textit{Claim:} Let $X_1,X_2,\dots$ be a sequence of r.v.'s defined on
+$(\Omega, \mathcal{F}, P)$ where $\Omega$ is a countable set and $\mathcal{F}$
+consists of all subsets of $\Omega$. Show that $X_n \to X$ in probability
+implies $X_n \to X$ a.s.
+
+\textit{Proof:} Assume $X_n$ does not converge almost surely to $X$,
+then there exists a subset $A \subset \Omega$ with non-zero measure
+on which $\vert X_n - X \vert \not \to 0$.
+Instead there exists some constant $\alpha > 0$ for which 
+$\vert X_n - X \vert > \alpha$ infinitely often.
+Since $\mu A > 0$ and $\Omega$
+is discrete, the finite additivity of $\mu$ tells us that there is at least
+one element $\omega \in A$ for which $\mu \omega > 0$.
+But if such an $\omega$ exists, then $X_n$ cannot coverge to $X$ in probability
+either as $P(\vert X_n - X \vert > \alpha) > \mu \omega$ 
+for an infinite subsequence of $\langle X_n \rangle$.
+
+\section*{2.3.14}
+\textit{Claim:} Let $X_1,X_2,\dots$ be independent. 
+Show that $\sup X_n < \infty$ a.s. if and only if
+$\sum_n P(X_n > A) < \infty$ for some $A$.
+
+\textit{Proof:} $(\impliedby)$ Assume there exists some $A$ for which
+$\sum_n P(X_n > A) < \infty$. Then BCI implies that
+$P(X_n > A \ \text{i.o.}) = 0$ and  so $P(X_n < A \ \text{eventually}) = 1$.
+For any $\omega \in \{X_n < A \ \text{eventually}\}$,
+there is a finite integer $N$ beyond which $X_n(\omega) < A$.
+That combined with the fact that  $X_n$ is bounded a.s. 
+implies that $\sup_n X_n < \infty$ a.s.
+
+$(\implies)$ Now assume that $\sum_n P(X_n > A) = \infty$ for every $A$.
+Then the indepence of the random variables $X_n$ along with BCII
+tell us that $P(X_n > A \ \text{i.o.}) = 1$ for any $A$. 
+For  $\omega \in \{X_n > A \ \text{i.o.}\}$,
+$\sup X_n(\omega) > A$ almost surely and since $A$ is arbitrary 
+it follows that $\sup X_n(\omega) = \infty$ almost surely.
+Thus if $\sup X_n < \infty$ a.s., 
+it must hold that $\sum_n P(X_n > A) < \infty$
+
+\section*{2.4.2}
+\textit{Claim:} Let $X_0=(1,0)$ and define $X_n \in \mathbb{R}^2$ inductively
+by declaring that $X_{n+1}$ is chosen at random from the ball of radius
+$\vert X_n \vert$ centered at the origin, i.e. $X_{n+1}/\vert X_n \vert$
+is uniformly distributed on the ball of radius 1 and independent of
+$X_1,\dots,X_n$. Prove that $n^{-1} \log \vert X_n \vert \to c$ a.s.
+and compute $c$.
+
+\textit{Proof:} Place a uniform distribution on the unit ball
+in $\mathbb{R}^2$ and let $Y_i$ be a sample taken from that distribution.
+Then the probability that $\vert Y_i \vert < r$ is just the normalized area. 
+Specifically $P(\vert Y_i \vert < r) = r^2$ for $r \in [0,1]$. 
+Because each $X_n$ can be represented as a sample from the unit ball scaled by 
+the previous sample's magnitude $\vert X_{n-1} \vert$,
+we can write $\vert X_n \vert = \prod_{i=1}^n \vert Y_i \vert$ where the $Y_i$'s
+are i.i.d. random variables as described previously.
+Noting then that $\log(\vert X_n \vert) = \log (\prod_{i=1}^n \vert Y_i \vert)
+= \sum_{i=1}^n \log(\vert Y_i \vert )$, we can apply the SLLN to determine that 
+$n^{-1} \log(\vert X_n \vert) = n^{-1} \sum_{i=1}^n \log \vert Y_i \vert \to \mu$
+where $\mu = E \vert Y_i \vert = \int_0^1 r (2r) \ dr = 2/3$
+
+\end{document}

@@ -1,0 +1,223 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275A: Homework 4}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{1.7.4}
+
+Claim: Let $\mu$ be a finite masure on $\mathbb{R}$
+and $F(x) = \mu((-\infty,x])$. Show that
+\begin{equation*}
+  \int (F(x+c) - F(x)) \ dx = c \mu (\mathbb{R})
+\end{equation*}
+
+Proof: Define the product measure $\lambda \times \mu$
+on $\mathbb{R}^2$ where $\lambda$ is the standard 
+Lebesgue measure on $\mathbb{R}$. 
+Also define a subset of $\mathbb{R}^2$,
+\begin{equation*}
+  E = \{(x,y) : x < y \le x + c \}
+  = \{(x,y) : y - c < x \le y \},
+\end{equation*}
+over which we will integrate.
+From Fubini's theorem, we can determine that
+\begin{equation*}
+  \int_{\mathbb{R}^2} \mathbf{1}_E \ d(\lambda \times \mu)
+  = \int_{\mathbb{R}} \int_{x < y \le x+c} \ d\mu dx
+  = \int_{\mathbb{R}} F(x+c) - F(x) \ dx.
+\end{equation*}
+Likewise, if we flip the order of integration 
+(and use the alternative expression for $E$ above), we get
+\begin{equation*}
+  \int_{\mathbb{R}^2} \mathbf{1}_E \ d(\lambda \times \mu)
+  = \int_{\mathbb{R}} \int_{y-c < x \le y} \ dx d\mu
+  = \int_{\mathbb{R}} c \ d\mu = c \mu(\mathbb{R}),
+\end{equation*}
+proving the claim.
+
+\section*{2.1.5}
+
+Claim: (i) If $X$ and $Y$ are independent with distributions
+$\mu$ and $\nu$ then
+\begin{equation*}
+  P(X + Y = 0) = \sum_y \mu(\{-y\}) \nu(\{y\}).
+\end{equation*}
+(ii) If $X$ has a continuous distribution $P(X = Y) = 0$.
+
+Proof: Since $X$ and $Y$ are independent,
+we know the vector $(X,Y)$ has distribution $\mu \times \nu$.
+Thus can define the $P(X+Y = 0)$ as an integral over 
+the indicator function for $x + y = 0$, that is
+\begin{equation*}
+  P(X +Y = 0) = \int \mathbf{1}_{(x + y = 0)} d(\mu \times \nu).
+\end{equation*}
+This integrand is nonzero only on a line,
+passing through the origin of $R^2$.
+Thus we can rewrite the expression for the probability as
+\begin{equation*}
+  P(X+Y = 0) = \int \mathbf{1}_{(x + y = 0)} \ d\mu d\nu
+  = \int \mu(\{-y\}) d\nu
+  = \sum_y \mu(\{y\}) \nu(\{-y\}),
+\end{equation*}
+proving the first claim. Note here that the sum over $y$
+makes sense in that each distribution has only 
+countably many discontinuities such that $\mu$ and $\nu$
+only evaluate to zero at a finite number of points.
+
+To prove the second claim,
+just note that if  $\mu$ (r.e. $\nu$) has a continuous distribution
+function $F(x)$, then $\mu(x) = F(x) - F(x^-) = 0$ by definition.
+Thus
+\begin{equation*}
+  P(X+Y=0) = \sum_y \mu(\{y\}) \nu(\{-y\})
+  = \sum_y 0 \cdot 0 = 0.
+\end{equation*}
+
+\section*{2.1.15}
+Claim: Let $\Omega$ be the unit interval $(0,1)$
+equipped with the Borel sets $\mathcal{F}$ and 
+Lebesque measure $P$. Let $Y_n(\omega) = 1$ if $[2^n \omega]$
+is odd and $0$ if $[2^n \omega]$ is even.
+Show that $Y_1, Y_2, \dots$ are independent with
+$P(Y_k = 0) = P(Y_k=1) = 1/2$.
+
+Proof: For a given $k$, each successive h-interval
+$[\frac{i-1}{2^k}, \frac{i}{2^k})$
+for $i \in 1,2,\dots,2^k$ maps alternately to either
+0 or 1, and has an equivalent measure under $P$.
+Note that all intervals specified as $[0,\frac{1}{2^k})$
+are actually open intervals, 
+but this doesn't affect their measure under $P$
+so I will not differentiate these intervals in the proof.
+
+Given a specific $y_1$, $\{\omega: Y_1(\omega) = y_1\} 
+= [\frac{i}{2}, \frac{i+1}{2})$ for some $i \in \{1,2\}$.
+If we also specify $y_2$, then
+$\{\omega: Y_1(\omega) = y_1, Y_2(\omega) = y_2\} 
+= \{\omega: Y_1(\omega) = y_1\} \cap \{\omega: Y_2(\omega) = y_2\}
+= [\frac{i}{2}, \frac{i+1}{2})$ for some $i \in \{0,1,2,3\}$.
+Proceeding by induction, it follows that for any given
+sequence of $y_k$'s of length $n$,
+\begin{equation*}
+  \{\omega: Y_1(\omega) = y_1, \dots, Y_n(\omega) = y_n\}
+  \cap_{i=k}^n\{\omega: Y_k(\omega) = y_k\}
+  = [\frac{i}{2^n}, \frac{i+1}{2^n})
+\end{equation*} 
+for some $i \in \{0, 2^n-1\}$.
+
+Thus the probability of any length-$n$ sequence occuring
+is $P([\frac{i}{2^n}, \frac{i+1}{2^n})) = \frac{1}{2^n}$. 
+This combined with the fact that each $Y_k$ has and
+equal probability of being 0 or 1 lets us write
+\begin{equation*}
+  P(Y_1=y_1, Y_2=y_2, \dots, Y_n=y_n) = \frac{1}{2^n} 
+  = \prod_{i=1}^n P(Y_i=y_i) 
+  \quad \text{for all} \quad n \in \mathbb{N},
+\end{equation*}
+confirming that $Y_1,Y_2,\dots$ are independent.
+
+\section*{2.2.3}
+
+Claim: (i) Let $f$ be a measurable function on $[0,1]$
+with $\int_0^1 \vert f(x) \vert dx < \infty$.
+Let $U_1, U_2,...$ be independent and uniformly distributed
+on $[0,1]$, and let
+\begin{equation*}
+  I_n = n^{-1}(f(U_1) + \cdots + f(U_n))
+\end{equation*} 
+Show that $I_n \to I := \int_0^1 f \ dx$ in probability.
+(ii) Suppose $\int_0^1 \vert f(x) \vert^2 \ dx < \infty$.
+Use Chebyshev's inequality to estimate
+$P(\vert I_n - I \vert > a/n^{1/2})$.
+
+Proof: Each function $f(U_i)$ is a random variable
+since each $U_i$ is a random variable and $f$ is
+measurable. They also inherit the i.i.d. property from $U_i$.
+That $f(x)$ is integrable implies 
+$E f(U_i) = \int_0^1 f \ dU_i(x) = \int_0^1 f \ dx = I$ 
+is finite. Thus we apply the $L^1$ weak law of large numbers (2.2.14)
+to determine that $I_n \to I$ in probability.
+
+Letting $\phi(x) = x^2$, we can apply 
+Chebyshev's inequality to the random variables
+$\vert I_n - I \vert$ to determine that
+\begin{equation*}
+  \frac{a^2}{n} P(\vert I_n - I \vert > a/n^{1/2})
+  \le E \vert I_n - I \vert^2
+\end{equation*}
+$I$ being equal to the expectation of each 
+$f(U_i)$ means
+\begin{equation*}
+  E(I_n - I)^2
+  = E(n^{-1} ( \sum_{i=1}^n f(U_i) - nI) )^2
+  = n^{-2} \text{var}(\sum_{i=1}^n f(U_i))
+  = n^{-1} \text{var}(f(U_i)).
+\end{equation*}
+Combining this result with the previous inequality implies
+\begin{equation*}
+  P(\vert I_n - I \vert > a/n^{1/2}) 
+  \le a^{-2} \left( \int_0^1 f(x)^2 \ dx 
+  - \left(\int_0^1 f(x) \ dx \right)^2 \right)
+  < \infty.
+\end{equation*}
+Where the boundedness of $\text{var}(f(U_i))$ follows from
+$f \in L^2$.
+
+\section*{2.2.4}
+
+Claim: Let $X_1, X_2, \dots$ be i.i.d with 
+$P(X_i=(-1)^k k) = C/k^2 \log k$ for $k \ge 2$ where $C$
+is chosen to make the sum of the probabilites = 1.
+Show that $E \vert X_i \vert = \infty$, but there is a
+finite constant $\mu$ so that $S_n/n \to \mu$ in probability.
+
+Proof: To see that $E \vert X_i \vert = \infty$ observe that
+\begin{equation*}
+  E \vert X_i \vert = \sum_{k=2}^\infty k \cdot C/k^2 \log k
+  = \sum_{k=2}^\infty C/k \log k = C \sum_{k=2}^\infty 1/k \log k.
+\end{equation*}
+The sum multiplying $C$ in the last expression is a divergent
+series of nonnegative terms so $E \vert X_i \vert = \infty$.
+
+To show convergence in probability, 
+we apply Durrett's weak law of large numbers (2.2.12).
+First note that
+\begin{equation*}
+  n P(\vert X_n \vert > n) = nC \sum_{k=n+1}^\infty 1/k^2 \log k
+  \le \frac{nC}{\log n} \sum_{k=n+1}^n\infty \frac{1}{k^2}
+  \le \frac{nC}{\log n} \int_n^\infty \frac{x^2} \ dx
+  = \frac{C}{\log n}.
+\end{equation*}
+Thus $n P(\vert X_n \vert > n) \to 0$ as $n \to \infty$,
+allowing us to apply the WLLN. Furthermore,
+\begin{equation*}
+  \mu_n = E(X_1 \mathbf{1}_{(\vert X_1 \vert \le n)})
+  = \sum_{k=2}^n \frac{(-1)^kC}{k \log k}
+  \to \sum_{k=2}^\infty \frac{(-1)^kC}{k \log k} =\mu
+\end{equation*}
+Where the fact that $\mu$ is an alternating series implies
+convergence. So by the WLLN $S_n/n \to \mu_n \to \mu$
+as $n \to \infty$ proving the claim.
+
+\end{document}

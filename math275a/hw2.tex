@@ -1,0 +1,220 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275A: Homework 2}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Bonus}
+
+Claim: Let $m$ be a measure on the Borel set $\mathcal{R}$, 
+with $A \in \mathcal{R}$ such that $m A < \infty$.
+Let $\epsilon > 0$. Show that there is a finite collection of
+bounded intervals $I_1,I_2, \dots, I_k$ such that
+\begin{equation*}
+  m(A \Delta  (I_1 \cup \cdots \cup I_k)) < \epsilon.
+\end{equation*}
+
+Proof: Lebesque measure $m$ is, by definition, 
+the restriction of outer measure $m^*$
+to the $m^*$-measurable sets, 
+themselves equivalent to $\mathcal{R}$.
+The explicit definition of $m^*$ is
+\begin{equation*}
+  m^*(A) = \inf \{\sum_i (b_i - a_i): 
+    A \subset \cup_i (a_i, b_i], 
+    -\infty < a_i \le b_i < \infty \}.
+\end{equation*}
+This implies that for any $\epsilon$ and set $A$ of finite measure,
+there exists a countable set of half-open intervals $\{I_i\}_i$ 
+covering $A$ such that
+\begin{equation*}
+  m(A) + \frac{\epsilon}{2} \ge \sum_i m(I_i).
+\end{equation*}
+
+Since $\sum_i m(I_i)$ converges, we can select an integer $k$
+such that
+\begin{equation*}
+  \sum_{i=1}^k m(I_i) + \frac{\epsilon}{2} \ge \sum_i m(I_i)
+\end{equation*}
+
+Note, that sets of half-open intervals $I_i$ 
+can be assumed to be disjoint, following from the fact that
+any two such overlapping intervals $I_i$ and $I_j$ can be rewritten 
+as a pair of disjoint intervals, so that we can build
+collection of disjoint intervals from any generic collection.
+Thus
+\begin{equation*}
+  \sum_i m(I_i) = m(\cup_i I_i)
+\end{equation*}
+
+This equality lets us rewrite the previous inequalities as
+\begin{equation*}
+  m(A) + \frac{\epsilon}{2} > m (\cup_i I) \quad \text{and} \quad
+  m(\cup_{i=1}^k I_i) + \frac{\epsilon}{2} \ge m(\cup_i I_i).
+\end{equation*}
+That $A$ and $\cup_{i=1}^k I_i$ are both subsets of $\cup_i I_i$,
+lets us use additivity to rewrite them again as
+\begin{equation*}
+  m(\cup_i I_i \setminus A) \le \frac{\epsilon}{2} 
+  \quad \text{and} \quad
+  m(\cup_i I_i \setminus \cup_{i=1}^k I_i) \le \frac{\epsilon}{2},
+\end{equation*}
+thus implying that $m(A \Delta \cup_{i=1}^k I_i) \le \epsilon$.
+
+
+\section*{1.2.1}
+
+Claim: Suppose $X$ and $Y$ are random variables on 
+$(\Omega, \mathcal{F}, P)$ and let $A \in \mathcal{F}$.
+Show that if we let $Z(\omega) = X(\omega)$ for $\omega \in A$
+and $Z(\omega) = Y(\omega)$ for $\omega \in A^c$,
+then $Z$ is a random variable.
+
+Proof: We just need to show that $Z^{-1}(B) \in \mathcal{F}$
+for $B \in \mathcal{R}$. But given any such $B$,
+\begin{equation*}
+  Z^{-1}(B) = (X^{-1}(B) \cap A) \cup (Y^{-1}(B) \cap A^c).
+\end{equation*}
+Each of the intersections are in $\mathcal{F}$ 
+since $A \in \mathcal{F}$ and $\mathcal{F}$ is a $\sigma$-algebra.
+Thus their union $Z^{-1}(B)$ is also in $\mathcal{F}$
+for any $B \in \mathcal{R}$ and $Z(\omega)$ is 
+a random variables. 
+
+\section*{1.3.3}
+
+Claim: Show that if $f$ is continuous and $X_n \to X$ a.s.
+then $f(X_n) \to f(X)$ a.s.
+
+Proof: Because $f$ is continuous it is also measurable.
+Thus the functions $f(X_n)$ and $f(X)$ must all be random variables.
+One can use this fact to argue that the set
+\begin{equation*}
+  \Omega'_o:= \{w: \lim_{n \to \infty} f(X_n) \ \text{exists}\}
+  = \{w: \lim \sup f(X_n) - \lim \inf f(X_n) = 0\}
+\end{equation*}
+is measurable, as the expressions $\lim \inf X_n$ and $\lim \sup X_n$
+are themselves random variables.
+Lastly, for any given 
+$\omega \in \Omega_o \{w: \lim_{n \to \infty} X_n \ \text{exists}\}$
+it follows from continuity of $f$ that $f(X_n(\omega)) \to f(X(\omega))$.
+This means that $\Omega'_o$ contains $\Omega_o$ which itself has measure
+equal to one. Thus $P(\Omega'_o) = 1$ by monotonicity of measures 
+and $f(X_n)$ converges a.s.
+
+\section*{1.4.1}
+
+Claim: Show that if $f \ge 0$ and $\int f\ d\mu = 0$ then $f = 0$ a.e.
+
+Proof: It follows from our the assumptions that $f < 1/n$ a.e.
+Assume otherwise, such that there exists a $E \in \mathcal{F}$ 
+for which $f(E) \ge 1/n$ and $\mu E > 0$. 
+Then we can define a simple function $\phi = \frac{1}{n} \mathbf{1}_E$,
+less than $f$ and with integral equal to 
+$\int \phi\ d \mu = \frac{1}{n} \mu E > 0$.
+But we know from the properties we've derived for the integral
+that $f > \phi$ implies $\int f > \int \phi = \mu E > 0$
+Thus $f$ must be less than any constant function $\frac{1}{n}$ a.e.. 
+Taking that limit as $n \to \infty$ implies then that $f = 0$ a.e.
+
+\section*{1.4.3}
+
+Claim: Let $g$ be an integrable function on $\mathbb{R}$
+and $\epsilon > 0$. (i) Use the definition of the integral 
+to conclude there is a simple function 
+$\phi = \sum_k b_k \mathbf{1}_{A_k}$ with
+$\int \vert g - \phi \vert \ dx < \epsilon$.
+(ii) Approximate the $A_k$ by finite unions of intervals
+to get a step function
+\begin{equation*}
+  q = \sum_{j=1}^k c_j \mathbf{1}_{(a_{j-1}, a_j)}
+\end{equation*}
+with $a_0 < a_1 < \cdots < a_k$,
+so that $\int \vert \phi - q \vert < \epsilon$.
+
+Proof: (i) First note that $g = g^+ - g^-$ for 
+two non-negative functions. 
+Thus, we'll assume the $g \ge 0$ without
+loss of generality.
+
+We know by step 3 of the definition of the integral
+that for a given $\epsilon > 0$ there exists
+a bounded function $h$, 
+zero everywhere but a set $E$ of finite measure,
+such that $0 \le h \le g$ and 
+$\int h \ dx + \frac{\epsilon}{2} > \int g \ dx$.
+This along with the other properties of the integral
+implies that $\frac{\epsilon}{2} 
+> \int g - h \ dx \ge 0$.
+
+Likewise, step 2 of the definition of the integral
+implies the existence of simple functions
+$\psi > h > \phi \ge 0$ defined only on $E$
+such that $\int \phi \ d\mu 
++ \frac{\epsilon}{2} > \int h \ d\mu$
+and $\int h \ d\mu + \frac{\epsilon}{2} > \int \psi \ dx$.
+These inequalities indicate that more generaly, 
+there always exists some function $\varphi$
+on $E$ for which 
+$\int \vert h - \varphi \vert \ dx < \frac{\epsilon}{2}$.
+
+Combined with the contraint derived for $\int g - h \ dx$,
+this last inequality shows that there always exists
+a simple function $\phi$, defined on a set $E$ of finite 
+measure, such that $\int \vert g - \phi \vert \ dx < \epsilon$.
+
+
+(ii) We know that $\phi$ is a simple function,
+defined over a finite collection of sets $A_i$
+such that $\phi = \sum_{i=1}^n b_i \mathbf{1}_{A_i}$.
+As shown in the bonus problem, we can cover 
+each $A_i$ with a finite collection of $m_i$ bounded intervals
+$I_{A_i}^j$.
+Let $b = \max_i \{b_i\}$.
+Then for a given $\epsilon$ we can select an interval set 
+so that for $I_i = I_{A_i}^1 \cup \dots \cup I_{A_i}^{m_i}$
+we have $\mu(A_i \Delta I_i) < \frac{\epsilon}{n b}$.
+
+We can define a similiar set $I_i$ satisfying the same bound 
+for each set $A_i$. Define a set of simple functions
+$q_i = b_i \mathbf{1}_{I_i}$ and then define $q = \max_i{q_i}$.
+The function $q$ has the form suggested in the promp
+(up to a finite, measure-zero set of points). We can see this
+by noting that $\cup_i I_i$ is an open set and the 
+endponts of intervals comprising the sets $I_i$
+can be ordered and labeled as $a_0 < a_1 < \dots < a_k$.
+On each interval $(a_i, a_{i-1})$, $q$ just takes the maximum value
+between the two functions $q_i$ active on it.
+
+The way we've defined $q$, the difference $\phi - q$ is zero
+is zero on each set $A_i$ excepting small sets where the intervals
+$I_i$ overlap. On these sets, $q$ equals at most $b$.
+Thus the integral $\int \vert \phi - q \vert$ can be bounded
+by $b * \sum_{i=1}^n m(A_i \Delta I_i) \le b n \frac{\epsilon}{n b}
+= \epsilon$. This completes the proof.
+
+
+
+
+\end{document}

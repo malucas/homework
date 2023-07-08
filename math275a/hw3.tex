@@ -1,0 +1,256 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}
+{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\itshape}
+{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0.1em}
+
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{Math 275A: Homework 3}
+\author{Marcus Lucas}
+\date{\vspace{-1cm}}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section*{1.5.4}
+
+Claim: If $f$ is integrable and $E_m$ are disjoint sets
+with union $E$ then
+\begin{equation*}
+  \sum_{m=0}^\infty \int_{E_m}f \ d\mu = \int_E f \ d\mu
+\end{equation*}
+So if $f \ge 0$, then $\nu(E) = \int_E f \ d\mu$
+defines a measure.
+
+Proof: The easiest way to show this is to apply the
+dominated convergence theorem. 
+Define $f_n = f \mathbf{1}_{A_n}$ for $A_n = \cup_{m=0}^n E_m$.
+Since $A_n \uparrow E$ it follows that $f_n \to f$ on $E$ a.e.
+By construction, each $f_n$ is dominated by $\vert f \vert$
+in that $\vert f_n \vert \le \vert f \vert$.
+Given that $f$, and therefore $\vert f \vert$,
+is integrable, we can apply the DCT to our sequence.
+Thus $\int_E f_n \ d\mu \to \int_E f \ d\mu$.
+
+To prove the claim, note that each $A_n$ over which
+each $f_n$ is defined is a union of $n$ disjoint sets
+so that
+\begin{equation*}
+  \int_{E} f_n \ d\mu = \lim_n \int_{A_n} f \ d\mu
+  = \lim_n \sum_{m=0}^n \int_{E_m} f \ d\mu
+  = \sum_{m=0}^\infty \int_{E_m} f \ d\mu
+\end{equation*}
+The second equality comes from the linearity property of
+integration and the fact that we can write $f_n$
+as $\sum_{m=0}^n f \mathbf{1}_{E_m}$ for disjoint 
+sets $E_m$.
+If, in addition, $f \ge 0$ such that 
+$\nu(E) = \int_E f \ d\mu \ge 0$ for every set $E$,
+then $\nu(E)$ satisfies the definition of a measure.
+
+\section*{1.5.8}
+
+Claim: Show that if $f$ is integrable on $[a,b]$,
+$g(x) = \int_{[a,x]} f(y) \ dy$ is continuous on $(a,b)$.
+
+Proof: Given that $g : \mathbb{R} \to \mathbb{R}$ we 
+just need to show continuity in terms of limits of sequences.
+Take any sequence $x_n \to x$ where 
+$x_n, x \in (a,b)$.
+Then define $f_n = f \mathbf{1}_{[a,x_n]}$ 
+such that the functions $f_n$ converge
+to $f \mathbf{1}_{[a,x]}$ a.e. 
+Since $f$ is integrable over $[a,b]$, the absolute value of
+each $f_n$ is upper-bounded by an integrable function
+$\vert f \vert$ on $[a,b]$.
+Thus we can apply the Dominated Convergence Theorem
+to conclude that
+\begin{equation*}
+  g(x_n) = \int_{[a,x_n]} f(y) \ dy = \int_{[a,b]} f_n(y) \ dy \to 
+  \int_{[a,b]} f(y) \mathbf{1}_{[a,x]} \ dy 
+  = \int_{[a,x]} f(y) \ dy = g(x)
+\end{equation*}
+We did not make any assumptions about the sequence $x_n$
+other than convergence to $x$, so continuity follows.
+
+\section*{1.6.5}
+
+Claim: Show that: (i) if $\epsilon > 0$,
+$\inf\{P (\vert X \vert > \epsilon) : EX = 0,\ 
+\text{var} (X) = 1 \} = 0$;
+(ii) if $y \ge 1$, $\sigma^2 \in (0, \infty)$,
+$\inf\{P(\vert X \vert > y) : EX = 1,\ 
+\text{var} \ (X) = \sigma^2 \} = 0$
+
+Proof: Given that my own understanding of set theory
+is lacking, I'll make the assumption that the infimums
+in the claim are taken over all possible random
+variables $X$ defined on $([0,1], \mathcal{R}, \mu)$
+where $\mu$ is taken to be the Lebesgue measure.
+
+(i) For a given $\epsilon > 0$, 
+define a sequence of random variables
+$X_n = \epsilon \sqrt{n} \mathbf{1}_{E_n} 
+- \epsilon \sqrt{n} \mathbf{1}_{E_{-n}}$
+where $E_n = (0,\frac{1}{2n\epsilon^2})$ 
+and $E_{-n} = (-\frac{1}{2n\epsilon^2}, 0)$.
+Then
+\begin{equation*}
+  EX_n = \sqrt{n} \epsilon \mu(E_n) 
+  - \sqrt{n} \epsilon \mu(E_{-n}) = 0
+\end{equation*}
+and
+\begin{equation*}
+  \text{var} (X_n) = n \epsilon^2 \mu(E_n) 
+  + n \epsilon^2 \mu(E_{-n}) 
+  = \frac{2n\epsilon^2}{2n\epsilon^2}
+  = 1
+\end{equation*}
+while
+\begin{equation*}
+  P(\vert X_n \vert > \epsilon) = \mu(E_n) + \mu(E_{-n})
+  = \frac{1}{n\epsilon^2} 
+  \quad  \text{for} \quad n > 1
+\end{equation*}
+This probablity goes to zero as $n \to \infty$,
+proving the claim.
+
+(ii) Given $y \ge 1$ and $\sigma^2 \in (0, \infty)$, 
+define a sequence of random variables
+$X_n = \sqrt{n} y \mathbf{1}_{E_n}
+- \sqrt{n} y \mathbf{1}_{E_{-n}} + \mathbf{1}_{[0,1]}$
+where $E_n = (0,\frac{\sigma^2}{2ny^2})$ 
+and $E_{-n} = (-\frac{\sigma^2}{2ny^2}, 0)$.
+Then
+\begin{equation*}
+  EX_n = \sqrt{n} y \mu(E_n) 
+  - \sqrt{n} y \mu(E_{-n}) 
+  + \mu([0,1]) = 1
+\end{equation*}
+and
+\begin{equation*}
+  \text{var} (X_n) = E(X_n - 1)^2
+  = n y^2 \mu(E_n) 
+  + n y^2 \mu(E_{-n})
+  = \frac{2ny^2\sigma^2}{2ny^2}
+  = \sigma^2
+\end{equation*}
+Due to the way we've defined $X_n$ and because $y \ge 1$, 
+$\vert X_n(\omega) \vert$ only has the potential to be 
+greater than $y$ when $\omega$ falls within $E_n$ or $E_{-n}$. 
+Thus
+\begin{equation*}
+  P(\vert X_n \vert > y) \le \mu(E_n) + \mu(E_{-n})
+  = \frac{\sigma^2}{ny^2} 
+  \quad  \text{for} \quad n > 1
+\end{equation*}
+which goes to zero as $n \to \infty$, proving the claim.
+
+\section*{1.6.8}
+
+Claim: Suppose that the probability measure $\mu$ has 
+$\mu(A) = \int_A f(x) \ dx$ for all $A \in \mathcal{R}$.
+Use the proof technique of Theorem 1.6.9 to show that
+for any $g$ with $g \ge 0$ or 
+$\int \vert g(x) \vert \ \mu(dx) < \infty$ we have
+\begin{equation*}
+  \int g(x) \ \mu(dx) = \int g(x) f(x) \ dx
+\end{equation*}
+
+Proof: Let's go through the cases as in 1.6.9.
+
+Case 1 (Indicator Functions): 
+For some $A \in \mathcal{R}$, let $g = \mathbf{1}_A$.
+Then
+\begin{equation*}
+  \int g(x) \ \mu(dx) = \int \mathbf{1}_A \ \mu(dx)
+  = P(X \in A) = \mu(A) = \int_A f(x) \ dx
+  = \int \mathbf{1}_A(x) f(x) dx = \int g(x) f(x) dx
+\end{equation*}
+
+Case 2 (Simple Functions): 
+Let $g(x) = \sum_{n=1}^m c_m \mathbf{1}_{A_m}$
+be some simple function where $c_m \in \mathbb{R}$
+and $A_m \in \mathcal{R}$. Then linearity of integration
+lets us write
+\begin{equation*}
+\begin{aligned}
+  \int g(x) \ \mu(dx)
+  & = \int \sum_{n=1}^m c_m \mathbf{1}_{A_m}(x) \ \mu(dx)
+  = \sum_{n=1}^m c_m \int \mathbf{1}_{A_m}(x) \ \mu(dx) \\
+  & = \sum_{n=1}^m c_m \int \mathbf{1}_{A_m}(x) f(x) \ dx
+  = \int \sum_{n=1}^m c_m \mathbf{1}_{A_m}(x) f(x) \ dx
+  = \int g(x) f(x) \ dx
+\end{aligned}
+\end{equation*}
+where Case 1 was applied to get the third equality.
+
+Case 3 (Nonnegative Functions):
+If $g \ge 0$ define
+\begin{equation*}
+  g_n(x) = ([2^ng(x)/2^n]) \wedge n
+\end{equation*}
+where $[x]$ is the largest integer less than or equal to
+$x$ and $a \wedge b = \min \{a,b\}$.
+As defined $g_n$ are simple nonnegative functions such that 
+$g_n \uparrow g$ and $g_n f \uparrow g f$
+Applying Case 2 and the Monotone Convergence Theorem 
+(twice) yields
+\begin{equation*}
+  \int g(x) \ \mu(dx) = \lim_n \int g_n(x) \ \mu(dx)
+  = \lim_n \int g_n(x) f(x) \ dx
+  = \int g(x) f(x) \ dx
+\end{equation*}
+
+Case 4 (Integrable Functions):
+For the general case can write $g(x) = g^+(x) - g^-(x)$.
+That $\int \vert g(x) \vert \ \mu(dx) < \infty$
+guarantes $\int g^+(x) \ \mu(dx)$ and $\int g^-(x) \ \mu(dx)$
+are finite. Thus
+\begin{equation*}
+  \int g(x) \ \mu(dx) = \int g^+(x) \ \mu(dx) - \int g^-(x) \ \mu(dx)
+  = \int g^+(x) f(x) \ dx - \int g^-(x) f(x) \ dx
+  = \int g(x) f(x) \ dx
+\end{equation*}
+thereby completing the proof.
+
+\section*{1.6.13}
+
+Claim: If $EX_1^- < \infty$ and $X_n \uparrow X$,
+then $EX_n \uparrow EX$.
+
+Proof: Each $X_n$ can be decomposed as $X_n = X_n^+ - X_n-$.
+$X_n \uparrow X$ implies that $X_n^+ \uparrow X^+$
+so the Monotone Convergence Theorem tells us that
+$EX_n^+ \uparrow EX^+$. 
+
+Similarly, $X_n^- \downarrow X^-$ where each $X_n^-$ 
+is a nonnegative function. This implies that 
+$\vert X_n \vert \le X_1$ for which we know that
+$EX_1$ is finite. Thus we can apply the Dominated Convergence
+Theorem to determine $EX_n^- \to EX^-$.
+
+Combing results, we have that
+\begin{equation*}
+  EX_n = EX_n^+ - EX_n^- \to EX^+ - EX^- = EX 
+\end{equation*}
+To get monotonic convergence from bellow, observe that
+since $X_n^- \downarrow X^-$ it follows that 
+$EX_n^-$ decreases with each $n$ as $n \to \infty$.
+This combined with the monotonicity of $EX_n^+$
+implies $EX_n \uparrow EX$.
+
+\end{document}
