@@ -1,2 +1,2 @@
 # homework
-Assignments and work from random books.
+Assignments and other exercises.
